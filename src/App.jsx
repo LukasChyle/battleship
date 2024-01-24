@@ -46,3 +46,28 @@ function BoardTile(/* row = 0, col = 0, */ children) {
 }
 
 export default App
+
+/*
+TODO: EXAMPLE OF 2d array
+
+ function ChessBoard() {
+  const board = [
+    ["R","N","B","Q","K","B","N","R"],
+    ["P","P","P","P","P","P","P","P"],
+    //... more arrays
+  ];
+
+  return (
+    <div>
+      {board.map((row, i) => (
+        <div key={i}>
+          {row.map((cell, j) => (
+            <span key={j}>{cell} </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+ */
