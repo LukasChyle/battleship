@@ -14,7 +14,11 @@ const board = [
 ]
 
 function App() {
-    const [ship1, setShip1] = useState({position: {row: 5, col: 5}, isHorizontal: true, length: 3})
+    const [ship1, setShip1] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 2})
+    const [ship2, setShip2] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
+    const [ship3, setShip3] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
+    const [ship4, setShip4] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 4})
+    const [ship5, setShip5] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 5})
 
     return (
         <div>
