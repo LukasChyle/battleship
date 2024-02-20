@@ -1,17 +1,21 @@
 import {List} from "@mui/material";
 
-const board = [
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-]
+const board = Array.apply(null, Array(10)).map(() => (
+    Array.apply(null, Array(10)).map(function () {})))
+
+function loadTileRows() {
+    return board.map((row, rowIndex) => ({
+        rowNumber: rowIndex + 1,
+        tiles: row.map((tile, columnIndex) => ({
+            id: (rowIndex + "" + columnIndex),
+            row: rowIndex + 1,
+            col: columnIndex + 1,
+            used: false
+        }))
+    }))
+}
+
+const tileRows = loadTileRows()
 
 const initialShips = [
     {id: "ship-5", isHorizontal: false, length: 2},
@@ -22,48 +26,41 @@ const initialShips = [
 ]
 
 function App() {
-    // const [ship1, setShip1] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 2})
-    // const [ship2, setShip2] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
-    // const [ship3, setShip3] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
-    // const [ship4, setShip4] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 4})
-    // const [ship5, setShip5] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 5})
+    console.log(tileRows) // TODO: Add rows to useState
 
     return (
         <div>
             <ShipList ships={initialShips}/>
-            <Board/>
+            <Board tileRows={tileRows}/>
         </div>
     )
 }
 
-function Board() {
+function Board({tileRows}) {
     return (
         <div>
-            {board.map((row, rowIndex) => (
-                <div className="board-row" key={rowIndex}>
-                    {row.map((cell, columnIndex) => (
-                        <BoardTile key={cell} row={rowIndex} col={columnIndex}>{cell}</BoardTile>
-                    ))}
+            {tileRows.map((row) => (
+                <div className="board-row" key={row.rowNumber}>
+                    {row.tiles.map((tile) => (<BoardTile key={tile.id} tile={tile}/>))}
                 </div>
             ))}
         </div>
     )
 }
 
-function BoardTile(tile) {
-    console.log("row:" + tile.row + " col:" + tile.col + " child:" + tile.children)
-
+function BoardTile({tile}) {
+    console.log("row:" + tile.row + " col:" + tile.col)
     return (
         <span className="board-tile">
                     <img src="src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
-            </span>
+        </span>
     )
 }
 
 function ShipList({ships}) {
     return (
         <List>
-            {ships.map((ship, index) => (
+            {ships.map((ship) => (
                 <Ship key={ship.id} id={ship.id} isHorizontal={ship.isHorizontal}
                       length={ship.length}/>
             ))}
