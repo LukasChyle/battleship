@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {List} from "@mui/material";
 
 const board = [
     ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
@@ -13,32 +13,30 @@ const board = [
     ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
 ]
 
+const initialShips = [
+    {id: "ship-5", isHorizontal: false, length: 2},
+    {id: "ship-1", isHorizontal: true, length: 2},
+    {id: "ship-2", isHorizontal: true, length: 3},
+    {id: "ship-3", isHorizontal: true, length: 4},
+    {id: "ship-4", isHorizontal: true, length: 5},
+]
+
 function App() {
-    const [ship1, setShip1] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 2})
-    const [ship2, setShip2] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
-    const [ship3, setShip3] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
-    const [ship4, setShip4] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 4})
-    const [ship5, setShip5] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 5})
+    // const [ship1, setShip1] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 2})
+    // const [ship2, setShip2] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
+    // const [ship3, setShip3] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 3})
+    // const [ship4, setShip4] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 4})
+    // const [ship5, setShip5] = useState({position: {row: 0, col: 0}, isHorizontal: true, length: 5})
 
     return (
         <div>
-            Hello World!
-            <Ship isHorizontal={true} length={2}/>
-            <Ship isHorizontal={true} length={3}/>
-            <Ship isHorizontal={true} length={4}/>
-            <Ship isHorizontal={true} length={5}/>
-            <Ship isHorizontal={false} length={2}/>
-            <Ship isHorizontal={false} length={3}/>
-            <Ship isHorizontal={false} length={4}/>
-            <Ship isHorizontal={false} length={5}/>
-
+            <ShipList ships={initialShips}/>
             <Board/>
         </div>
     )
 }
 
 function Board() {
-
     return (
         <div>
             {board.map((row, i) => (
@@ -52,53 +50,67 @@ function Board() {
     )
 }
 
-function BoardTile({row, col, children}) {
-
-    console.log("row:" + row + " col:" + col + " child:" + children)
+function BoardTile(tile) {
+    // console.log("row:" + tile.row + " col:" + tile.col + " child:" + tile.children)
 
     return (
         <span className="board-tile">
-            <img src="src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
-        </span>
+                    <img src="src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
+            </span>
     )
 }
 
-function Ship({isHorizontal, length}) {
+function ShipList({ships}) {
+    return (
+        <List>
+            {ships.map((ship, index) => (
+                <Ship key={ship.id} id={ship.id} isHorizontal={ship.isHorizontal}
+                      length={ship.length}
+                      index={index}/>
+            ))}
+        </List>
+    )
+}
 
-    if (isHorizontal && length === 2) return <img src="src/assets/Boat_4.png" alt="ship"/>
-    if (isHorizontal && length === 3) return <img src="src/assets/Boat_3.png" alt="ship"/>
-    if (isHorizontal && length === 4) return <img src="src/assets/Boat_2.png" alt="ship"/>
-    if (isHorizontal && length === 5) return <img src="src/assets/Boat_1.png" alt="ship"/>
-    if (!isHorizontal && length === 2) return <img src="src/assets/Boat_4_vert.png" alt="ship"/>
-    if (!isHorizontal && length === 3) return <img src="src/assets/Boat_3_vert.png" alt="ship"/>
-    if (!isHorizontal && length === 4) return <img src="src/assets/Boat_2_vert.png" alt="ship"/>
-    if (!isHorizontal && length === 5) return <img src="src/assets/Boat_1_vert.png" alt="ship"/>
-    return <p>Ship Image</p>
+function Ship(ship) {
+    let srcString = "";
+    if (ship.isHorizontal) {
+        switch (ship.length) {
+            case 2 :
+                srcString = "src/assets/Boat_4.png"
+                break
+            case 3 :
+                srcString = "src/assets/Boat_3.png"
+                break
+            case 4 :
+                srcString = "src/assets/Boat_2.png"
+                break
+            case 5 :
+                srcString = "src/assets/Boat_1.png"
+                break
+        }
+    } else {
+        switch (ship.length) {
+            case 2 :
+                srcString = "src/assets/Boat_4_vert.png"
+                break
+            case 3 :
+                srcString = "src/assets/Boat_3_vert.png"
+                break
+            case 4 :
+                srcString = "src/assets/Boat_2_vert.png"
+                break
+            case 5 :
+                srcString = "src/assets/Boat_1_vert.png"
+                break
+        }
+    }
+    return (
+        <div>
+            <img src={srcString} alt={"Ship"}/>
+        </div>
+    )
 }
 
 export default App
 
-/*
-TODO: EXAMPLE OF 2d array
-
- function ChessBoard() {
-  const board = [
-    ["R","N","B","Q","K","B","N","R"],
-    ["P","P","P","P","P","P","P","P"],
-    //... more arrays
-  ];
-
-  return (
-    <div>
-      {board.map((row, i) => (
-        <div key={i}>
-          {row.map((cell, j) => (
-            <span key={j}>{cell} </span>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
- */
