@@ -39,10 +39,10 @@ function App() {
 function Board() {
     return (
         <div>
-            {board.map((row, i) => (
-                <div className="board-row" key={i}>
-                    {row.map((cell, j) => (
-                        <BoardTile key={cell} row={i} col={j}>{cell}</BoardTile>
+            {board.map((row, rowIndex) => (
+                <div className="board-row" key={rowIndex}>
+                    {row.map((cell, columnIndex) => (
+                        <BoardTile key={cell} row={rowIndex} col={columnIndex}>{cell}</BoardTile>
                     ))}
                 </div>
             ))}
@@ -51,7 +51,7 @@ function Board() {
 }
 
 function BoardTile(tile) {
-    // console.log("row:" + tile.row + " col:" + tile.col + " child:" + tile.children)
+    console.log("row:" + tile.row + " col:" + tile.col + " child:" + tile.children)
 
     return (
         <span className="board-tile">
@@ -65,14 +65,15 @@ function ShipList({ships}) {
         <List>
             {ships.map((ship, index) => (
                 <Ship key={ship.id} id={ship.id} isHorizontal={ship.isHorizontal}
-                      length={ship.length}
-                      index={index}/>
+                      length={ship.length}/>
             ))}
         </List>
     )
 }
 
 function Ship(ship) {
+    console.log("id:" + ship.id + " isHorizontal:" + ship.isHorizontal + " length:" + ship.length)
+
     let srcString = "";
     if (ship.isHorizontal) {
         switch (ship.length) {
