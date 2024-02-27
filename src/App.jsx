@@ -1,7 +1,11 @@
 import {List} from "@mui/material";
+import {useState} from "react";
+import {DndContext, useDraggable, useDroppable} from "@dnd-kit/core";
+import {CSS} from "@dnd-kit/utilities"
 
 const board = Array.apply(null, Array(10)).map(() => (
-    Array.apply(null, Array(10)).map(function () {})))
+    Array.apply(null, Array(10)).map(function () {
+    })))
 
 function loadTileRows() {
     return board.map((row, rowIndex) => ({
@@ -15,8 +19,6 @@ function loadTileRows() {
     }))
 }
 
-const tileRows = loadTileRows()
-
 const initialShips = [
     {id: "ship-5", isHorizontal: false, length: 2},
     {id: "ship-1", isHorizontal: true, length: 2},
@@ -26,13 +28,31 @@ const initialShips = [
 ]
 
 function App() {
-    console.log(tileRows) // TODO: Add rows to useState
+    const [ships, setShips] = useState(initialShips);
+    console.log(loadTileRows()) // TODO: Add rows to useState
+
+    const handleOnDragOver = (e) => {
+        if (e.over) {
+            console.log(`${e.active.id} was moved over ${e.over.id}.`)
+        }
+        if (!e.over) {
+            console.log(`${e.active.id} is no longer over.`)
+        }
+    }
+
+    const handleOnDragEnd = (e) => {
+        if (e.over) {
+            console.log(`${e.active.data.id} was dropped on ${e.over.id}`)
+        }
+    }
 
     return (
-        <div>
-            <ShipList ships={initialShips}/>
-            <Board tileRows={tileRows}/>
-        </div>
+        <DndContext onDragEnd={handleOnDragEnd} onDragOver={handleOnDragOver}>
+            <div>
+                <ShipList ships={ships}/>
+                <Board tileRows={loadTileRows()}/>
+            </div>
+        </DndContext>
     )
 }
 
@@ -49,10 +69,11 @@ function Board({tileRows}) {
 }
 
 function BoardTile({tile}) {
-    console.log("row:" + tile.row + " col:" + tile.col)
+    const {setNodeRef} = useDroppable({id: tile.id, data: {row: tile.row, col: tile.col}})
     return (
-        <span className="board-tile">
-                    <img src="src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
+        <span className="board-tile" ref={setNodeRef}>
+            <img src="/src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
+            {tile.children}
         </span>
     )
 }
@@ -69,7 +90,12 @@ function ShipList({ships}) {
 }
 
 function Ship(ship) {
-    console.log("id:" + ship.id + " isHorizontal:" + ship.isHorizontal + " length:" + ship.length)
+    const {
+        attributes, listeners, setNodeRef, transform
+    } = useDraggable({
+        id: ship.id,
+        data: {length: ship.length, isHorizontal: ship.isHorizontal}
+    })
 
     let srcString = "";
     if (ship.isHorizontal) {
@@ -104,7 +130,12 @@ function Ship(ship) {
         }
     }
     return (
-        <div>
+        <div
+            ref={setNodeRef}
+            style={{transform: CSS.Translate.toString(transform)}}
+            {...attributes}
+            {...listeners}
+        >
             <img src={srcString} alt={"Ship"}/>
         </div>
     )
