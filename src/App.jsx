@@ -20,18 +20,23 @@ function loadTileRows() {
 }
 
 const initialShips = [
-    {id: "ship-5", isHorizontal: false, length: 2},
-    {id: "ship-1", isHorizontal: true, length: 2},
-    {id: "ship-2", isHorizontal: true, length: 3},
-    {id: "ship-3", isHorizontal: true, length: 4},
-    {id: "ship-4", isHorizontal: true, length: 5},
+    {id: "ship-1", isHorizontal: true, length: 2, position: {Row: 1, Col: 1}},
+    {id: "ship-2", isHorizontal: false, length: 2, position: {Row: 5, Col: 5}},
+    {id: "ship-3", isHorizontal: false, length: 3, position: {Row: 5, Col: 6}},
+    {id: "ship-4", isHorizontal: false, length: 4, position: {Row: 5, Col: 7}},
+    {id: "ship-5", isHorizontal: false, length: 5, position: {Row: 5, Col: 8}},
 ]
 
 function App() {
     const [ships, setShips] = useState(initialShips);
-    console.log(loadTileRows()) // TODO: Add rows to useState
+    const [tileRows, setTileRows] = useState(loadTileRows())
+    console.log(ships)
+    console.log(tileRows)
 
-    const handleOnDragOver = (e) => {
+    const handleDragStart = (e) => {
+    }
+
+    const handleDragOver = (e) => {
         if (e.over) {
             console.log(`${e.active.id} was moved over ${e.over.id}.`)
         }
@@ -40,23 +45,25 @@ function App() {
         }
     }
 
-    const handleOnDragEnd = (e) => {
+    const handleDragEnd = (e) => {
         if (e.over) {
-            console.log(`${e.active.data.id} was dropped on ${e.over.id}`)
+            console.log(`${e.active.id} was dropped on ${e.over.id}`)
         }
     }
 
     return (
-        <DndContext onDragEnd={handleOnDragEnd} onDragOver={handleOnDragOver}>
+        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
                 <ShipList ships={ships}/>
-                <Board tileRows={loadTileRows()}/>
+                <Board tileRows={tileRows}/>
             </div>
         </DndContext>
     )
 }
 
 function Board({tileRows}) {
+    //TODO if boat row and col matches, put ship in as child and change used to true.
+    //TODO if boat was matched, change used status on tiles effected by length and boat direction.
     return (
         <div>
             {tileRows.map((row) => (
@@ -69,11 +76,11 @@ function Board({tileRows}) {
 }
 
 function BoardTile({tile}) {
-    const {setNodeRef} = useDroppable({id: tile.id, data: {row: tile.row, col: tile.col}})
+    const {setNodeRef} = useDroppable({id: tile.id, data: {row: tile.row, col: tile.col}, disabled: tile.used})
     return (
         <span className="board-tile" ref={setNodeRef}>
-            <img src="/src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
             {tile.children}
+            <img src="/src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
         </span>
     )
 }
