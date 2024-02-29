@@ -7,7 +7,7 @@ const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
     })))
 
-function loadTileRows() {
+function loadTileRows() { //TODO function to const, put board directly inside equation.
     return board.map((row, rowIndex) => ({
         rowNumber: rowIndex + 1,
         tiles: row.map((tile, columnIndex) => ({
@@ -29,7 +29,7 @@ const initialShips = [
 
 function App() {
     const [ships, setShips] = useState(initialShips);
-    const [tileRows, setTileRows] = useState(loadTileRows())
+    const [tiles, setTiles] = useState([]) //TODO. Make list of tiles: id, row, col, used
     console.log(ships)
     console.log(tileRows)
 
@@ -55,14 +55,14 @@ function App() {
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
                 <ShipList ships={ships}/>
-                <Board tileRows={tileRows}/>
+                <Board tileRows={loadTileRows()}/>
             </div>
         </DndContext>
     )
 }
 
 function Board({tileRows}) {
-    //TODO if boat row and col matches, put ship in as child and change used to true.
+    //TODO if boat row and col matches, put ship in as child.
     //TODO if boat was matched, change used status on tiles effected by length and boat direction.
     return (
         <div>
