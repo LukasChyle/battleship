@@ -3,37 +3,35 @@ import {useState} from "react";
 import {DndContext, useDraggable, useDroppable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities"
 
-const board = Array.apply(null, Array(10)).map(() => (
-    Array.apply(null, Array(10)).map(function () {
-    })))
+function getInitialTileRows() {
+    const board = Array.apply(null, Array(10)).map(() => (
+        Array.apply(null, Array(10)).map(function () {
+        })))
 
-function initialTileRows() { //TODO function to const, put board directly inside equation.
     return board.map((row, rowIndex) => ({
-        rowNumber: rowIndex + 1,
         tiles: row.map((tile, columnIndex) => ({
             id: (rowIndex + "" + columnIndex),
-            row: rowIndex + 1,
-            col: columnIndex + 1,
+            row: rowIndex,
+            col: columnIndex,
             used: false,
             ship: undefined
         }))
     }))
 }
 
-// TODO: make method that iterates through tileRows and puts a ships value inside if col and row is matched, change used to true.
-// TODO: When a ship is matched to a tile: Create a method that looks at the ship and changes tiles used by the ship to used: true.
-
-const initialShips = [
-    {id: "ship-1", isHorizontal: true, length: 2, position: {Row: 1, Col: 1}},
-    {id: "ship-2", isHorizontal: false, length: 2, position: {Row: 5, Col: 5}},
-    {id: "ship-3", isHorizontal: false, length: 3, position: {Row: 5, Col: 6}},
-    {id: "ship-4", isHorizontal: false, length: 4, position: {Row: 5, Col: 7}},
-    {id: "ship-5", isHorizontal: false, length: 5, position: {Row: 5, Col: 8}},
-]
+function getInitialShips() {
+    return [
+        {id: "ship-1", isHorizontal: true, length: 2, row: 1, col: 1},
+        {id: "ship-2", isHorizontal: false, length: 2, row: 5, col: 5},
+        {id: "ship-3", isHorizontal: false, length: 3, row: 5, col: 6},
+        {id: "ship-4", isHorizontal: false, length: 4, row: 5, col: 7},
+        {id: "ship-5", isHorizontal: false, length: 5, row: 5, col: 8},
+    ]
+}
 
 function App() {
-    const [ships, setShips] = useState(initialShips);
-    const [tileRows, setTilesRows] = useState(initialTileRows)
+    const [ships, setShips] = useState(getInitialShips);
+    const [tileRows, setTilesRows] = useState(getInitialTileRows)
     console.log(ships)
     console.log(tileRows)
 
@@ -55,6 +53,24 @@ function App() {
         }
     }
 
+// TODO: make method that iterates through tileRows and puts a ships value inside if col and row is matched, change used to true.
+    const handleBoats = () => {
+        // TODO: instead of iterating tiles, iterate ships and just match tile id from a map of tiles without rows?
+        // TODO: mapOf: ((row + "" + col), {tile info}) hardcode the full map and id?
+        tileRows.forEach(r => r.tiles.forEach(t => {
+            ships.forEach(s => {
+                if (s.row === t.row && s.col === t.col) {
+                    // TODO: put boat into the tile.
+                }
+            })
+        }))
+    }
+
+// TODO: When a ship is matched to a tile: Create a method that looks at the ship and changes tiles used by the ship to used: true.
+    const handleTiles = () => {
+// TODO: tile id = (row + "" + col)
+    }
+
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
@@ -70,7 +86,7 @@ function Board({tileRows}) {
         <div>
             {tileRows.map((row) => (
                 <div className="board-row" key={row.rowNumber}>
-                    {row.tiles.map((tile) => (<BoardTile key={tile.id} tile={tile} child={}/>))}
+                    {row.tiles.map((tile) => (<BoardTile key={tile.id} tile={tile}/>))}
                 </div>
             ))}
         </div>
