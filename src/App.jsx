@@ -7,17 +7,21 @@ const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
     })))
 
-function loadTileRows() { //TODO function to const, put board directly inside equation.
+function initialTileRows() { //TODO function to const, put board directly inside equation.
     return board.map((row, rowIndex) => ({
         rowNumber: rowIndex + 1,
         tiles: row.map((tile, columnIndex) => ({
             id: (rowIndex + "" + columnIndex),
             row: rowIndex + 1,
             col: columnIndex + 1,
-            used: false
+            used: false,
+            ship: undefined
         }))
     }))
 }
+
+// TODO: make method that iterates through tileRows and puts a ships value inside if col and row is matched, change used to true.
+// TODO: When a ship is matched to a tile: Create a method that looks at the ship and changes tiles used by the ship to used: true.
 
 const initialShips = [
     {id: "ship-1", isHorizontal: true, length: 2, position: {Row: 1, Col: 1}},
@@ -29,7 +33,7 @@ const initialShips = [
 
 function App() {
     const [ships, setShips] = useState(initialShips);
-    const [tiles, setTiles] = useState([]) //TODO. Make list of tiles: id, row, col, used
+    const [tileRows, setTilesRows] = useState(initialTileRows)
     console.log(ships)
     console.log(tileRows)
 
@@ -55,20 +59,18 @@ function App() {
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
                 <ShipList ships={ships}/>
-                <Board tileRows={loadTileRows()}/>
+                <Board tileRows={tileRows}/>
             </div>
         </DndContext>
     )
 }
 
 function Board({tileRows}) {
-    //TODO if boat row and col matches, put ship in as child.
-    //TODO if boat was matched, change used status on tiles effected by length and boat direction.
     return (
         <div>
             {tileRows.map((row) => (
                 <div className="board-row" key={row.rowNumber}>
-                    {row.tiles.map((tile) => (<BoardTile key={tile.id} tile={tile}/>))}
+                    {row.tiles.map((tile) => (<BoardTile key={tile.id} tile={tile} child={}/>))}
                 </div>
             ))}
         </div>
@@ -79,7 +81,8 @@ function BoardTile({tile}) {
     const {setNodeRef} = useDroppable({id: tile.id, data: {row: tile.row, col: tile.col}, disabled: tile.used})
     return (
         <span className="board-tile" ref={setNodeRef}>
-            {tile.children}
+            {tile.used && tile.ship && <Ship id={tile.ship.id} key={tile.ship.id} isHorizontal={tile.ship.isHorizontal}
+                                             length={tile.ship.length}/>}
             <img src="/src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
         </span>
     )
