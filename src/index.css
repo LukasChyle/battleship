@@ -26,6 +26,19 @@ body {
     display: flex;
 }
 
+.tile-img {
+    display: block;
+    /*width: 100%;*/
+    height: auto;
+}
+
+.ship-img {
+    position: absolute;
+    /*display: block;*/
+    scale: 75%;
+    /*height: auto;*/
+}
+
 .board-row {
     display: flex;
 }
