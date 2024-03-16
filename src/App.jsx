@@ -183,6 +183,7 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
     }
 
     const buttonStyle = {
+        position: "absolute",
         fontSize: 20,
         marginTop: "4px",
         marginLeft: "4px",
@@ -208,8 +209,9 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             {...attributes}
             {...listeners}
         >
-            <div style={{position: "absolute"}}>
+            <div>
                 <Button onClick={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
+                <span>{"\n"}</span>
                 <img className={className} src={srcString} alt={"Ship"}/>
             </div>
 
