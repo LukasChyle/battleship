@@ -84,7 +84,7 @@ function App() {
     )
 }
 
-function Board({board, tiles, ships, onShips}) {
+function Board({board, tiles, ships, onShips}) { // TODO: Create board with grid component.
     return (
         <div>
             {board.map((row, rowIndex) => (
@@ -141,43 +141,43 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
         data: {length: length, isHorizontal: isHorizontal}
     })
     let srcString = "";
-    let className = "";
+    let style = "";
     if (isHorizontal) {
         switch (length) {
             case 2 :
                 srcString = "src/assets/ship_4.png"
-                className = "img-ship-4"
+                style = "img-ship-4"
                 break
             case 3 :
                 srcString = "src/assets/ship_3.png"
-                className = "img-ship-3"
+                style = "img-ship-3"
                 break
             case 4 :
                 srcString = "src/assets/ship_2.png"
-                className = "img-ship-2"
+                style = "img-ship-2"
                 break
             case 5 :
                 srcString = "src/assets/ship_1.png"
-                className = "img-ship-1"
+                style = "img-ship-1"
                 break
         }
     } else {
         switch (length) {
             case 2 :
                 srcString = "src/assets/ship_4_vert.png"
-                className = "img-ship-4-vert"
+                style = "img-ship-4-vert"
                 break
             case 3 :
                 srcString = "src/assets/ship_3_vert.png"
-                className = "img-ship-3-vert"
+                style = "img-ship-3-vert"
                 break
             case 4 :
                 srcString = "src/assets/ship_2_vert.png"
-                className = "img-ship-2-vert"
+                style = "img-ship-2-vert"
                 break
             case 5 :
                 srcString = "src/assets/ship_1_vert.png"
-                className = "img-ship-1-vert"
+                style = "img-ship-1-vert"
                 break
         }
     }
@@ -195,9 +195,9 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
     // TODO: create button on tile with ship that can rotate the ship.
     // TODO: when hovering on the button: highlight the tiles that will be rotated too and if possible.
     const handleButtonClick = () => {
-        console.log("clicked+")
+        console.log("clicked")
         onShips(ships.map((e) => {
-            return e.id === id ? {...e, isHorizontal: isHorizontal => !isHorizontal} : e
+            return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
         }))
     }
     // FixMe: Draggable not working properly with position absolute.
@@ -212,7 +212,7 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             <div>
                 <Button onClick={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
                 <span>{"\n"}</span>
-                <img className={className} src={srcString} alt={"Ship"}/>
+                <img className={style} src={srcString} alt={"Ship"}/>
             </div>
 
         </div>
