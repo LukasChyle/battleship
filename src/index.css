@@ -1,212 +1,79 @@
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    color: #343a40;
-    line-height: 1;
+  font-family: sans-serif;
+  color: #343a40;
+  line-height: 1;
 }
 
-/*.tile-img {*/
-/*    display: block;*/
-/*    height: auto;*/
-/*}*/
+.tile-img {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+}
 
 .board-tile {
-    display: flex;
+  display: flex;
+  width: 75px;
+  height: 75px;
 }
 
-.board-row {
-    display: flex;
+.ship-image {
+  position: relative;
+  z-index: 2;
 }
 
 .img-ship-1 {
-    position: absolute;
-    margin-left: 5px;
-    margin-top: -40px;
+  margin-left: 20px;
+  margin-top: -60px;
 }
 
 .img-ship-2 {
-    position: absolute;
-    /*margin-left: 20px;*/
-    margin-top: -35px;
+  margin-left: 20px;
+  margin-top: -50px;
 }
 
 .img-ship-3 {
-    position: absolute;
-    margin-left: 10px;
-    margin-top: -25px;
+  margin-left: 30px;
+  margin-top: -45px;
 }
 
 .img-ship-4 {
-    position: absolute;
-    margin-left: -5px;
-    margin-top: 15px;
+  margin-left: 15px;
 }
 
 .img-ship-1-vert {
-    position: absolute;
-    margin-left: -40px;
-    margin-top: 25px;
+  margin-left: -40px;
+  margin-top: 25px;
 }
 
 .img-ship-2-vert {
-    position: absolute;
-    margin-left: -30px;
-    margin-top: 20px;
+  margin-left: -30px;
+  margin-top: 20px;
 }
 
 .img-ship-3-vert {
-    position: absolute;
-    margin-left: -25px;
-    margin-top: 25px;
+  margin-left: -25px;
+  margin-top: 25px;
 }
 
 .img-ship-4-vert {
-    position: absolute;
-    margin-left: 15px;
-    margin-top: 15px;
+  margin-left: 15px;
+  margin-top: 15px;
 }
-
-/*.numbers {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-/*.numbers > div {*/
-/*    height: 40px;*/
-/*    aspect-ratio: 1;*/
-/*    background-color: #e7e7e7;*/
-/*    border-radius: 50%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    font-size: 18px;*/
-/*}*/
-
-/*.numbers .active {*/
-/*    background-color: #7950f2;*/
-/*    color: #fff;*/
-/*}*/
-
-/*.message {*/
-/*    text-align: center;*/
-/*    font-size: 20px;*/
-/*    margin: 40px 0;*/
-/*    font-weight: bold;*/
-
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*}*/
-
-/*.buttons {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-/*.buttons button {*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    padding: 10px 15px;*/
-/*    border-radius: 100px;*/
-/*    font-size: 14px;*/
-/*    font-weight: bold;*/
-
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    gap: 10px;*/
-/*}*/
-
-/*.buttons button span {*/
-/*    font-size: 16px;*/
-/*    line-height: 1;*/
-/*}*/
-
-/*h3 {*/
-/*    margin: 0;*/
-/*    text-transform: uppercase;*/
-/*}*/
-
-/*.close {*/
-/*    position: absolute;*/
-/*    top: 16px;*/
-/*    right: 16px;*/
-/*    border: none;*/
-/*    background: none;*/
-/*    cursor: pointer;*/
-/*    font-size: 40px;*/
-/*    color: inherit;*/
-/*}*/
-
-/*.close:hover {*/
-/*    color: #7950f2;*/
-/*}*/
-
-/*.item {*/
-/*    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);*/
-/*    padding: 20px 24px;*/
-/*    padding-right: 48px;*/
-/*    cursor: pointer;*/
-/*    border-top: 4px solid #fff;*/
-/*    border-bottom: 4px solid #fff;*/
-
-/*    display: grid;*/
-/*    grid-template-columns: auto 1fr auto;*/
-/*    column-gap: 24px;*/
-/*    row-gap: 32px;*/
-/*    align-items: center;*/
-/*}*/
-
-/*.number {*/
-/*    font-size: 24px;*/
-/*    font-weight: 500;*/
-/*    color: #ced4da;*/
-/*}*/
-
-/*.title,*/
-/*.icon {*/
-/*    font-size: 24px;*/
-/*    font-weight: 500;*/
-/*}*/
-
-/*.content-box {*/
-/*    grid-column: 2 / -1;*/
-/*    padding-bottom: 16px;*/
-/*    line-height: 1.6;*/
-/*}*/
-
-/*.content-box ul {*/
-/*    color: #868e96;*/
-/*    margin-left: 16px;*/
-/*    margin-top: 16px;*/
-
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 12px;*/
-/*}*/
-
-/*!* OPEN STATE *!*/
-/*.open {*/
-/*    border-top: 4px solid #087f5b;*/
-/*}*/
-
-/*.open .number,*/
-/*.open .title {*/
-/*    color: #087f5b;*/
-/*}*/

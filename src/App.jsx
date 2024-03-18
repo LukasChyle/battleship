@@ -1,4 +1,4 @@
-import {Button, List} from "@mui/material";
+import {Button, Grid, List} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext, useDraggable, useDroppable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities"
@@ -84,20 +84,23 @@ function App() {
     )
 }
 
-function Board({board, tiles, ships, onShips}) { // TODO: Create board with grid component.
+function Board({board, tiles, ships, onShips}) {
     return (
-        <div>
-            {board.map((row, rowIndex) => (
-                <div className="board-row" key={rowIndex}>
-                    {row.map((col, colIndex) => (
-                        <BoardTile key={colIndex}
-                                   tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
-                                   ships={ships}
-                                   onShips={onShips}
-                        />))}
-                </div>
+        <Grid container>
+            {board.map((col, colIndex) => (
+                <Grid className="board-row" key={colIndex}>
+                    {col.map((row, rowIndex) => (
+                        <Grid key={rowIndex}>
+                            <BoardTile key={rowIndex}
+                                       tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
+                                       ships={ships}
+                                       onShips={onShips}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
             ))}
-        </div>
+        </Grid>
     )
 }
 
@@ -120,6 +123,7 @@ function BoardTile({tile, ships, onShips}) {
     })
     return (
         <span className="board-tile" ref={setNodeRef}>
+            <img className="tile-img" src="/src/assets/framed-water.jpg" alt="board-tile"/>
             {tile.ship && <Ship
                 id={tile.ship.id}
                 key={tile.ship.id}
@@ -128,7 +132,7 @@ function BoardTile({tile, ships, onShips}) {
                 ships={ships}
                 onShips={onShips}
             />}
-            <img className="tile-img" src="/src/assets/framed-water.jpg" width={75} height={75} alt="board-tile"/>
+
         </span>
     )
 }
@@ -141,52 +145,51 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
         data: {length: length, isHorizontal: isHorizontal}
     })
     let srcString = "";
-    let style = "";
+    let shipImageStyle = "";
     if (isHorizontal) {
         switch (length) {
             case 2 :
                 srcString = "src/assets/ship_4.png"
-                style = "img-ship-4"
+                shipImageStyle = "img-ship-4"
                 break
             case 3 :
                 srcString = "src/assets/ship_3.png"
-                style = "img-ship-3"
+                shipImageStyle = "img-ship-3"
                 break
             case 4 :
                 srcString = "src/assets/ship_2.png"
-                style = "img-ship-2"
+                shipImageStyle = "img-ship-2"
                 break
             case 5 :
                 srcString = "src/assets/ship_1.png"
-                style = "img-ship-1"
+                shipImageStyle = "img-ship-1"
                 break
         }
     } else {
         switch (length) {
             case 2 :
                 srcString = "src/assets/ship_4_vert.png"
-                style = "img-ship-4-vert"
+                shipImageStyle = "img-ship-4-vert"
                 break
             case 3 :
                 srcString = "src/assets/ship_3_vert.png"
-                style = "img-ship-3-vert"
+                shipImageStyle = "img-ship-3-vert"
                 break
             case 4 :
                 srcString = "src/assets/ship_2_vert.png"
-                style = "img-ship-2-vert"
+                shipImageStyle = "img-ship-2-vert"
                 break
             case 5 :
                 srcString = "src/assets/ship_1_vert.png"
-                style = "img-ship-1-vert"
+                shipImageStyle = "img-ship-1-vert"
                 break
         }
     }
 
     const buttonStyle = {
-        position: "absolute",
+        position: "relative",
+        zIndex: 2,
         fontSize: 20,
-        marginTop: "4px",
-        marginLeft: "4px",
         maxWidth: '20px',
         maxHeight: '20px',
         minWidth: '20px',
@@ -200,7 +203,6 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
         }))
     }
-    // FixMe: Draggable not working properly with position absolute.
     // FixMe: button onClick not working, probably because of draggable.
     return (
         <div
@@ -209,12 +211,8 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             {...attributes}
             {...listeners}
         >
-            <div>
-                <Button onClick={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
-                <span>{"\n"}</span>
-                <img className={style} src={srcString} alt={"Ship"}/>
-            </div>
-
+            <Button onClick={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
+            <img className={[shipImageStyle, "ship-image"].join(' ')} src={srcString} alt={"Ship"}/>
         </div>
     )
 }
