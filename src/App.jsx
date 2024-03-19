@@ -1,4 +1,4 @@
-import {Button, Grid, List} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext, useDraggable, useDroppable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities"
@@ -32,6 +32,11 @@ const getInitialTiles = () => {
 function App() {
     const [ships, setShips] = useState(getInitialShips);
     const [tiles, setTiles] = useState(getInitialTiles())
+
+    useEffect(() => {
+        handleTiles()
+    }, [ships]);
+
     console.log(ships)
     console.log(tiles)
 
@@ -70,14 +75,9 @@ function App() {
         }))
     }
 
-    useEffect(() => {
-        handleTiles()
-    }, [ships]);
-
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
-                {/*<ShipList ships={ships}/>*/}
                 <Board board={board} tiles={tiles} ships={ships} onShips={setShips}/>
             </div>
         </DndContext>
@@ -104,17 +104,6 @@ function Board({board, tiles, ships, onShips}) {
     )
 }
 
-function ShipList({ships}) {
-    return (
-        <List>
-            {ships.map((ship) => (
-                <Ship key={ship.id} id={ship.id} isHorizontal={ship.isHorizontal}
-                      length={ship.length}/>
-            ))}
-        </List>
-    )
-}
-
 function BoardTile({tile, ships, onShips}) {
     const {setNodeRef} = useDroppable({
         id: tile.id,
@@ -132,7 +121,6 @@ function BoardTile({tile, ships, onShips}) {
                 ships={ships}
                 onShips={onShips}
             />}
-
         </span>
     )
 }
@@ -185,17 +173,14 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
                 break
         }
     }
-
     const buttonStyle = {
-        position: "relative",
-        zIndex: 2,
+        position: "absolute",
         fontSize: 20,
         maxWidth: '20px',
         maxHeight: '20px',
         minWidth: '20px',
         minHeight: '20px'
     }
-    // TODO: create button on tile with ship that can rotate the ship.
     // TODO: when hovering on the button: highlight the tiles that will be rotated too and if possible.
     const handleButtonClick = () => {
         console.log("clicked")
@@ -203,7 +188,6 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
         }))
     }
-    // FixMe: button onClick not working, probably because of draggable.
     return (
         <div
             ref={setNodeRef}
@@ -211,7 +195,7 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
             {...attributes}
             {...listeners}
         >
-            <Button onClick={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
+            <Button onMouseDown={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
             <img className={[shipImageStyle, "ship-image"].join(' ')} src={srcString} alt={"Ship"}/>
         </div>
     )
