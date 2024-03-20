@@ -50,12 +50,22 @@ function App() {
         if (!e.over) {
             console.log(`${e.active.id} is no longer over.`)
         }
+        // TODO: Check if ship are allowed to be dropped, color the tiles green or red.
     }
 
     const handleDragEnd = (e) => {
         if (e.over) {
             console.log(`${e.active.id} was dropped on ${e.over.id}`)
         }
+        // TODO: Check if ship are allowed to be dropped, verify length to edge and if any tiles are already used.
+        if (!e.over) {
+            return
+        }
+        setShips(ships.map((ship) => {
+            const match = e.active.id === ship.id
+            return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
+        }))
+        // FixMe: ship are blinking on old location before placement.
     }
 
     const handleTiles = () => {
@@ -71,7 +81,7 @@ function App() {
         })
         setTiles(tiles.map((e) => {
             const match = tilesToChange.find(t => t.id === e.id)
-            return match ? {...e, used: true, ship: match.ship} : e
+            return match ? {...e, used: true, ship: match.ship} : {...e, used: false, ship: undefined}
         }))
     }
 
@@ -107,7 +117,10 @@ function Board({board, tiles, ships, onShips}) {
 function BoardTile({tile, ships, onShips}) {
     const {setNodeRef} = useDroppable({
         id: tile.id,
-        data: {row: tile.row, col: tile.col},
+        data: {
+            row: tile.row,
+            col: tile.col
+        },
         disabled: tile.used
     })
     return (
@@ -127,11 +140,13 @@ function BoardTile({tile, ships, onShips}) {
 
 function Ship({id, isHorizontal, length, ships, onShips}) {
     const {
-        attributes, listeners, setNodeRef, transform
+        active, attributes, listeners, setNodeRef, transform
     } = useDraggable({
         id: id,
         data: {length: length, isHorizontal: isHorizontal}
     })
+    const zIndex = active && active.id === id ? 2 : 1;
+
     let srcString = "";
     let shipImageStyle = "";
     if (isHorizontal) {
@@ -183,7 +198,6 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
     }
     // TODO: when hovering on the button: highlight the tiles that will be rotated too and if possible.
     const handleButtonClick = () => {
-        console.log("clicked")
         onShips(ships.map((e) => {
             return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
         }))
@@ -191,7 +205,10 @@ function Ship({id, isHorizontal, length, ships, onShips}) {
     return (
         <div
             ref={setNodeRef}
-            style={{transform: CSS.Translate.toString(transform)}}
+            style={{
+                transform: CSS.Translate.toString(transform),
+                zIndex
+            }}
             {...attributes}
             {...listeners}
         >
