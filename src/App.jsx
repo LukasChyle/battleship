@@ -46,6 +46,13 @@ function App() {
     const handleDragOver = (e) => {
         if (e.over) {
             console.log(`${e.active.id} was moved over ${e.over.id}.`)
+            console.log("Can be laid: " + canBeLaid(
+                e.active.data.current.length,
+                e.active.data.current.isHorizontal,
+                e.over.data.current.row,
+                e.over.data.current.col,
+                e.active.data.current.row,
+                e.active.data.current.col))
         }
         if (!e.over) {
             console.log(`${e.active.id} is no longer over.`)
@@ -54,13 +61,21 @@ function App() {
     }
 
     const handleDragEnd = (e) => {
-        if (e.over) {
-            console.log(`${e.active.id} was dropped on ${e.over.id}`)
-        }
+
         // TODO: Check if ship are allowed to be dropped, verify length to edge and if any tiles are already used.
         if (!e.over) {
             return
         }
+        if (!canBeLaid(
+            e.active.data.current.length,
+            e.active.data.current.isHorizontal,
+            e.over.data.current.row,
+            e.over.data.current.col,
+            e.active.data.current.row,
+            e.active.data.current.col)) {
+            return
+        }
+        console.log(`${e.active.id} was dropped on ${e.over.id}`)
         setShips(ships.map((ship) => {
             const match = e.active.id === ship.id
             return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
@@ -69,6 +84,7 @@ function App() {
     }
 
     const handleTiles = () => {
+        //FixMe: when laid on current used tile or another used tile, it jumps to another place.
         const tilesToChange = []
         ships.forEach((e) => {
             for (let i = 0; i < e.length; i++) {
@@ -83,6 +99,34 @@ function App() {
             const match = tilesToChange.find(t => t.id === e.id)
             return match ? {...e, used: true, ship: match.ship} : {...e, used: false, ship: undefined}
         }))
+    }
+
+    const canBeLaid = (length, isHorizontal, overRow, overCol, currentRow, currentCol) => {
+        if (isHorizontal) {
+            if (length + overCol > 10) {
+                return false
+            }
+        } else {
+            if (length + overRow > 10) {
+                return false
+            }
+        }
+        const currentTiles = []
+        for (let i = 0; i < length; i++) {
+            isHorizontal? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push({id:(currentRow + i) + "" + currentCol})
+        }
+        for (let i = 0; i < length; i++) {
+            if (isHorizontal) {
+                if (tiles.find(e => e.id === overRow + "" + (overCol + i)).used && !currentTiles.find(e => e.id === overRow + "" + (overCol + i))) {
+                    return false
+                }
+            } else {
+                if (tiles.find(e => e.id === (overRow + i) + "" + overCol).used && !currentTiles.find(e => e.id === (overRow + i) + "" + overCol)) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     return (
@@ -131,6 +175,8 @@ function BoardTile({tile, ships, onShips}) {
                 key={tile.ship.id}
                 isHorizontal={tile.ship.isHorizontal}
                 length={tile.ship.length}
+                row={tile.row}
+                col={tile.col}
                 ships={ships}
                 onShips={onShips}
             />}
@@ -138,12 +184,12 @@ function BoardTile({tile, ships, onShips}) {
     )
 }
 
-function Ship({id, isHorizontal, length, ships, onShips}) {
+function Ship({id, isHorizontal, length, row, col, ships, onShips}) {
     const {
         active, attributes, listeners, setNodeRef, transform
     } = useDraggable({
         id: id,
-        data: {length: length, isHorizontal: isHorizontal}
+        data: {length: length, isHorizontal: isHorizontal, row: row, col: col}
     })
     const zIndex = active && active.id === id ? 2 : 1;
 
