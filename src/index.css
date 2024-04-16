@@ -36,7 +36,14 @@ body {
 
 .ship-image {
   position: relative;
-  /*z-index: 1;*/
+}
+
+.ship-image:hover {
+  cursor: pointer;
+}
+
+.ship-image:active {
+  cursor: move;
 }
 
 .img-ship-1 {

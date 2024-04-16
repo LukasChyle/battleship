@@ -22,6 +22,7 @@ const getInitialTiles = () => {
             id: (rowIndex + "" + colIndex),
             row: rowIndex,
             col: colIndex,
+            src: "/src/assets/framed-water.jpg",
             used: false,
             ship: undefined
         })
@@ -37,8 +38,8 @@ function App() {
         handleTiles()
     }, [ships]);
 
-    console.log(ships)
-    console.log(tiles)
+    // console.log(ships)
+    // console.log(tiles)
 
     const handleDragStart = (e) => {
     }
@@ -46,28 +47,32 @@ function App() {
     const handleDragOver = (e) => {
         if (e.over) {
             console.log(`${e.active.id} was moved over ${e.over.id}.`)
-            console.log("Can be laid: " + canBeLaid(
+            markTiles(canBeLaid(
+                    e.active.data.current.length,
+                    e.active.data.current.isHorizontal,
+                    e.active.data.current.isHorizontal,
+                    e.over.data.current.row,
+                    e.over.data.current.col,
+                    e.active.data.current.row,
+                    e.active.data.current.col),
                 e.active.data.current.length,
                 e.active.data.current.isHorizontal,
                 e.over.data.current.row,
-                e.over.data.current.col,
-                e.active.data.current.row,
-                e.active.data.current.col))
+                e.over.data.current.col)
         }
         if (!e.over) {
             console.log(`${e.active.id} is no longer over.`)
         }
-        // TODO: Check if ship are allowed to be dropped, color the tiles green or red.
     }
 
     const handleDragEnd = (e) => {
-
-        // TODO: Check if ship are allowed to be dropped, verify length to edge and if any tiles are already used.
+        resetTileImages()
         if (!e.over) {
             return
         }
         if (!canBeLaid(
             e.active.data.current.length,
+            e.active.data.current.isHorizontal,
             e.active.data.current.isHorizontal,
             e.over.data.current.row,
             e.over.data.current.col,
@@ -75,7 +80,6 @@ function App() {
             e.active.data.current.col)) {
             return
         }
-        console.log(`${e.active.id} was dropped on ${e.over.id}`)
         setShips(ships.map((ship) => {
             const match = e.active.id === ship.id
             return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
@@ -84,14 +88,13 @@ function App() {
     }
 
     const handleTiles = () => {
-        //FixMe: when laid on current used tile or another used tile, it jumps to another place.
         const tilesToChange = []
         ships.forEach((e) => {
             for (let i = 0; i < e.length; i++) {
                 if (e.isHorizontal) {
                     tilesToChange.push({id: (e.row + "" + (e.col + i)), ship: e.col === (e.col + i) ? e : undefined})
                 } else {
-                    tilesToChange.push({id: ((e.row - i) + "" + e.col), ship: e.row === (e.row + i) ? e : undefined})
+                    tilesToChange.push({id: ((e.row + i) + "" + e.col), ship: e.row === (e.row + i) ? e : undefined})
                 }
             }
         })
@@ -101,8 +104,8 @@ function App() {
         }))
     }
 
-    const canBeLaid = (length, isHorizontal, overRow, overCol, currentRow, currentCol) => {
-        if (isHorizontal) {
+    const canBeLaid = (length, layIsHorizontal, currentIsHorizontal, overRow, overCol, currentRow, currentCol) => {
+        if (layIsHorizontal) {
             if (length + overCol > 10) {
                 return false
             }
@@ -113,15 +116,18 @@ function App() {
         }
         const currentTiles = []
         for (let i = 0; i < length; i++) {
-            isHorizontal? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push({id:(currentRow + i) + "" + currentCol})
+            currentIsHorizontal ? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push(
+                {id: (currentRow + i) + "" + currentCol})
         }
         for (let i = 0; i < length; i++) {
-            if (isHorizontal) {
-                if (tiles.find(e => e.id === overRow + "" + (overCol + i)).used && !currentTiles.find(e => e.id === overRow + "" + (overCol + i))) {
+            if (layIsHorizontal) {
+                if (tiles.find(e => e.id === overRow + "" + (overCol + i)).used && !currentTiles.find(
+                    e => e.id === overRow + "" + (overCol + i))) {
                     return false
                 }
             } else {
-                if (tiles.find(e => e.id === (overRow + i) + "" + overCol).used && !currentTiles.find(e => e.id === (overRow + i) + "" + overCol)) {
+                if (tiles.find(e => e.id === (overRow + i) + "" + overCol).used && !currentTiles.find(
+                    e => e.id === (overRow + i) + "" + overCol)) {
                     return false
                 }
             }
@@ -129,16 +135,43 @@ function App() {
         return true
     }
 
+    const markTiles = (canBeLaid, length, isHorizontal, overRow, overCol) => {
+        const tilesToChange = []
+        for (let i = 0; i < length; i++) {
+            isHorizontal ? tilesToChange.push({id: overRow + "" + (overCol + i)}) : tilesToChange.push(
+                {id: (overRow + i) + "" + overCol})
+        }
+        setTiles(tiles.map((e) => {
+            const match = tilesToChange.find(t => t.id === e.id)
+            return match ? {
+                ...e,
+                src: canBeLaid ? "/src/assets/green-framed-water.jpg" : "/src/assets/red-framed-water.jpg"
+            } : {...e, src: "/src/assets/framed-water.jpg"}
+        }))
+    }
+
+    const resetTileImages = () => {
+        setTiles(tiles.map((e) => {
+            return {...e, src: "/src/assets/framed-water.jpg"}
+        }))
+    }
+
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
             <div>
-                <Board board={board} tiles={tiles} ships={ships} onShips={setShips}/>
+                <Board board={board}
+                       tiles={tiles}
+                       ships={ships}
+                       onShips={setShips}
+                       canBeLaid={canBeLaid}
+                       markTiles={markTiles}
+                       resetTileImages={resetTileImages}/>
             </div>
         </DndContext>
     )
 }
 
-function Board({board, tiles, ships, onShips}) {
+function Board({board, tiles, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
     return (
         <Grid container>
             {board.map((col, colIndex) => (
@@ -149,6 +182,9 @@ function Board({board, tiles, ships, onShips}) {
                                        tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
                                        ships={ships}
                                        onShips={onShips}
+                                       canBeLaid={canBeLaid}
+                                       markTiles={markTiles}
+                                       resetTileImages={resetTileImages}
                             />
                         </Grid>
                     ))}
@@ -158,18 +194,17 @@ function Board({board, tiles, ships, onShips}) {
     )
 }
 
-function BoardTile({tile, ships, onShips}) {
+function BoardTile({tile, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
     const {setNodeRef} = useDroppable({
         id: tile.id,
         data: {
             row: tile.row,
             col: tile.col
-        },
-        disabled: tile.used
+        }
     })
     return (
         <span className="board-tile" ref={setNodeRef}>
-            <img className="tile-img" src="/src/assets/framed-water.jpg" alt="board-tile"/>
+            <img className="tile-img" src={tile.src} alt="board-tile"/>
             {tile.ship && <Ship
                 id={tile.ship.id}
                 key={tile.ship.id}
@@ -179,12 +214,15 @@ function BoardTile({tile, ships, onShips}) {
                 col={tile.col}
                 ships={ships}
                 onShips={onShips}
+                canBeLaid={canBeLaid}
+                markTiles={markTiles}
+                resetTileImages={resetTileImages}
             />}
         </span>
     )
 }
 
-function Ship({id, isHorizontal, length, row, col, ships, onShips}) {
+function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
     const {
         active, attributes, listeners, setNodeRef, transform
     } = useDraggable({
@@ -244,21 +282,30 @@ function Ship({id, isHorizontal, length, row, col, ships, onShips}) {
     }
     // TODO: when hovering on the button: highlight the tiles that will be rotated too and if possible.
     const handleButtonClick = () => {
-        onShips(ships.map((e) => {
-            return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
-        }))
+        if (canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col)) {
+            onShips(ships.map((e) => {
+                return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
+            }))
+        }
+    }
+    const handleButtonEnter = () => {
+        markTiles(canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col), length, !isHorizontal, row, col)
     }
     return (
         <div
             ref={setNodeRef}
             style={{
                 transform: CSS.Translate.toString(transform),
-                zIndex
+                zIndex,
             }}
             {...attributes}
             {...listeners}
         >
-            <Button onMouseDown={handleButtonClick} style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}</Button>
+            <Button onMouseEnter={handleButtonEnter}
+                    onMouseLeave={resetTileImages}
+                    onMouseDown={handleButtonClick}
+                    style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}
+            </Button>
             <img className={[shipImageStyle, "ship-image"].join(' ')} src={srcString} alt={"Ship"}/>
         </div>
     )
