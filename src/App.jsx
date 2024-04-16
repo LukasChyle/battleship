@@ -40,7 +40,6 @@ function App() {
 
     const handleDragOver = (e) => {
         if (e.over) {
-            console.log(`${e.active.id} was moved over ${e.over.id}.`)
             markTiles(canBeLaid(
                     e.active.data.current.length,
                     e.active.data.current.isHorizontal,
@@ -53,9 +52,6 @@ function App() {
                 e.active.data.current.isHorizontal,
                 e.over.data.current.row,
                 e.over.data.current.col)
-        }
-        if (!e.over) {
-            console.log(`${e.active.id} is no longer over.`)
         }
     }
 
@@ -284,6 +280,7 @@ function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, ma
     const handleButtonEnter = () => {
         markTiles(canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col), length, !isHorizontal, row, col)
     }
+    // FixMe: ship image not changing position directly when dragged on button, button position absolute.
     return (
         <div
             ref={setNodeRef}
