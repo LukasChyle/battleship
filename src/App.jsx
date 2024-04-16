@@ -38,12 +38,6 @@ function App() {
         handleTiles()
     }, [ships]);
 
-    // console.log(ships)
-    // console.log(tiles)
-
-    const handleDragStart = (e) => {
-    }
-
     const handleDragOver = (e) => {
         if (e.over) {
             console.log(`${e.active.id} was moved over ${e.over.id}.`)
@@ -157,7 +151,7 @@ function App() {
     }
 
     return (
-        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} onDragOver={handleDragOver}>
+        <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
             <div>
                 <Board board={board}
                        tiles={tiles}
@@ -280,7 +274,6 @@ function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, ma
         minWidth: '20px',
         minHeight: '20px'
     }
-    // TODO: when hovering on the button: highlight the tiles that will be rotated too and if possible.
     const handleButtonClick = () => {
         if (canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col)) {
             onShips(ships.map((e) => {
