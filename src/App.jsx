@@ -213,11 +213,13 @@ function BoardTile({tile, ships, onShips, canBeLaid, markTiles, resetTileImages}
 }
 
 function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
+    const [isDisabled, setIsDisabled] = useState(false)
     const {
         active, attributes, listeners, setNodeRef, transform
     } = useDraggable({
         id: id,
-        data: {length: length, isHorizontal: isHorizontal, row: row, col: col}
+        data: {length: length, isHorizontal: isHorizontal, row: row, col: col},
+        disabled: isDisabled
     })
     const zIndex = active && active.id === id ? 2 : 1;
 
@@ -275,12 +277,17 @@ function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, ma
             onShips(ships.map((e) => {
                 return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
             }))
+            resetTileImages()
         }
     }
     const handleButtonEnter = () => {
         markTiles(canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col), length, !isHorizontal, row, col)
+        setIsDisabled(true)
     }
-    // FixMe: ship image not changing position directly when dragged on button, button position absolute.
+    const handleButtonLeave = () => {
+        resetTileImages()
+        setIsDisabled(false)
+    }
     return (
         <div
             ref={setNodeRef}
@@ -292,7 +299,7 @@ function Ship({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, ma
             {...listeners}
         >
             <Button onMouseEnter={handleButtonEnter}
-                    onMouseLeave={resetTileImages}
+                    onMouseLeave={handleButtonLeave}
                     onMouseDown={handleButtonClick}
                     style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}
             </Button>
