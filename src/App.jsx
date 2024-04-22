@@ -30,7 +30,7 @@ function App() {
     const [ownStrikes, setOwnStrikes] = useState(ownStrikeDummyList);
 
     const handleTileStrikeClick = (e) => {
-
+        console.log(e)
     }
 
     return (

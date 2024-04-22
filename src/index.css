@@ -35,6 +35,10 @@ body {
   height: 75px;
 }
 
+.opponent-tile-img:hover {
+  cursor: pointer;
+}
+
 .board-tile {
   display: flex;
   width: 75px;
@@ -46,11 +50,11 @@ body {
 }
 
 .ship-image:hover {
-  cursor: pointer;
+  cursor: grab;
 }
 
 .ship-image:active {
-  cursor: move;
+  cursor: grabbing;
 }
 
 .img-ship-1 {
