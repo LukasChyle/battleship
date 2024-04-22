@@ -18,7 +18,7 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
 
     const buttonStyle = {
         position: "absolute",
-        fontSize: 20,
+        fontSize: 25,
         maxWidth: '20px',
         maxHeight: '20px',
         minWidth: '20px',

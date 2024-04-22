@@ -22,7 +22,7 @@ body {
   line-height: 1;
 }
 
-.own-tile-strike-img {
+.tile-strike-img {
   position: absolute;
   z-index: 3;
   width: 75px;

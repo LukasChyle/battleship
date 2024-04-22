@@ -2,6 +2,7 @@ import {Grid} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
 import SetUpPlayboardTile from "./setUpPlayboardComponents/SetUpPlayboardTile.jsx";
+import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
@@ -26,7 +27,7 @@ export default function SetUpPlayboard({ships, onShips}) {
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
-        handleTiles()
+        MatchTilesWithShips(tiles, setTiles, ships)
     }, [ships]);
 
     const handleDragOver = (e) => {
@@ -64,23 +65,6 @@ export default function SetUpPlayboard({ships, onShips}) {
         onShips(ships.map((ship) => {
             const match = e.active.id === ship.id
             return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
-        }))
-    }
-
-    const handleTiles = () => {
-        const tilesToChange = []
-        ships.forEach((e) => {
-            for (let i = 0; i < e.length; i++) {
-                if (e.isHorizontal) {
-                    tilesToChange.push({id: (e.row + "" + (e.col + i)), ship: e.col === (e.col + i) ? e : undefined})
-                } else {
-                    tilesToChange.push({id: ((e.row + i) + "" + e.col), ship: e.row === (e.row + i) ? e : undefined})
-                }
-            }
-        })
-        setTiles(tiles.map((e) => {
-            const match = tilesToChange.find(t => t.id === e.id)
-            return match ? {...e, used: true, ship: match.ship} : {...e, used: false, ship: undefined}
         }))
     }
 
