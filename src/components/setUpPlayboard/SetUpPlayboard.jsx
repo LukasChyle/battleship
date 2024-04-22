@@ -3,14 +3,6 @@ import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
 import SetUpPlayboardTile from "./setUpPlayboardComponents/SetUpPlayboardTile.jsx";
 
-const getInitialShips = [
-    {id: "ship-1", isHorizontal: true, length: 2, row: 1, col: 1},
-    {id: "ship-2", isHorizontal: true, length: 2, row: 2, col: 2},
-    {id: "ship-3", isHorizontal: true, length: 3, row: 3, col: 3},
-    {id: "ship-4", isHorizontal: true, length: 4, row: 4, col: 4},
-    {id: "ship-5", isHorizontal: true, length: 5, row: 5, col: 5},
-]
-
 const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
     })))
@@ -30,8 +22,7 @@ const getInitialTiles = () => {
     return tiles
 }
 
-export default function SetUpPlayboard() {
-    const [ships, setShips] = useState(getInitialShips);
+export default function SetUpPlayboard({ships, onShips}) {
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
@@ -70,7 +61,7 @@ export default function SetUpPlayboard() {
             e.active.data.current.col)) {
             return
         }
-        setShips(ships.map((ship) => {
+        onShips(ships.map((ship) => {
             const match = e.active.id === ship.id
             return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
         }))
@@ -156,7 +147,7 @@ export default function SetUpPlayboard() {
                                     <SetUpPlayboardTile key={rowIndex}
                                                tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
                                                ships={ships}
-                                               onShips={setShips}
+                                               onShips={onShips}
                                                canBeLaid={canBeLaid}
                                                markTiles={markTiles}
                                                resetTileImages={resetTileImages}
