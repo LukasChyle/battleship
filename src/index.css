@@ -48,17 +48,17 @@ body {
 
 .img-ship-1 {
   margin-left: 25px;
-  margin-top: -40px;
+  margin-top: -10px;
 }
 
 .img-ship-2 {
   margin-left: 20px;
-  margin-top: -30px;
+  margin-top: -5px;
 }
 
 .img-ship-3 {
   margin-left: 30px;
-  margin-top: -25px;
+  margin-top: -5px;
 }
 
 .img-ship-4 {
@@ -67,21 +67,25 @@ body {
 }
 
 .img-ship-1-vert {
-  margin-left: -40px;
-  margin-top: 25px;
+  margin-left: -135px;
+  margin-top: 145px;
+  rotate: -90deg;
 }
 
 .img-ship-2-vert {
-  margin-left: -30px;
-  margin-top: 20px;
+  margin-left: -105px;
+  margin-top: 115px;
+  rotate: -90deg;
 }
 
 .img-ship-3-vert {
-  margin-left: -25px;
-  margin-top: 30px;
+  margin-left: -60px;
+  margin-top: 80px;
+  rotate: -90deg;
 }
 
 .img-ship-4-vert {
-  margin-left: 15px;
-  margin-top: 15px;
+  margin-left: -25px;
+  margin-top: 55px;
+  rotate: -90deg;
 }
