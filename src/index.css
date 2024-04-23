@@ -10,17 +10,17 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+/** {*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  box-sizing: border-box;*/
+/*}*/
 
-body {
-  font-family: sans-serif;
-  color: #343a40;
-  line-height: 1;
-}
+/*body {*/
+/*  font-family: sans-serif;*/
+/*  color: #343a40;*/
+/*  line-height: 1;*/
+/*}*/
 
 .tile-strike-img {
   position: absolute;
