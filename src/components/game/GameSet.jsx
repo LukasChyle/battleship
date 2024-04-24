@@ -1,7 +1,7 @@
 import {useState} from "react";
-import SetUpPlayboard from "./setUpPlayboard/SetUpPlayboard.jsx";
-import OwnPlayboard from "./ownPlayboard/OwnPlayboard.jsx";
-import OpponentPlayboard from "./opponentPlayboard/OpponentPlayboard.jsx";
+import useWebSocket from "react-use-websocket";
+import GameSession from "./GameSession.jsx";
+import GameSetUp from "./GameSetUp.jsx";
 
 const getInitialShips = [
     {id: "ship-1", isHorizontal: true, length: 2, row: 1, col: 1},
@@ -19,6 +19,9 @@ export default function GameSet() {
     const [opponentStrikes, setOpponentStrikes] = useState(opponentStrikeDummyList);
     const [ownStrikes, setOwnStrikes] = useState(ownStrikeDummyList);
 
+    const WS_URL = 'http://localhost:8080/play'
+    const { SendJsonMessage } = useWebSocket(WS_URL)
+
     const handleTileStrikeClick = (e) => {
         console.log(e)
         //TODO: Test
@@ -28,17 +31,9 @@ export default function GameSet() {
 
     return (
         <div>
-            {/*<Grid container>*/}
-            {/*    <Grid children>*/}
-            {/*    </Grid>*/}
-            {/*    <Grid children>*/}
-            {/*    </Grid>*/}
-            {/*</Grid>*/}
-            <SetUpPlayboard ships={ships} onShips={setShips}/>
+            <GameSetUp ships={ships} onShips={setShips}/>
             <p> . </p>
-            <OwnPlayboard ships={ships} tileStrikes={opponentStrikes}/>
-            <p> . </p>
-            <OpponentPlayboard onTileClick={handleTileStrikeClick} tileStrikes={ownStrikes}/>
+            <GameSession ships={ships} ownStrikes={ownStrikes} opponentStrikes={opponentStrikes} handleTileStrikeClick={handleTileStrikeClick} />
         </div>
     )
 }

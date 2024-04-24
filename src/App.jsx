@@ -1,4 +1,4 @@
-import GameSet from "./components/playboards/GameSet.jsx";
+import GameSet from "./components/game/GameSet.jsx";
 
 function App() {
     return (
