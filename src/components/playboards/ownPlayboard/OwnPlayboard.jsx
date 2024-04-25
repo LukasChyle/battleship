@@ -1,5 +1,5 @@
 import {Grid} from "@mui/material";
-import OwnPlayboardTile from "./ownPlayboardComponents/OwnPlayboardTile.jsx";
+import OwnPlayboardTile from "./components/OwnPlayboardTile.jsx";
 import {useEffect, useState} from "react";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 
@@ -35,7 +35,7 @@ export default function OwnPlayboard({ships, tileStrikes}) {
 
     return (
         <div>
-            <Grid container>
+            <Grid container wrap="nowrap">
                 {board.map((col, colIndex) => (
                     <Grid className="board-row" key={colIndex}>
                         {col.map((row, rowIndex) => (

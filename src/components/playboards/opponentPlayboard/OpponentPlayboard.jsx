@@ -1,5 +1,5 @@
 import {Grid} from "@mui/material";
-import OpponentPlayboardTile from "./opponentPlayboardComponents/OpponentPlayboardTile.jsx";
+import OpponentPlayboardTile from "./components/OpponentPlayboardTile.jsx";
 import {useEffect, useState} from "react";
 
 const board = Array.apply(null, Array(10)).map(() => (
@@ -32,7 +32,7 @@ export default function OpponentPlayboard({tileStrikes, onTileClick}) {
 
     return (
         <div>
-            <Grid container>
+            <Grid container wrap="nowrap">
                 {board.map((col, colIndex) => (
                     <Grid className="board-row" key={colIndex}>
                         {col.map((row, rowIndex) => (

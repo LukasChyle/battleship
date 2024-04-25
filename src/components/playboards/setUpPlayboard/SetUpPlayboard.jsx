@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
-import SetUpPlayboardTile from "./setUpPlayboardComponents/SetUpPlayboardTile.jsx";
+import SetUpPlayboardTile from "./components/SetUpPlayboardTile.jsx";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
@@ -123,7 +123,7 @@ export default function SetUpPlayboard({ships, onShips}) {
     return (
         <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
             <div>
-                <Grid container>
+                <Grid container wrap="nowrap">
                     {board.map((col, colIndex) => (
                         <Grid className="board-row" key={colIndex}>
                             {col.map((row, rowIndex) => (

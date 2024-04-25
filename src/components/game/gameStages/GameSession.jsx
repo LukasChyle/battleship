@@ -1,6 +1,6 @@
 
-import OwnPlayboard from "../playboards/ownPlayboard/OwnPlayboard.jsx";
-import OpponentPlayboard from "../playboards/opponentPlayboard/OpponentPlayboard.jsx";
+import OwnPlayboard from "../../playboards/ownPlayboard/OwnPlayboard.jsx";
+import OpponentPlayboard from "../../playboards/opponentPlayboard/OpponentPlayboard.jsx";
 
 export default function GameSession({ships, ownStrikes, opponentStrikes, handleTileStrikeClick}) {
 

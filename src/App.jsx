@@ -1,8 +1,8 @@
-import GameSet from "./components/game/GameSet.jsx";
+import Game from "./components/game/Game.jsx";
 
 function App() {
     return (
-        <GameSet/>
+        <Game/>
     )
 }
 
