@@ -1,5 +1,5 @@
 import {Grid} from "@mui/material";
-import OpponentPlayboardTile from "./components/OpponentPlayboardTile.jsx";
+import OpponentGameBoardTile from "./components/OpponentGameBoardTile.jsx";
 import {useEffect, useState} from "react";
 
 const board = Array.apply(null, Array(10)).map(() => (
@@ -17,7 +17,7 @@ const getTiles = () => {
     return tiles
 }
 
-export default function OpponentPlayboard({tileStrikes, onTileClick}) {
+export default function OpponentGameBoard({tileStrikes, onTileClick}) {
     const [tiles, setTiles] = useState(getTiles())
 
     const handleTiles = () => {
@@ -44,7 +44,7 @@ export default function OpponentPlayboard({tileStrikes, onTileClick}) {
                                          alt={"tileStrike"}
                                     />
                                 }
-                                <OpponentPlayboardTile key={rowIndex}
+                                <OpponentGameBoardTile key={rowIndex}
                                                        tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
                                                        onTileClick={onTileClick}
                                 />

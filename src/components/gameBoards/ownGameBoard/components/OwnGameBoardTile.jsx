@@ -1,6 +1,6 @@
 import Ship from "./Ship.jsx";
 
-export default function OwnPlayboardTile({tile, tileStrikes}) {
+export default function OwnGameBoardTile({tile, tileStrikes}) {
     const getUsedTileImage = (isHit) => {
         if (isHit) {
             return "/src/assets/red-framed-water.jpg"

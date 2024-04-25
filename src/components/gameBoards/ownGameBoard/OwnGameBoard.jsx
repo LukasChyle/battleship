@@ -1,5 +1,5 @@
 import {Grid} from "@mui/material";
-import OwnPlayboardTile from "./components/OwnPlayboardTile.jsx";
+import OwnGameBoardTile from "./components/OwnGameBoardTile.jsx";
 import {useEffect, useState} from "react";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 
@@ -19,7 +19,7 @@ const getInitialTiles = () => {
     return tiles
 }
 
-export default function OwnPlayboard({ships, tileStrikes}) {
+export default function OwnGameBoard({ships, tileStrikes}) {
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function OwnPlayboard({ships, tileStrikes}) {
                                          src={getStrikeImage(tiles.find(t => t.used && t.id === rowIndex + "" + colIndex))} alt={"tileStrike"}
                                     />
                                 }
-                                <OwnPlayboardTile key={rowIndex}
+                                <OwnGameBoardTile key={rowIndex}
                                                   tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
                                                   tileStrikes={tileStrikes}
                                 />

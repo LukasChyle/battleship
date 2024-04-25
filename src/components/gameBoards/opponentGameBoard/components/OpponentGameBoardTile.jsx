@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function OpponentPlayboardTile({tile, onTileClick}) {
+export default function OpponentGameBoardTile({tile, onTileClick}) {
     const [image, setImage] = useState("/src/assets/framed-water.jpg")
     const handleOnMouseEnter = () => {
         if (tile.alreadyUsed) {

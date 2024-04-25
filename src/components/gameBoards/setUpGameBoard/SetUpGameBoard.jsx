@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
-import SetUpPlayboardTile from "./components/SetUpPlayboardTile.jsx";
+import SetUpGameBoardTile from "./components/SetUpGameBoardTile.jsx";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
@@ -23,7 +23,7 @@ const getInitialTiles = () => {
     return tiles
 }
 
-export default function SetUpPlayboard({ships, onShips}) {
+export default function SetUpGameBoard({ships, onShips}) {
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
@@ -128,13 +128,13 @@ export default function SetUpPlayboard({ships, onShips}) {
                         <Grid className="board-row" key={colIndex}>
                             {col.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    <SetUpPlayboardTile key={rowIndex}
-                                               tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
-                                               ships={ships}
-                                               onShips={onShips}
-                                               canBeLaid={canBeLaid}
-                                               markTiles={markTiles}
-                                               resetTileImages={resetTileImages}
+                                    <SetUpGameBoardTile key={rowIndex}
+                                                        tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
+                                                        ships={ships}
+                                                        onShips={onShips}
+                                                        canBeLaid={canBeLaid}
+                                                        markTiles={markTiles}
+                                                        resetTileImages={resetTileImages}
                                     />
                                 </Grid>
                             ))}
