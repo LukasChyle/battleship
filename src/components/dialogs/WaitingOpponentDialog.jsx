@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
-export default function WaitingOpponentDialog({isOpen, onClose}) {
+export default function WaitingOpponentDialog({isOpen, handleLeaveGame}) {
     return (
         <Dialog
             fullWidth
@@ -15,9 +15,11 @@ export default function WaitingOpponentDialog({isOpen, onClose}) {
                 { "Timer" /* TODO: Timer */}
             </DialogContent>
             <DialogActions>
-                <Button size={"small"} onClick={onClose} color="error" variant="contained">
-                    Quit
-                </Button>
+                <Button type="submit" size={"small"} color="error" variant="contained" onClick={() => {
+                    if (window.confirm('Are you sure you want to cancel game?')) {
+                        handleLeaveGame()
+                    }
+                }}>Cancel</Button>
             </DialogActions>
         </Dialog>
     );

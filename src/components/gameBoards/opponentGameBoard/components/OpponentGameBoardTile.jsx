@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function OpponentGameBoardTile({tile, onTileClick}) {
+export default function OpponentGameBoardTile({tile, handleStrike}) {
     const [image, setImage] = useState("/src/assets/framed-water.jpg")
     const handleOnMouseEnter = () => {
         if (tile.alreadyUsed) {
@@ -15,7 +15,7 @@ export default function OpponentGameBoardTile({tile, onTileClick}) {
     return (
         <span className="board-tile">
             <img
-                onClick={() => !tile.alreadyUsed? onTileClick(tile.id) : null}
+                onClick={() => handleStrike(!tile.alreadyUsed? tile.id : null)}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
                 className="opponent-tile-img tile-img"

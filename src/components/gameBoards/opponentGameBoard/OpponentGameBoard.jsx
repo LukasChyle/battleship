@@ -17,7 +17,7 @@ const getTiles = () => {
     return tiles
 }
 
-export default function OpponentGameBoard({tileStrikes, onTileClick}) {
+export default function OpponentGameBoard({tileStrikes, handleStrike}) {
     const [tiles, setTiles] = useState(getTiles())
 
     const handleTiles = () => {
@@ -46,7 +46,7 @@ export default function OpponentGameBoard({tileStrikes, onTileClick}) {
                                 }
                                 <OpponentGameBoardTile key={rowIndex}
                                                        tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
-                                                       onTileClick={onTileClick}
+                                                       handleStrike={handleStrike}
                                 />
                             </Grid>
                         ))}

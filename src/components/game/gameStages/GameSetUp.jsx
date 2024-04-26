@@ -1,8 +1,7 @@
 import SetUpGameBoard from "../../gameBoards/setUpGameBoard/SetUpGameBoard.jsx";
-import StartGameButton from "../../buttons/StartGameButton.jsx";
-import {Grid, ListItemText, Paper, Typography} from "@mui/material";
+import {Button, Grid, ListItemText, Paper} from "@mui/material";
 
-export default function GameSetUp({ships, onShips, closeWaitDialogIfTrue, onLeaveGame, onStartGame}) {
+export default function GameSetUp({ships, onShips, onHasStartedGame}) {
 
     const boardGridStyle = {
         display: "grid",
@@ -40,8 +39,14 @@ export default function GameSetUp({ships, onShips, closeWaitDialogIfTrue, onLeav
                             secondaryTypographyProps={{variant: "h6", color: "black"}}
                         />
                         <div style={{marginTop: "30px"}}>
-                            <StartGameButton onClose={onLeaveGame} closeDialog={closeWaitDialogIfTrue}
-                                             onClick={onStartGame}/>
+                            <Button
+                                size="large"
+                                variant="contained"
+                                color="primary"
+                                onClick={() => onHasStartedGame(true)}
+                            >
+                                Start Game
+                            </Button>
                         </div>
                     </Paper>
                 </Grid>
