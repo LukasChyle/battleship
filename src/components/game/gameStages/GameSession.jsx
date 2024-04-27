@@ -1,13 +1,14 @@
 import OwnGameBoard from "../../gameBoards/ownGameBoard/OwnGameBoard.jsx";
 import OpponentGameBoard from "../../gameBoards/opponentGameBoard/OpponentGameBoard.jsx";
 import {Alert, Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
-import GameLogMessageList from "../../gameLogMessageList/GameLogMessageList.jsx";
+import GameMessageLogList from "../../lists/GameMessageLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
 
 export default function GameSession({
     ships,
+    onShips,
     onHasStartedGame,
 }) {
     const [isWaitDialogOpen, setIsWaitDialogOpen] = useState(false);
@@ -16,24 +17,37 @@ export default function GameSession({
     const [opponentStrikes, setOpponentStrikes] = useState([]);
     const [ownStrikes, setOwnStrikes] = useState([]);
     const [gameLogMessages, setGameLogMessages] = useState([]);
+    const [gameId, setGameId] = useState("");
+
     const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage} = useWebSocket(WS_URL)
+    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL)
 
     useEffect(() => {
         console.log(lastJsonMessage)
-        // TODO: add message to gameLogMessages
-        // TODO: disable and enable game board
-        // TODO: process game logic
+        // TODO: handle all types of Event and make LogMessage.
 
-        const today = new Date()
-        setGameLogMessages(messages => [...messages, {
-            isOwnMove: true,
-            content: "test content",
-            time: today.getHours() + ":" + today.getMinutes()
-        }])
+        if (lastJsonMessage?.type === "connected") {
+            sendJsonMessage({
+                type: "JOIN",
+                gameId: null,
+                content: null,
+                ships: null
+            })
+        }
 
-        // setOpponentStrikes(opponentStrikes => [...opponentStrikes, e])
-        // setOwnStrikes(ownStrikes => [...ownStrikes, {id: e, isHit: true}])
+        if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
+            createGameLogMessage()
+        }
+        if (lastJsonMessage?.opponentStrikes && lastJsonMessage?.ownStrikes) {
+            setOpponentStrikes(lastJsonMessage.opponentStrikes)
+            setOwnStrikes(lastJsonMessage.ownStrikes)
+        }
+        if (lastJsonMessage?.gameId) {
+            setGameId(lastJsonMessage?.gameId)
+        }
+        if (lastJsonMessage?.ships) {
+            onShips(lastJsonMessage?.ships)
+        }
     }, [lastJsonMessage]);
 
     const handleStrike = (e) => {
@@ -53,7 +67,12 @@ export default function GameSession({
 
     const handleLeaveGame = () => {
         console.log("handleLeaveGame")
-
+        sendJsonMessage({
+            type: "LEAVE",
+            gameId: null,
+            content: null,
+            ships: null
+        })
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -63,15 +82,43 @@ export default function GameSession({
         setShowSnackbar(false)
     }
 
+    const createGameLogMessage = () => {
+        const letters = [
+            {"0": "A"}, {"1": "B"}, {"2": "C"}, {"3": "D"}, {"4": "E"}, {"5": "F"}, {"6": "G"}, {"7": "H"},
+            {"8": "I"}, {"9": "J"}
+        ];
+        const content = letters.find(e => e === lastJsonMessage.strikeRow) + lastJsonMessage.strikeCol
+        + " was struck by " + lastJsonMessage.type === "TURN_OWN" ? "you" : "opponent" + ", it did "
+        + lastJsonMessage.isHit ? " hit a ship" : "miss"
+
+        const today = new Date()
+        setGameLogMessages(messages => [...messages, {
+            isOwnMove: lastJsonMessage.type === "TURN_OWN",
+            content: content,
+            time: today.getHours() + ":" + today.getMinutes()
+        }])
+    }
+
     return (
         <div>
             <WaitingOpponentDialog
                 isOpen={isWaitDialogOpen}
                 handleLeaveGame={handleLeaveGame}
             />
+            <Button
+                style={{margin: "14px"}}
+                type="submit"
+                size={"small"}
+                color="error"
+                variant="contained"
+                onClick={() => {
+                    if (window.confirm('Are you sure you want to cancel game?')) {
+                        handleLeaveGame()
+                    }
+                }}>Leave Game</Button>
             <Grid container spacing={10}>
-                <Grid item xs={12} md={1}/>
-                <Grid item xs={12} md={4} style={{
+
+                <Grid item xs={12} md={5} style={{
                     display: "grid",
                     alignContent: "center",
                     justifyContent: "center",
@@ -86,7 +133,7 @@ export default function GameSession({
                 <Grid item xs={12} md={4} style={{
                     display: "grid",
                     alignContent: "center",
-                    justifyContent: "left",
+                    justifyContent: "center",
                     marginTop: "24px"
                 }}>
                     <Typography variant="h5" component="div">Opponents Board</Typography>
@@ -100,15 +147,17 @@ export default function GameSession({
                     justifyContent: "left",
                     marginTop: "24px"
                 }}>
-                    <div style={{display: "flex"}}>
-                        <Typography variant="h5" component="div">Action log</Typography>
-                        <Button type="submit" size={"small"} color="error" variant="contained" onClick={() => {
-                            if (window.confirm('Are you sure you want to cancel game?')) {
-                                onLeaveGame(true)
-                            }
-                        }}>Leave Game</Button>
-                    </div>
-                    <GameLogMessageList messages={gameLogMessages}/>
+                    <Typography variant="h5" component="div">Action log</Typography>
+                    <Paper elevation={3} style={{
+                        paddingLeft: "14px",
+                        paddingRight: "14px",
+                        minHeight: "750px",
+                        maxHeight: "750px",
+                    }}>
+                        <GameMessageLogList
+                            style={{alignContent: "top", overflow: "auto"}}
+                            messages={gameLogMessages}/>
+                    </Paper>
                 </Grid>
             </Grid>
             <Snackbar

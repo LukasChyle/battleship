@@ -19,6 +19,7 @@ export default function Game() {
             {hasStartedGame ?
                 <GameSession
                     ships={ships}
+                    onShips={setShips}
                     onHasStartedGame={hasStartedGame}
                 />
                 :
