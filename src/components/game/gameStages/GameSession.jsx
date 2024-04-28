@@ -11,7 +11,7 @@ export default function GameSession({
     onShips,
     onHasStartedGame,
 }) {
-    const [isWaitDialogOpen, setIsWaitDialogOpen] = useState(false);
+    const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [isOwnTurn, setIsOwnTurn] = useState(true);
     const [opponentStrikes, setOpponentStrikes] = useState([]);
@@ -24,16 +24,6 @@ export default function GameSession({
 
     useEffect(() => {
         console.log(lastJsonMessage)
-        // TODO: handle all types of Event and make LogMessage.
-
-        if (lastJsonMessage?.type === "connected") {
-            sendJsonMessage({
-                type: "JOIN",
-                gameId: null,
-                content: null,
-                ships: null
-            })
-        }
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
@@ -48,6 +38,41 @@ export default function GameSession({
         if (lastJsonMessage?.ships) {
             onShips(lastJsonMessage?.ships)
         }
+
+        switch (lastJsonMessage?.type) {
+            case "connect" : {
+                sendJsonMessage({
+                    type: "JOIN",
+                    gameId: null,
+                    content: null,
+                    ships: ships
+                })
+            } break
+            case "WAITING_OPPONENT" : {
+                setOpenWaitingDialog(true)
+            } break
+            case "TURN_OWN" : {
+                if (openWaitingDialog) {
+                    setOpenWaitingDialog(false)
+                }
+                setIsOwnTurn(true)
+            } break
+            case "TURN_OPPONENT" : {
+                if (openWaitingDialog) {
+                    setOpenWaitingDialog(false)
+                }
+                setIsOwnTurn(false)
+            } break
+            case "WON" : {
+                // TODO: open dialog
+            } break
+            case "LOST" : {
+                // TODO: open dialog
+            } break
+            case "OPPONENT_LEFT" : {
+                // TODO: open dialog
+            } break
+        }
     }, [lastJsonMessage]);
 
     const handleStrike = (e) => {
@@ -55,7 +80,7 @@ export default function GameSession({
             if (e !== null) {
                 sendJsonMessage({
                     type: "STRIKE",
-                    gameId: null,
+                    gameId: gameId,
                     content: e,
                     ships: null
                 })
@@ -69,7 +94,7 @@ export default function GameSession({
         console.log("handleLeaveGame")
         sendJsonMessage({
             type: "LEAVE",
-            gameId: null,
+            gameId: gameId,
             content: null,
             ships: null
         })
@@ -102,7 +127,7 @@ export default function GameSession({
     return (
         <div>
             <WaitingOpponentDialog
-                isOpen={isWaitDialogOpen}
+                isOpen={openWaitingDialog}
                 handleLeaveGame={handleLeaveGame}
             />
             <Button
