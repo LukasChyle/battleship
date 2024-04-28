@@ -20,7 +20,19 @@ export default function GameSession({
     const [gameId, setGameId] = useState("");
 
     const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL)
+    const {sendJsonMessage, lastJsonMessage, lastMessage, readyState} = useWebSocket(WS_URL)
+
+    useEffect(() => {
+        if (readyState === 1) {
+            sendJsonMessage({
+                type: "JOIN",
+                gameId: null,
+                row: null,
+                column: null,
+                ships: ships
+            })
+        }
+    }, [readyState]);
 
     useEffect(() => {
         console.log(lastJsonMessage)
@@ -40,15 +52,6 @@ export default function GameSession({
         }
 
         switch (lastJsonMessage?.type) {
-            case "connect" : {
-                sendJsonMessage({
-                    type: "JOIN",
-                    gameId: null,
-                    row: null,
-                    column: null,
-                    ships: ships
-                })
-            } break
             case "WAITING_OPPONENT" : {
                 setOpenWaitingDialog(true)
             } break
@@ -79,6 +82,7 @@ export default function GameSession({
     const handleStrike = (e) => {
         if (isOwnTurn) {
             if (e !== null) {
+                console.log(e)
                 sendJsonMessage({
                     type: "STRIKE",
                     gameId: gameId,

@@ -11,6 +11,8 @@ const getTiles = () => {
     board.forEach((row, rowIndex) => (row.forEach((col, colIndex) => {
         tiles.push({
             id: (rowIndex + "" + colIndex),
+            row: rowIndex,
+            col: colIndex,
             alreadyUsed: false
         })
     })))
