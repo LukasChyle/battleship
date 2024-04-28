@@ -44,7 +44,8 @@ export default function GameSession({
                 sendJsonMessage({
                     type: "JOIN",
                     gameId: null,
-                    content: null,
+                    row: null,
+                    column: null,
                     ships: ships
                 })
             } break
@@ -81,7 +82,8 @@ export default function GameSession({
                 sendJsonMessage({
                     type: "STRIKE",
                     gameId: gameId,
-                    content: e,
+                    row: e.row,
+                    column: e.col,
                     ships: null
                 })
             }
@@ -95,7 +97,8 @@ export default function GameSession({
         sendJsonMessage({
             type: "LEAVE",
             gameId: gameId,
-            content: null,
+            row: null,
+            column: null,
             ships: null
         })
     }
