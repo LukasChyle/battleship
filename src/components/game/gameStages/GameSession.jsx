@@ -112,8 +112,8 @@ export default function GameSession({
             {"0": "A"}, {"1": "B"}, {"2": "C"}, {"3": "D"}, {"4": "E"}, {"5": "F"}, {"6": "G"}, {"7": "H"},
             {"8": "I"}, {"9": "J"}
         ];
-        const content = letters.find(e => e === lastJsonMessage.strikeRow) + lastJsonMessage.strikeCol
-        + " was struck by " + lastJsonMessage.type === "TURN_OWN" ? "you" : "opponent" + ", it did "
+        const content = letters.find(e => e === lastJsonMessage.strikeRow) + (Number.valueOf(lastJsonMessage.strikeCol) + 1)
+        + " was struck by " + lastJsonMessage.type === "TURN_OWN" ? "opponent" : "you" + ", it did "
         + lastJsonMessage.isHit ? " hit a ship" : "miss"
 
         const today = new Date()

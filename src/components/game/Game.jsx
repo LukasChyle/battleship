@@ -12,7 +12,7 @@ const getInitialShips = [
 
 export default function Game() {
     const [ships, setShips] = useState(getInitialShips);
-    const [hasStartedGame, setHasStartedGame] = useState(true);
+    const [hasStartedGame, setHasStartedGame] = useState(false);
 
     return (
         <div>

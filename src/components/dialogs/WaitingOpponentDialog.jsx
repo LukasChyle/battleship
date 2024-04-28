@@ -12,7 +12,7 @@ export default function WaitingOpponentDialog({isOpen, handleLeaveGame}) {
                 Wait for an opponent
             </DialogTitle>
             <DialogContent>
-                { "Timer" /* TODO: Timer */}
+                { "Timer" /* TODO: implement an timer, here and in backend. */}
             </DialogContent>
             <DialogActions>
                 <Button type="submit" size={"small"} color="error" variant="contained" onClick={() => {
