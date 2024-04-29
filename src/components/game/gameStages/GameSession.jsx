@@ -35,7 +35,7 @@ export default function GameSession({
     }, [readyState]);
 
     useEffect(() => {
-        console.log(lastJsonMessage)
+        console.log(lastJsonMessage) // TODO:
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
@@ -54,28 +54,34 @@ export default function GameSession({
         switch (lastJsonMessage?.type) {
             case "WAITING_OPPONENT" : {
                 setOpenWaitingDialog(true)
-            } break
+            }
+                break
             case "TURN_OWN" : {
                 if (openWaitingDialog) {
                     setOpenWaitingDialog(false)
                 }
                 setIsOwnTurn(true)
-            } break
+            }
+                break
             case "TURN_OPPONENT" : {
                 if (openWaitingDialog) {
                     setOpenWaitingDialog(false)
                 }
                 setIsOwnTurn(false)
-            } break
+            }
+                break
             case "WON" : {
                 // TODO: open dialog
-            } break
+            }
+                break
             case "LOST" : {
                 // TODO: open dialog
-            } break
+            }
+                break
             case "OPPONENT_LEFT" : {
                 // TODO: open dialog
-            } break
+            }
+                break
         }
     }, [lastJsonMessage]);
 
@@ -113,18 +119,15 @@ export default function GameSession({
     }
 
     const createGameLogMessage = () => {
-        const letters = [
-            {"0": "A"}, {"1": "B"}, {"2": "C"}, {"3": "D"}, {"4": "E"}, {"5": "F"}, {"6": "G"}, {"7": "H"},
-            {"8": "I"}, {"9": "J"}
-        ];
-        const content = letters.find(e => e === lastJsonMessage.strikeRow) + (Number.valueOf(lastJsonMessage.strikeCol) + 1)
-        + " was struck by " + lastJsonMessage.type === "TURN_OWN" ? "opponent" : "you" + ", it did "
-        + lastJsonMessage.isHit ? " hit a ship" : "miss"
+        const letter = String.fromCharCode(97 + + lastJsonMessage.strikeRow).toUpperCase()
+        console.log(letter)
+        const content = `${lastJsonMessage.type === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit ? " hit a ship" : "missed"} at ${letter +(+ lastJsonMessage.strikeCol + 1)}`
 
         const today = new Date()
         setGameLogMessages(messages => [...messages, {
-            isOwnMove: lastJsonMessage.type === "TURN_OWN",
+            isOwnMove: lastJsonMessage.type === "TURN_OPPONENT",
             content: content,
+            isHit: lastJsonMessage.hit,
             time: today.getHours() + ":" + today.getMinutes()
         }])
     }

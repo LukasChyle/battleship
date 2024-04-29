@@ -2,15 +2,20 @@ import {List, ListItemText} from "@mui/material";
 
 export default function GameMessageLogList({messages, style}) {
 
+    const getStyle = (e) => { return {
+        color: e.isOwnMove? "darkgreen" : "darkblue",
+        fontsize: "small",
+    }}
+
     return (
-        <List style={style? style : null}>
+        <List style={style ? style : null}>
             {messages?.map((message, index) => (
                 <ListItemText
                     key={index}
                     align="left"
                     primary={message.time + ": " + message.content}
-                    style={{color: message.isOwnMove ? "darkgreen" : "darkblue"}}
-                    primaryTypographyProps={{fontWeight: "bold"}}
+                    style={getStyle(message)}
+                    primaryTypographyProps={{fontWeight: message.isHit? "bold" : "normal", fontSize: "small"}}
                 />
             ))}
         </List>
