@@ -4,13 +4,13 @@ export default function ConnectionState({style, state}) {
 
     const getConnectionState = () => {
         if (state === 0) {
-            return {string: "Connecting", color: "khaki"}
+            return {string: "Connecting", color: "yellow"}
         } else if (state === 1) {
-            return {string: "Connected", color: "lightgreen"}
+            return {string: "Connected", color: "lime"}
         } else if (state === 2) {
-            return {string: "Closing", color: "khaki "}
+            return {string: "Closing", color: "yellow"}
         } else if (state === 3) {
-            return {string: "Disconnected", color: "lightcoral"}
+            return {string: "Disconnected", color: "red"}
         } else {
             return {string: "Error", color: "lightgray"}
         }
@@ -27,7 +27,8 @@ export default function ConnectionState({style, state}) {
             height={30}
             width={100}
             sx={{
-                border: "2px solid gray",
+                borderRadius: '5px',
+                border: "2px solid black",
                 backgroundColor: values.color,
                 fontWeight: "bold"
             }}

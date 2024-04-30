@@ -1,8 +1,14 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {Fragment, useState} from "react";
 
-
-export default function AlertDialog({onAccept, title, content, dialogButtonText, acceptDialogButtonText, cancelDialogButtonText}) {
+export default function AlertDialog({
+    onAccept,
+    title,
+    content,
+    dialogButtonText,
+    acceptDialogButtonText,
+    cancelDialogButtonText
+}) {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -20,7 +26,12 @@ export default function AlertDialog({onAccept, title, content, dialogButtonText,
 
     return (
         <Fragment>
-            <Button type="submit" size={"small"} color="error" variant="contained" onClick={handleClickOpen}>
+            <Button
+                type="submit"
+                size="small"
+                color="error"
+                variant="contained"
+                onClick={handleClickOpen}>
                 {dialogButtonText}
             </Button>
             <Dialog
@@ -29,7 +40,9 @@ export default function AlertDialog({onAccept, title, content, dialogButtonText,
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle
+                    fontWeight="bold"
+                    id="alert-dialog-title">
                     {title}
                 </DialogTitle>
                 <DialogContent>
@@ -38,8 +51,17 @@ export default function AlertDialog({onAccept, title, content, dialogButtonText,
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>{cancelDialogButtonText}</Button>
-                    <Button onClick={handleAccept} autoFocus>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleClose}>{cancelDialogButtonText}</Button>
+                    <Button
+                        size="small"
+                        color="error"
+                        variant="contained"
+                        onClick={handleAccept}
+                        autoFocus>
                         {acceptDialogButtonText}
                     </Button>
                 </DialogActions>

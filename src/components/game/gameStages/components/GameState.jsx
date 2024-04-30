@@ -23,8 +23,6 @@ export default function GameState({state}) {
     const style =  {
         variant: "h6",
         color: values.color,
-        webkitTextStrokeWidth: "3px",
-        webKitTextFillColor: "black"
     }
 
     return (

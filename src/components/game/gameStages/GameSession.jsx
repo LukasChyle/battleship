@@ -34,6 +34,8 @@ export default function GameSession({
                 column: null,
                 ships: ships
             })
+        } else {
+            setOpenWaitingDialog(false)
         }
     }, [readyState]);
 
@@ -115,7 +117,7 @@ export default function GameSession({
     }
 
     const isGameOver = () => {
-        return !(gameState === "WAITING_OPPONENT" || gameState === "TURN_OWN" || gameState === "TURN_OPPONENT");
+        return !(gameState === "WAITING_OPPONENT" || gameState === "TURN_OWN" || gameState === "TURN_OPPONENT" || gameState !== 1);
     }
 
     return (
@@ -133,25 +135,27 @@ export default function GameSession({
                       marginBottom: "12px"
                   }}>
                 <Grid item xs={3} sx={{marginLeft: "50px"}}>
-                    <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
-                    {isGameOver() ?
-                        <Button
-                            size="large"
-                            variant="contained"
-                            color="primary"
-                            onClick={handleLeaveGame}>
-                            {"Leave Game"}
-                        </Button>
-                        :
-                        <AlertDialog
-                            dialogButtonText={"Leave Game"}
-                            acceptDialogButtonText={"Leave"}
-                            cancelDialogButtonText={"Stay"}
-                            title={"Are you sure you want to leave this game?"}
-                            onAccept={handleLeaveGame}/>}
+                        <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
+                        {isGameOver() ?
+                            <Button
+                                size="large"
+                                variant="contained"
+                                color="primary"
+                                onClick={handleLeaveGame}>
+                                {"Leave Game"}
+                            </Button>
+                            :
+                            <AlertDialog
+                                dialogButtonText={"Leave Game"}
+                                acceptDialogButtonText={"Leave"}
+                                cancelDialogButtonText={"Stay"}
+                                title={"Are you sure you want to leave this game?"}
+                                onAccept={handleLeaveGame}/>}
                 </Grid>
                 <Grid item xs={3}>
-                    <GameState state={gameState}/>
+                    <Paper elevation={3} sx={{padding: "20px"}}>
+                        <GameState state={gameState}/>
+                    </Paper>
                 </Grid>
             </Grid>
             <Grid container spacing={10}>
@@ -184,7 +188,7 @@ export default function GameSession({
                     justifyContent: "left",
                     marginTop: "24px"
                 }}>
-                    <Typography variant="h5" component="div">Action log</Typography>
+                    <Typography variant="h5" component="div">{"Action log"}</Typography>
                     <Paper elevation={3} sx={{
                         paddingLeft: "14px",
                         paddingRight: "14px",
