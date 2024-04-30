@@ -18,11 +18,12 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
 
     const buttonStyle = {
         position: "absolute",
-        fontSize: 25,
-        maxWidth: '20px',
-        maxHeight: '20px',
-        minWidth: '20px',
-        minHeight: '20px'
+        fontSize: 20,
+        maxWidth: '17px',
+        maxHeight: '17px',
+        minWidth: '17px',
+        minHeight: '17px',
+        color: "darkblue"
     }
 
     const handleButtonClick = () => {

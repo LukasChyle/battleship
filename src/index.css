@@ -25,14 +25,14 @@ input[type=number] {
 .tile-strike-img {
   position: absolute;
   z-index: 3;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
 }
 
 .tile-img {
   position: absolute;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
 }
 
 .opponent-tile-img:hover {
@@ -41,8 +41,8 @@ input[type=number] {
 
 .board-tile {
   display: flex;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
 }
 
 .ship-image {
@@ -58,45 +58,45 @@ input[type=number] {
 }
 
 .img-ship-1 {
-  margin-left: 25px;
+  margin-left: 20px;
   margin-top: -10px;
 }
 
 .img-ship-2 {
   margin-left: 20px;
-  margin-top: -5px;
+  margin-top: 0;
 }
 
 .img-ship-3 {
-  margin-left: 30px;
+  margin-left: 20px;
   margin-top: -5px;
 }
 
 .img-ship-4 {
-  margin-top: 15px;
   margin-left: 15px;
+  margin-top: 15px;
 }
 
 .img-ship-1-vert {
-  margin-left: -135px;
-  margin-top: 145px;
+  margin-left: -110px;
+  margin-top: 125px;
   rotate: -90deg;
 }
 
 .img-ship-2-vert {
-  margin-left: -105px;
-  margin-top: 115px;
+  margin-left: -80px;
+  margin-top: 100px;
   rotate: -90deg;
 }
 
 .img-ship-3-vert {
-  margin-left: -60px;
-  margin-top: 80px;
+  margin-left: -50px;
+  margin-top: 65px;
   rotate: -90deg;
 }
 
 .img-ship-4-vert {
-  margin-left: -25px;
-  margin-top: 55px;
+  margin-left: -20px;
+  margin-top: 50px;
   rotate: -90deg;
 }
