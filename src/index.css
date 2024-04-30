@@ -35,6 +35,16 @@ input[type=number] {
   height: 60px;
 }
 
+.number-tile {
+  width: 60px;
+  height: 30px;
+}
+
+.letter-tile {
+  width: 30px;
+  height: 60px;
+}
+
 .opponent-tile-img:hover {
   cursor: pointer;
 }

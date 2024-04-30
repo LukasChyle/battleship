@@ -1,4 +1,4 @@
-import {Grid} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
 import SetUpGameBoardTile from "./components/SetUpGameBoardTile.jsx";
@@ -120,28 +120,65 @@ export default function SetUpGameBoard({ships, onShips}) {
         }))
     }
 
+    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+    const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+
     return (
-        <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
-            <div>
-                <Grid container wrap="nowrap">
-                    {board.map((col, colIndex) => (
-                        <Grid className="board-row" key={colIndex}>
-                            {col.map((row, rowIndex) => (
-                                <Grid key={rowIndex}>
-                                    <SetUpGameBoardTile key={rowIndex}
-                                                        tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
-                                                        ships={ships}
-                                                        onShips={onShips}
-                                                        canBeLaid={canBeLaid}
-                                                        markTiles={markTiles}
-                                                        resetTileImages={resetTileImages}
-                                    />
+        <div>
+            <Grid container wrap="nowrap" style={{
+                alignContent: "baseline",
+                justifyContent: "right",
+                backgroundColor: "lavender"
+            }}>
+                {numbers.map((number) => (
+                    <div key={number} className="number-tile">
+                        <Typography key={number} style={{
+                            alignContent: "center",
+                            textAlign: "center",
+                        }} className="number-tile">{number}</Typography>
+                            <Divider orientation="vertical" flexItem  style={{   alignSelf: "stretch",
+                                height: "auto" }}/>
+
+                    </div>
+
+                ))}
+            </Grid>
+            <Grid container style={{backgroundColor: "lavender"}} wrap="nowrap">
+                <Grid item xs={12} md={12}>
+                    {letters.map((letter) => (
+                        <div key={letter} className="letter-tile">
+                            <Typography key={letter} style={{
+                                alignContent: "center",
+                                textAlign: "center",
+                            }} className="letter-tile">{letter}</Typography>
+                            <Divider/>
+                        </div>
+                    ))}
+                </Grid>
+                <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+                    <div>
+                        <Grid container wrap="nowrap">
+                            {board.map((col, colIndex) => (
+                                <Grid key={colIndex}>
+                                    {col.map((row, rowIndex) => (
+                                        <Grid key={rowIndex}>
+                                            <SetUpGameBoardTile key={rowIndex}
+                                                                tile={tiles.find(
+                                                                    t => t.id === rowIndex + "" + colIndex)}
+                                                                ships={ships}
+                                                                onShips={onShips}
+                                                                canBeLaid={canBeLaid}
+                                                                markTiles={markTiles}
+                                                                resetTileImages={resetTileImages}
+                                            />
+                                        </Grid>
+                                    ))}
                                 </Grid>
                             ))}
                         </Grid>
-                    ))}
-                </Grid>
-            </div>
-        </DndContext>
+                    </div>
+                </DndContext>
+            </Grid>
+        </div>
     )
 }
