@@ -1,6 +1,7 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import AlertDialog from "./AlertDialog.jsx";
 
-export default function WaitingOpponentDialog({isOpen, handleLeaveGame}) {
+export default function WaitingOpponentDialog({isOpen, handleLeave}) {
     return (
         <Dialog
             fullWidth
@@ -15,11 +16,12 @@ export default function WaitingOpponentDialog({isOpen, handleLeaveGame}) {
                 { "Timer" /* TODO: implement an timer, here and in backend. */}
             </DialogContent>
             <DialogActions>
-                <Button type="submit" size={"small"} color="error" variant="contained" onClick={() => {
-                    if (window.confirm('Are you sure you want to cancel game?')) {
-                        handleLeaveGame()
-                    }
-                }}>Cancel</Button>
+                <AlertDialog
+                    dialogButtonText={"Leave Game"}
+                    acceptDialogButtonText={"Leave"}
+                    cancelDialogButtonText={"Stay"}
+                    title={"Are you sure you want to leave this game?"}
+                    onAccept={handleLeave} />
             </DialogActions>
         </Dialog>
     );

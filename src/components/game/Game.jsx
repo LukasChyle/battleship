@@ -12,21 +12,21 @@ const getInitialShips = [
 
 export default function Game() {
     const [ships, setShips] = useState(getInitialShips);
-    const [hasStartedGame, setHasStartedGame] = useState(false);
+    const [playGame, setPlayGame] = useState(false);
 
     return (
         <div>
-            {hasStartedGame ?
+            {playGame ?
                 <GameSession
                     ships={ships}
                     onShips={setShips}
-                    onHasStartedGame={hasStartedGame}
+                    onPlayGame={setPlayGame}
                 />
                 :
                 <GameSetUp
                     ships={ships}
                     onShips={setShips}
-                    onHasStartedGame={setHasStartedGame}
+                    onPlayGame={setPlayGame}
                 />}
         </div>
     )

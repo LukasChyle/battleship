@@ -5,15 +5,17 @@ import GameMessageLogList from "../../lists/GameMessageLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
+import ConnectionState from "./ConnectionState.jsx";
+import AlertDialog from "../../dialogs/AlertDialog.jsx";
 
 export default function GameSession({
     ships,
     onShips,
-    onHasStartedGame,
+    onPlayGame,
 }) {
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
-    const [isOwnTurn, setIsOwnTurn] = useState(true);
+    const [gameState, setGameState] = useState("");
     const [opponentStrikes, setOpponentStrikes] = useState([]);
     const [ownStrikes, setOwnStrikes] = useState([]);
     const [gameLogMessages, setGameLogMessages] = useState([]);
@@ -24,6 +26,7 @@ export default function GameSession({
 
     useEffect(() => {
         if (readyState === 1) {
+            setOpenWaitingDialog(false)
             sendJsonMessage({
                 type: "JOIN",
                 gameId: null,
@@ -36,6 +39,8 @@ export default function GameSession({
 
     useEffect(() => {
         console.log(lastJsonMessage) // TODO:
+
+        setGameState(lastJsonMessage?.type)
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
@@ -57,36 +62,30 @@ export default function GameSession({
             }
                 break
             case "TURN_OWN" : {
-                if (openWaitingDialog) {
-                    setOpenWaitingDialog(false)
-                }
-                setIsOwnTurn(true)
+
             }
                 break
             case "TURN_OPPONENT" : {
-                if (openWaitingDialog) {
-                    setOpenWaitingDialog(false)
-                }
-                setIsOwnTurn(false)
+
             }
                 break
             case "WON" : {
-                // TODO: open dialog
+
             }
                 break
             case "LOST" : {
-                // TODO: open dialog
+
             }
                 break
             case "OPPONENT_LEFT" : {
-                // TODO: open dialog
+
             }
                 break
         }
     }, [lastJsonMessage]);
 
     const handleStrike = (e) => {
-        if (isOwnTurn) {
+        if (gameState === "TURN_OWN") {
             if (e !== null) {
                 sendJsonMessage({
                     type: "STRIKE",
@@ -102,13 +101,17 @@ export default function GameSession({
     }
 
     const handleLeaveGame = () => {
-        sendJsonMessage({
-            type: "LEAVE",
-            gameId: gameId,
-            row: null,
-            column: null,
-            ships: null
-        })
+        if (readyState === 1) {
+            sendJsonMessage({
+                type: "LEAVE",
+                gameId: gameId,
+                row: null,
+                column: null,
+                ships: null
+            })
+        }
+        setOpenWaitingDialog(false)
+        onPlayGame(false)
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -119,9 +122,10 @@ export default function GameSession({
     }
 
     const createGameLogMessage = () => {
-        const letter = String.fromCharCode(97 + + lastJsonMessage.strikeRow).toUpperCase()
+        const letter = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
         console.log(letter)
-        const content = `${lastJsonMessage.type === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit ? " hit a ship" : "missed"} at ${letter +(+ lastJsonMessage.strikeCol + 1)}`
+        const content = `${lastJsonMessage.type === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit
+            ? " hit a ship" : "missed"} at ${letter + (+lastJsonMessage.strikeCol + 1)}`
 
         const today = new Date()
         setGameLogMessages(messages => [...messages, {
@@ -136,25 +140,28 @@ export default function GameSession({
         <div>
             <WaitingOpponentDialog
                 isOpen={openWaitingDialog}
-                handleLeaveGame={handleLeaveGame}
+                handleLeave={handleLeaveGame}
             />
-            <Button
-                style={{margin: "14px"}}
-                type="submit"
-                size={"small"}
-                color="error"
-                variant="contained"
-                onClick={() => {
-                    if (window.confirm('Are you sure you want to cancel game?')) {
-                        handleLeaveGame()
-                    }
-                }}>Leave Game</Button>
-            <Grid container spacing={10}>
+            <Grid container spacing={2} sx={{display: "flex", alignItems: "baseline", justifyContent: "center"}}>
+                <Grid item xs={6}>
+                    <AlertDialog
+                        dialogButtonText={"Leave Game"}
+                        acceptDialogButtonText={"Leave"}
+                        cancelDialogButtonText={"Stay"}
+                        title={"Are you sure you want to leave this game?"}
+                        onAccept={handleLeaveGame} />
+                </Grid>
+                <Grid item xs={6}>
+                    <ConnectionState state={readyState}/>
+                </Grid>
+            </Grid>
 
-                <Grid item xs={12} md={5} style={{
+            <Grid container spacing={5}>
+
+                <Grid item xs={12} md={5} sx={{
                     display: "grid",
                     alignContent: "center",
-                    justifyContent: "center",
+                    justifyContent: "right",
                     marginTop: "24px",
                 }}>
                     <Typography variant="h5" component="div">Your Board</Typography>
@@ -163,7 +170,7 @@ export default function GameSession({
                     </Paper>
 
                 </Grid>
-                <Grid item xs={12} md={4} style={{
+                <Grid item xs={12} md={4} sx={{
                     display: "grid",
                     alignContent: "center",
                     justifyContent: "center",
@@ -175,20 +182,20 @@ export default function GameSession({
                     </Paper>
 
                 </Grid>
-                <Grid item xs={12} md={2} style={{
+                <Grid item xs={12} md={2} sx={{
                     alignContent: "center",
                     justifyContent: "left",
                     marginTop: "24px"
                 }}>
                     <Typography variant="h5" component="div">Action log</Typography>
-                    <Paper elevation={3} style={{
+                    <Paper elevation={3} sx={{
                         paddingLeft: "14px",
                         paddingRight: "14px",
-                        minHeight: "750px",
-                        maxHeight: "750px",
+                        minHeight: "630px",
+                        maxHeight: "630px",
                     }}>
                         <GameMessageLogList
-                            style={{alignContent: "top", overflow: "auto"}}
+                            sx={{alignContent: "top", overflow: "auto"}}
                             messages={gameLogMessages}/>
                     </Paper>
                 </Grid>
