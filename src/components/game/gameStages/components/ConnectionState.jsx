@@ -1,6 +1,6 @@
 import {Box, Typography} from "@mui/material";
 
-export default function ConnectionState({state}) {
+export default function ConnectionState({style, state}) {
 
     const getConnectionState = () => {
         if (state === 0) {
@@ -18,7 +18,7 @@ export default function ConnectionState({state}) {
     const values = getConnectionState()
 
     return (
-        <div>
+        <div style={style}>
         <Typography variant="caption" sx={{fontWeight: "bold"}}>{"Connection state"}</Typography>
         <Box
             display="flex"

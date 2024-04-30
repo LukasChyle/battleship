@@ -5,8 +5,9 @@ import GameMessageLogList from "../../lists/GameMessageLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
-import ConnectionState from "./ConnectionState.jsx";
+import ConnectionState from "./components/ConnectionState.jsx";
 import AlertDialog from "../../dialogs/AlertDialog.jsx";
+import GameState from "./components/GameState.jsx";
 
 export default function GameSession({
     ships,
@@ -26,7 +27,6 @@ export default function GameSession({
 
     useEffect(() => {
         if (readyState === 1) {
-            setOpenWaitingDialog(false)
             sendJsonMessage({
                 type: "JOIN",
                 gameId: null,
@@ -38,8 +38,6 @@ export default function GameSession({
     }, [readyState]);
 
     useEffect(() => {
-        console.log(lastJsonMessage) // TODO:
-
         setGameState(lastJsonMessage?.type)
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
@@ -55,33 +53,12 @@ export default function GameSession({
         if (lastJsonMessage?.ships) {
             onShips(lastJsonMessage?.ships)
         }
-
-        switch (lastJsonMessage?.type) {
-            case "WAITING_OPPONENT" : {
-                setOpenWaitingDialog(true)
-            }
-                break
-            case "TURN_OWN" : {
-
-            }
-                break
-            case "TURN_OPPONENT" : {
-
-            }
-                break
-            case "WON" : {
-
-            }
-                break
-            case "LOST" : {
-
-            }
-                break
-            case "OPPONENT_LEFT" : {
-
-            }
-                break
+        if (lastJsonMessage?.type === "WAITING_OPPONENT") {
+            setOpenWaitingDialog(true)
+        } else {
+            setOpenWaitingDialog(false)
         }
+        console.log(lastJsonMessage) // TODO:
     }, [lastJsonMessage]);
 
     const handleStrike = (e) => {
@@ -112,6 +89,7 @@ export default function GameSession({
         }
         setOpenWaitingDialog(false)
         onPlayGame(false)
+        setGameState("")
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -136,28 +114,47 @@ export default function GameSession({
         }])
     }
 
+    const isGameOver = () => {
+        return !(gameState === "WAITING_OPPONENT" || gameState === "TURN_OWN" || gameState === "TURN_OPPONENT");
+    }
+
     return (
         <div>
             <WaitingOpponentDialog
                 isOpen={openWaitingDialog}
                 handleLeave={handleLeaveGame}
             />
-            <Grid container spacing={2} sx={{display: "flex", alignItems: "baseline", justifyContent: "center"}}>
-                <Grid item xs={6}>
-                    <AlertDialog
-                        dialogButtonText={"Leave Game"}
-                        acceptDialogButtonText={"Leave"}
-                        cancelDialogButtonText={"Stay"}
-                        title={"Are you sure you want to leave this game?"}
-                        onAccept={handleLeaveGame} />
+            <Grid container
+                  sx={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "left",
+                      marginTop: "12px",
+                      marginBottom: "12px"
+                  }}>
+                <Grid item xs={3} sx={{marginLeft: "50px"}}>
+                    <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
+                    {isGameOver() ?
+                        <Button
+                            size="large"
+                            variant="contained"
+                            color="primary"
+                            onClick={handleLeaveGame}>
+                            {"Leave Game"}
+                        </Button>
+                        :
+                        <AlertDialog
+                            dialogButtonText={"Leave Game"}
+                            acceptDialogButtonText={"Leave"}
+                            cancelDialogButtonText={"Stay"}
+                            title={"Are you sure you want to leave this game?"}
+                            onAccept={handleLeaveGame}/>}
                 </Grid>
-                <Grid item xs={6}>
-                    <ConnectionState state={readyState}/>
+                <Grid item xs={3}>
+                    <GameState state={gameState}/>
                 </Grid>
             </Grid>
-
-            <Grid container spacing={5}>
-
+            <Grid container spacing={10}>
                 <Grid item xs={12} md={5} sx={{
                     display: "grid",
                     alignContent: "center",
