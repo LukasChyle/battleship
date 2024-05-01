@@ -27,6 +27,7 @@ export default function AlertDialog({
     return (
         <Fragment>
             <Button
+                sx={{boxShadow: 5}}
                 type="submit"
                 size="small"
                 color="error"

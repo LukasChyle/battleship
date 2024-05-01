@@ -27,8 +27,8 @@ export default function ConnectionState({style, state}) {
             height={30}
             width={100}
             sx={{
-                borderRadius: '5px',
-                border: "2px solid black",
+                borderRadius: "5px",
+                border: "1px solid black",
                 backgroundColor: values.color,
                 fontWeight: "bold"
             }}

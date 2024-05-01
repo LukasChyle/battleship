@@ -1,4 +1,4 @@
-import {ListItemText} from "@mui/material";
+import {ListItemText, Paper} from "@mui/material";
 
 export default function GameState({state}) {
 
@@ -27,6 +27,7 @@ export default function GameState({state}) {
     }
 
     return (
+        <Paper elevation={5} sx={{padding: "20px"}}>
             <ListItemText
                 sx={{
                     textAlign: "center"
@@ -36,5 +37,6 @@ export default function GameState({state}) {
                 primaryTypographyProps={{variant: "h5", fontWeight: "bold", color: "darkblue"}}
                 secondaryTypographyProps={style}
             />
+        </Paper>
     )
 }

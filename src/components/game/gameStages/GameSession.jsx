@@ -68,7 +68,7 @@ export default function GameSession({
         if (
             lastJsonMessage?.eventType === "WON" ||
             lastJsonMessage?.eventType === "LOST" ||
-            lastJsonMessage?.eventType === "OPPONENT_LEFT"){
+            lastJsonMessage?.eventType === "OPPONENT_LEFT") {
             setIsGameOver(true)
             console.log("game over") // TODO
             window.sessionStorage.removeItem("gameId")
@@ -144,33 +144,31 @@ export default function GameSession({
             <Grid container
                   sx={{
                       display: "flex",
-                      alignItems: "baseline",
+                      alignItems: "top",
                       justifyContent: "left",
                       marginTop: "12px",
-                      marginBottom: "12px"
                   }}>
                 <Grid item xs={3} sx={{marginLeft: "50px"}}>
                     <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
-                    {isGameOver?
-                        <Button
-                            size="large"
-                            variant="contained"
-                            color="primary"
-                            onClick={handleLeaveGame}>
-                            {"Leave Game"}
-                        </Button>
-                        :
-                        <AlertDialog
-                            dialogButtonText={"Leave Game"}
-                            acceptDialogButtonText={"Leave"}
-                            cancelDialogButtonText={"Stay"}
-                            title={"Are you sure you want to leave this game?"}
-                            onAccept={handleLeaveGame}/>}
+                        {isGameOver ?
+                            <Button
+                                sx={{boxShadow: 5}}
+                                size="large"
+                                variant="contained"
+                                color="primary"
+                                onClick={handleLeaveGame}>
+                                {"Leave Game"}
+                            </Button>
+                            :
+                            <AlertDialog
+                                dialogButtonText={"Leave Game"}
+                                acceptDialogButtonText={"Leave"}
+                                cancelDialogButtonText={"Stay"}
+                                title={"Are you sure you want to leave this game?"}
+                                onAccept={handleLeaveGame}/>}
                 </Grid>
                 <Grid item xs={3}>
-                    <Paper elevation={3} sx={{padding: "20px"}}>
-                        <GameState state={gameState}/>
-                    </Paper>
+                    <GameState state={gameState}/>
                 </Grid>
             </Grid>
             <Grid container spacing={10}>
@@ -204,16 +202,7 @@ export default function GameSession({
                     marginTop: "24px"
                 }}>
                     <Typography variant="h5" component="div">{"Action log"}</Typography>
-                    <Paper elevation={3} sx={{
-                        paddingLeft: "14px",
-                        paddingRight: "14px",
-                        minHeight: "630px",
-                        maxHeight: "630px",
-                    }}>
-                        <GameMessageLogList
-                            sx={{alignContent: "top", overflow: "auto"}}
-                            messages={gameLogMessages}/>
-                    </Paper>
+                    <GameMessageLogList messages={gameLogMessages}/>
                 </Grid>
             </Grid>
             <Snackbar
