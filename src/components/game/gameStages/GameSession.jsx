@@ -20,27 +20,39 @@ export default function GameSession({
     const [opponentStrikes, setOpponentStrikes] = useState([]);
     const [ownStrikes, setOwnStrikes] = useState([]);
     const [gameLogMessages, setGameLogMessages] = useState([]);
+    const [isGameOver, setIsGameOver] = useState(false);
     const [gameId, setGameId] = useState("");
 
     const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL)
+    const {sendJsonMessage, lastJsonMessage, lastMessage, readyState} = useWebSocket(WS_URL)
 
     useEffect(() => {
         if (readyState === 1) {
-            sendJsonMessage({
-                type: "JOIN",
-                gameId: null,
-                row: null,
-                column: null,
-                ships: ships
-            })
+            if (window.sessionStorage?.getItem('gameId')) {
+                sendJsonMessage({
+                    type: "RECONNECT",
+                    gameId: window.sessionStorage?.getItem('gameId'),
+                    row: null,
+                    column: null,
+                    ships: ships
+                })
+            } else {
+                sendJsonMessage({
+                    type: "JOIN",
+                    gameId: null,
+                    row: null,
+                    column: null,
+                    ships: ships
+                })
+            }
         } else {
             setOpenWaitingDialog(false)
         }
     }, [readyState]);
 
     useEffect(() => {
-        setGameState(lastJsonMessage?.type)
+        setGameState(lastJsonMessage?.eventType)
+        console.log(lastJsonMessage) // TODO
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
@@ -50,17 +62,25 @@ export default function GameSession({
             setOwnStrikes(lastJsonMessage.ownStrikes)
         }
         if (lastJsonMessage?.gameId) {
-            setGameId(lastJsonMessage?.gameId)
+            setGameId(lastJsonMessage.gameId)
+            window.sessionStorage.setItem("gameId", lastJsonMessage.gameId)
+        }
+        if (
+            lastJsonMessage?.eventType === "WON" ||
+            lastJsonMessage?.eventType === "LOST" ||
+            lastJsonMessage?.eventType === "OPPONENT_LEFT"){
+            setIsGameOver(true)
+            console.log("game over") // TODO
+            window.sessionStorage.removeItem("gameId")
         }
         if (lastJsonMessage?.ships) {
-            onShips(lastJsonMessage?.ships)
+            onShips(lastJsonMessage.ships)
         }
-        if (lastJsonMessage?.type === "WAITING_OPPONENT") {
+        if (lastJsonMessage?.eventType === "WAITING_OPPONENT") {
             setOpenWaitingDialog(true)
         } else {
             setOpenWaitingDialog(false)
         }
-        console.log(lastJsonMessage) // TODO:
     }, [lastJsonMessage]);
 
     const handleStrike = (e) => {
@@ -89,6 +109,7 @@ export default function GameSession({
                 ships: null
             })
         }
+        window.sessionStorage.removeItem("gameId")
         setOpenWaitingDialog(false)
         onPlayGame(false)
         setGameState("")
@@ -103,21 +124,15 @@ export default function GameSession({
 
     const createGameLogMessage = () => {
         const letter = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
-        console.log(letter)
-        const content = `${lastJsonMessage.type === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit
+        const content = `${lastJsonMessage.eventType === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit
             ? " hit a ship" : "missed"} at ${letter + (+lastJsonMessage.strikeCol + 1)}`
-
         const today = new Date()
         setGameLogMessages(messages => [...messages, {
-            isOwnMove: lastJsonMessage.type === "TURN_OPPONENT",
+            isOwnMove: lastJsonMessage.eventType === "TURN_OPPONENT",
             content: content,
             isHit: lastJsonMessage.hit,
             time: today.getHours() + ":" + today.getMinutes()
         }])
-    }
-
-    const isGameOver = () => {
-        return !(gameState === "WAITING_OPPONENT" || gameState === "TURN_OWN" || gameState === "TURN_OPPONENT" || gameState !== 1);
     }
 
     return (
@@ -135,22 +150,22 @@ export default function GameSession({
                       marginBottom: "12px"
                   }}>
                 <Grid item xs={3} sx={{marginLeft: "50px"}}>
-                        <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
-                        {isGameOver() ?
-                            <Button
-                                size="large"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleLeaveGame}>
-                                {"Leave Game"}
-                            </Button>
-                            :
-                            <AlertDialog
-                                dialogButtonText={"Leave Game"}
-                                acceptDialogButtonText={"Leave"}
-                                cancelDialogButtonText={"Stay"}
-                                title={"Are you sure you want to leave this game?"}
-                                onAccept={handleLeaveGame}/>}
+                    <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
+                    {isGameOver?
+                        <Button
+                            size="large"
+                            variant="contained"
+                            color="primary"
+                            onClick={handleLeaveGame}>
+                            {"Leave Game"}
+                        </Button>
+                        :
+                        <AlertDialog
+                            dialogButtonText={"Leave Game"}
+                            acceptDialogButtonText={"Leave"}
+                            cancelDialogButtonText={"Stay"}
+                            title={"Are you sure you want to leave this game?"}
+                            onAccept={handleLeaveGame}/>}
                 </Grid>
                 <Grid item xs={3}>
                     <Paper elevation={3} sx={{padding: "20px"}}>
