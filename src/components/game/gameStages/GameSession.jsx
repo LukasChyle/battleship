@@ -131,7 +131,7 @@ export default function GameSession({
             isOwnMove: lastJsonMessage.eventType === "TURN_OPPONENT",
             content: content,
             isHit: lastJsonMessage.hit,
-            time: today.getHours() + ":" + today.getMinutes()
+            time: today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0')
         }])
     }
 
@@ -150,22 +150,22 @@ export default function GameSession({
                   }}>
                 <Grid item xs={3} sx={{marginLeft: "50px"}}>
                     <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
-                        {isGameOver ?
-                            <Button
-                                sx={{boxShadow: 5}}
-                                size="large"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleLeaveGame}>
-                                {"Leave Game"}
-                            </Button>
-                            :
-                            <AlertDialog
-                                dialogButtonText={"Leave Game"}
-                                acceptDialogButtonText={"Leave"}
-                                cancelDialogButtonText={"Stay"}
-                                title={"Are you sure you want to leave this game?"}
-                                onAccept={handleLeaveGame}/>}
+                    {isGameOver ?
+                        <Button
+                            sx={{boxShadow: 5}}
+                            size="large"
+                            variant="contained"
+                            color="primary"
+                            onClick={handleLeaveGame}>
+                            {"Leave Game"}
+                        </Button>
+                        :
+                        <AlertDialog
+                            dialogButtonText={"Leave Game"}
+                            acceptDialogButtonText={"Leave"}
+                            cancelDialogButtonText={"Stay"}
+                            title={"Are you sure you want to leave this game?"}
+                            onAccept={handleLeaveGame}/>}
                 </Grid>
                 <Grid item xs={3}>
                     <GameState state={gameState}/>
