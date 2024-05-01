@@ -1,6 +1,6 @@
 import {List, ListItemText, Paper} from "@mui/material";
 
-export default function GameMessageLogList({messages, style}) {
+export default function GameMessageLogList({messages}) {
 
     return (
         <Paper elevation={5} sx={{

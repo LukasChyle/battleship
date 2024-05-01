@@ -24,14 +24,14 @@ export default function GameSession({
     const [gameId, setGameId] = useState("");
 
     const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage, lastMessage, readyState} = useWebSocket(WS_URL)
+    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL)
 
     useEffect(() => {
         if (readyState === 1) {
             if (window.sessionStorage?.getItem('gameId')) {
                 sendJsonMessage({
                     type: "RECONNECT",
-                    gameId: window.sessionStorage?.getItem('gameId'),
+                    gameId: window.sessionStorage.getItem('gameId'),
                     row: null,
                     column: null,
                     ships: ships
@@ -45,6 +45,9 @@ export default function GameSession({
                     ships: ships
                 })
             }
+            if (window.sessionStorage?.getItem("messages")) {
+                setGameLogMessages(JSON.parse(window.sessionStorage.getItem("messages")))
+            }
         } else {
             setOpenWaitingDialog(false)
         }
@@ -52,7 +55,6 @@ export default function GameSession({
 
     useEffect(() => {
         setGameState(lastJsonMessage?.eventType)
-        console.log(lastJsonMessage) // TODO
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
@@ -70,8 +72,8 @@ export default function GameSession({
             lastJsonMessage?.eventType === "LOST" ||
             lastJsonMessage?.eventType === "OPPONENT_LEFT") {
             setIsGameOver(true)
-            console.log("game over") // TODO
             window.sessionStorage.removeItem("gameId")
+            window.sessionStorage.removeItem("isPlayingGame")
         }
         if (lastJsonMessage?.ships) {
             onShips(lastJsonMessage.ships)
@@ -109,7 +111,9 @@ export default function GameSession({
                 ships: null
             })
         }
+        window.sessionStorage.removeItem("messages")
         window.sessionStorage.removeItem("gameId")
+        window.sessionStorage.removeItem("isPlayingGame")
         setOpenWaitingDialog(false)
         onPlayGame(false)
         setGameState("")
@@ -127,12 +131,14 @@ export default function GameSession({
         const content = `${lastJsonMessage.eventType === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit
             ? " hit a ship" : "missed"} at ${letter + (+lastJsonMessage.strikeCol + 1)}`
         const today = new Date()
-        setGameLogMessages(messages => [...messages, {
+        const message = {
             isOwnMove: lastJsonMessage.eventType === "TURN_OPPONENT",
             content: content,
             isHit: lastJsonMessage.hit,
             time: today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0')
-        }])
+        }
+        setGameLogMessages(messages => [...messages, message])
+        window.sessionStorage.setItem("messages", JSON.stringify([...gameLogMessages, message]))
     }
 
     return (

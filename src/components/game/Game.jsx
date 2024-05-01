@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import GameSession from "./gameStages/GameSession.jsx";
 import GameSetUp from "./gameStages/GameSetUp.jsx";
 
@@ -9,24 +9,29 @@ const getInitialShips = [
     {id: "ship-4", isHorizontal: true, length: 4, row: 4, col: 4},
     {id: "ship-5", isHorizontal: true, length: 5, row: 5, col: 5},
 ]
-
 export default function Game() {
     const [ships, setShips] = useState(getInitialShips);
-    const [playGame, setPlayGame] = useState(false);
+    const [isPlayingGame, setIsPlayingGame] = useState(false);
+
+    useEffect(() => {
+        if (window.sessionStorage?.getItem("isPlayingGame")) {
+            setIsPlayingGame(window.sessionStorage.getItem("isPlayingGame"))
+        }
+    }, []);
 
     return (
         <div>
-            {playGame ?
+            {isPlayingGame ?
                 <GameSession
                     ships={ships}
                     onShips={setShips}
-                    onPlayGame={setPlayGame}
+                    onPlayGame={setIsPlayingGame}
                 />
                 :
                 <GameSetUp
                     ships={ships}
                     onShips={setShips}
-                    onPlayGame={setPlayGame}
+                    onPlayGame={setIsPlayingGame}
                 />}
         </div>
     )
