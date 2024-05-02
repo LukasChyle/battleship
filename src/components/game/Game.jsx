@@ -25,7 +25,7 @@ export default function Game() {
                 <GameSession
                     ships={ships}
                     onShips={setShips}
-                    onPlayGame={setIsPlayingGame}
+                    onIsPlayingGame={setIsPlayingGame}
                 />
                 :
                 <GameSetUp

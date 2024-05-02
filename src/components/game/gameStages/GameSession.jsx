@@ -12,7 +12,7 @@ import GameState from "./components/GameState.jsx";
 export default function GameSession({
     ships,
     onShips,
-    onPlayGame,
+    onIsPlayingGame,
 }) {
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
@@ -115,7 +115,7 @@ export default function GameSession({
         window.sessionStorage.removeItem("gameId")
         window.sessionStorage.removeItem("isPlayingGame")
         setOpenWaitingDialog(false)
-        onPlayGame(false)
+        onIsPlayingGame(false)
         setGameState("")
     }
 
