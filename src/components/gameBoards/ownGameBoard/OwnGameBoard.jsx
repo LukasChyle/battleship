@@ -1,4 +1,4 @@
-import {Divider, Grid, Typography, useTheme} from "@mui/material";
+import {Grid, useTheme} from "@mui/material";
 import OwnGameBoardTile from "./components/OwnGameBoardTile.jsx";
 import {useEffect, useState} from "react";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
