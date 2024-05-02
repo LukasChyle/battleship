@@ -31,7 +31,7 @@ export default function Game() {
                 <GameSetUp
                     ships={ships}
                     onShips={setShips}
-                    onPlayGame={setIsPlayingGame}
+                    onIsPlayingGame={setIsPlayingGame}
                 />}
         </div>
     )

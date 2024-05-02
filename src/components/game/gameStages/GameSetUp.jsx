@@ -1,10 +1,10 @@
 import SetUpGameBoard from "../../gameBoards/setUpGameBoard/SetUpGameBoard.jsx";
 import {Button, Grid, ListItemText, Paper} from "@mui/material";
 
-export default function GameSetUp({ships, onShips, onPlayGame}) {
+export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
 
     const handleStartGame = () => {
-        onPlayGame(true)
+        onIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
         window.sessionStorage.removeItem("messages")
     }
