@@ -1,8 +1,10 @@
-import {Divider, Grid, Typography} from "@mui/material";
+import {Divider, Grid, Typography, useTheme} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
 import SetUpGameBoardTile from "./components/SetUpGameBoardTile.jsx";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
+import NumberRow from "../NumberRow.jsx";
+import LetterRow from "../LetterRow.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
@@ -24,6 +26,7 @@ const getInitialTiles = () => {
 }
 
 export default function SetUpGameBoard({ships, onShips}) {
+    const theme = useTheme()
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
@@ -120,41 +123,11 @@ export default function SetUpGameBoard({ships, onShips}) {
         }))
     }
 
-    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-    const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-
     return (
         <div>
-            <Grid container wrap="nowrap" style={{
-                alignContent: "baseline",
-                justifyContent: "right",
-                backgroundColor: "lavender"
-            }}>
-                {numbers.map((number) => (
-                    <div key={number} className="number-tile">
-                        <Typography key={number} style={{
-                            alignContent: "center",
-                            textAlign: "center",
-                        }} className="number-tile">{number}</Typography>
-                            <Divider orientation="vertical" flexItem  style={{   alignSelf: "stretch",
-                                height: "auto" }}/>
-
-                    </div>
-
-                ))}
-            </Grid>
-            <Grid container style={{backgroundColor: "lavender"}} wrap="nowrap">
-                <Grid item xs={12} md={12}>
-                    {letters.map((letter) => (
-                        <div key={letter} className="letter-tile">
-                            <Typography key={letter} style={{
-                                alignContent: "center",
-                                textAlign: "center",
-                            }} className="letter-tile">{letter}</Typography>
-                            <Divider/>
-                        </div>
-                    ))}
-                </Grid>
+            <NumberRow/>
+            <Grid container style={{backgroundColor: theme.palette.boardSideRow}} wrap="nowrap">
+                <LetterRow/>
                 <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
                     <div>
                         <Grid container wrap="nowrap">

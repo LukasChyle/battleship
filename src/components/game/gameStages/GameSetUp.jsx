@@ -1,8 +1,8 @@
 import SetUpGameBoard from "../../gameBoards/setUpGameBoard/SetUpGameBoard.jsx";
-import {Button, Grid, ListItemText, Paper} from "@mui/material";
+import {Button, Grid, ListItemText, Paper, useTheme} from "@mui/material";
 
 export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
-
+    const theme = useTheme()
     const handleStartGame = () => {
         onIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
@@ -31,8 +31,8 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                         <ListItemText
                             primary={"Set up:"}
                             secondary={"Place the ships on the board as you want them, rotate a ship with the arrow button"}
-                            primaryTypographyProps={{variant: "h6", fontWeight: "bold", color: "darkblue"}}
-                            secondaryTypographyProps={{variant: "body1", color: "black"}}
+                            primaryTypographyProps={{variant: "h6", fontWeight: "bold"}}
+                            secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
                         />
                         <div style={{marginTop: "30px"}}>
                             <Button

@@ -1,6 +1,7 @@
-import {List, ListItemText, Paper} from "@mui/material";
+import {List, ListItemText, Paper, useTheme} from "@mui/material";
 
 export default function GameMessageLogList({messages}) {
+    const theme = useTheme()
 
     return (
         <Paper elevation={5} sx={{
@@ -17,7 +18,7 @@ export default function GameMessageLogList({messages}) {
                         key={index}
                         align="left"
                         primary={message.time + ": " + message.content}
-                        sx={{color: message.isOwnMove ? "darkgreen" : "darkblue", fontsize: "small",}}
+                        sx={{color: message.isOwnMove ? theme.palette.customText.green : theme.palette.customText.blue, fontsize: "small",}}
                         primaryTypographyProps={{fontWeight: message.isHit ? "bold" : "normal", fontSize: "small"}}
                     />
                 ))}
