@@ -1,35 +1,17 @@
 import Game from "./components/game/Game.jsx";
-import {AppBar, createTheme, CssBaseline, FormControlLabel, Switch, ThemeProvider} from "@mui/material";
+import {CssBaseline, ThemeProvider} from "@mui/material";
 import {useState} from "react";
+import ThemeConfig from "./ThemeConfig.jsx";
+import Header from "./components/header/Header.jsx";
 
 function App() {
-    const [isDarkMode, setIsDarkMode] = useState(false)
-    const theme = createTheme({
-        palette: {
-            mode: isDarkMode ? "dark" : "light",
-            customText: {
-                green: isDarkMode ? "lightgreen" : "darkgreen",
-                blue: isDarkMode ? "lightblue" : "darkblue"
-            },
-            boardSideRow: isDarkMode ? "rgba(255, 255, 255, 0.08)" : "lavender"
-        }
-    })
+    const [isDarkMode, setIsDarkMode] = useState(JSON.parse(window.sessionStorage?.getItem("isDarkMode")))
+    const theme = ThemeConfig(isDarkMode)
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <AppBar>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={isDarkMode}
-                            color="primary"
-                            onChange={() => setIsDarkMode(isDarkMode => !isDarkMode)}
-                        />}
-                    label="Dark"
-                    labelPlacement="start"
-                />
-            </AppBar>
+            <Header onIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode}/>
             <Game/>
         </ThemeProvider>
 
