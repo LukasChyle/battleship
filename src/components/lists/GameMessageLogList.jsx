@@ -1,10 +1,16 @@
 import {List, ListItemText, Paper, useTheme} from "@mui/material";
+import {useEffect} from "react";
 
 export default function GameMessageLogList({messages}) {
     const theme = useTheme()
 
+    useEffect(() => {
+        const element = document.getElementById("actionLog");
+        element.scrollTop = element.scrollHeight;
+    }, [messages]);
+
     return (
-        <Paper elevation={5} sx={{
+        <Paper id="actionLog" elevation={5} sx={{
             minHeight: "630px",
             maxHeight: "630px",
             minWidth: "280px",
