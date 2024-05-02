@@ -6,23 +6,27 @@ const ThemeConfig = (isDarkMode) => {
             palette: {
                 mode: "dark",
                 boardSideRow: "rgba(255, 255, 255, 0.08)",
+                leaveButton: "crimson",
                 customText: {
                     green: "lightgreen",
                     blue: "lightblue"
                 },
                 connection: {
-                    connecting: "yellow",
-                    connected: "green",
-                    closing: "yellow",
-                    disconnected: "darkred",
+                    connecting: "gold",
+                    connected: "limegreen",
+                    closing: "gold",
+                    disconnected: "crimson",
                     error: "gray",
-                    border: "darkgray"
+                    border: "darkgray",
+                    title: "gray",
+                    text: "black"
                 }
             }
         } : {
             palette: {
                 mode: "light",
                 boardSideRow: "lavender",
+                leaveButton: "error",
                 customText: {
                     green: "darkgreen",
                     blue: "darkblue"
@@ -33,7 +37,9 @@ const ThemeConfig = (isDarkMode) => {
                     closing: "yellow",
                     disconnected: "red",
                     error: "lightgray",
-                    border: "black"
+                    border: "black",
+                    title: "black",
+                    text: "black"
                 }
             }
         }

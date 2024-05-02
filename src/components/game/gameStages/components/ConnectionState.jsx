@@ -20,22 +20,27 @@ export default function ConnectionState({style, state}) {
 
     return (
         <div style={style}>
-        <Typography variant="caption" sx={{fontWeight: "bold"}}>{"Connection state"}</Typography>
-        <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            height={30}
-            width={100}
-            sx={{
-                borderRadius: "5px",
-                border: `1px solid ${theme.palette.connection.border}`,
-                backgroundColor: values.color,
-                fontWeight: "bold"
-            }}
-        >
-            <Typography variant="caption" sx={{fontWeight: "bold"}}>{values.string}</Typography>
-        </Box>
+            <Typography variant="caption" sx={{
+                fontWeight: "bold",
+                color: theme.palette.connection.title
+            }}>{"Connection state"}</Typography>
+            <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                height={30}
+                width={100}
+                sx={{
+                    borderRadius: "5px",
+                    border: `1px solid ${theme.palette.connection.border}`,
+                    backgroundColor: values.color,
+                    fontWeight: "bold"
+                }}
+            >
+                <Typography variant="caption" sx={{fontWeight: "bold", color: theme.palette.connection.text}}>
+                    {values.string}
+                </Typography>
+            </Box>
         </div>
     )
 }

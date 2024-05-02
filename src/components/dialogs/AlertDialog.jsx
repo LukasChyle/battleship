@@ -1,4 +1,4 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useTheme} from "@mui/material";
 import {Fragment, useState} from "react";
 
 export default function AlertDialog({
@@ -9,6 +9,7 @@ export default function AlertDialog({
     acceptDialogButtonText,
     cancelDialogButtonText
 }) {
+    const theme = useTheme()
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -27,7 +28,7 @@ export default function AlertDialog({
     return (
         <Fragment>
             <Button
-                sx={{boxShadow: 5}}
+                sx={{boxShadow: 5, backgroundColor: theme.palette.leaveButton}}
                 type="submit"
                 size="small"
                 color="error"

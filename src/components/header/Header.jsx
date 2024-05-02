@@ -10,10 +10,12 @@ export default function ({onIsDarkMode, isDarkMode}) {
     return (
         <AppBar
             position="sticky"
-            component="header">
-            <Toolbar>
+            component="header"
+            sx={{paddingLeft: "20px", paddingRight: "20px"}}
+        >
+            <Toolbar variant="dense">
                 <Typography
-                    variant="h6"
+                    variant="h5"
                     component="div"
                     sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
                 >
@@ -25,7 +27,6 @@ export default function ({onIsDarkMode, isDarkMode}) {
                     }}
                     control={
                         <Switch
-                            size="small"
                             checked={isDarkMode}
                             color="primary"
                             onChange={handleDarkModeSwitch}
@@ -36,9 +37,5 @@ export default function ({onIsDarkMode, isDarkMode}) {
             </Toolbar>
         </AppBar>
     )
-
-
-
-
 
 }
