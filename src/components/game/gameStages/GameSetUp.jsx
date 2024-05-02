@@ -18,7 +18,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                     alignContent: "center",
                     justifyContent: "center",
                 }}>
-                    <Paper elevation={7} sx={{marginTop: "24px"}}>
+                    <Paper elevation={7} sx={{marginTop: "50px"}}>
                         <SetUpGameBoard ships={ships} onShips={onShips}/>
                     </Paper>
                 </Grid>
