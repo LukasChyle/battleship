@@ -8,7 +8,7 @@ export default function GameState({state}) {
         } else if (state === "TURN_OWN") {
             return {string: "Your turn to strike", color: "black"}
         } else if (state === "TURN_OPPONENT") {
-            return {string: "Opponents turn to strike", color: "black"}
+            return {string: "Opponent turn to strike", color: "black"}
         } else if (state === "OPPONENT_LEFT") {
             return {string: "Opponent left the game", color: "red"}
         } else if (state === "WON") {
@@ -21,7 +21,7 @@ export default function GameState({state}) {
 
     const values = getGameState()
     const style =  {
-        variant: state === "WON" || state === "LOST" || state === "OPPONENT_LEFT"? "h4" : "h6",
+        variant: state === "WON" || state === "LOST" || state === "OPPONENT_LEFT"? "h5" : "h6",
         fontWeight: state === "WON" || state === "LOST" || state === "OPPONENT_LEFT"? "bold" : "normal",
         color: values.color
     }

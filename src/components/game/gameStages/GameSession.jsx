@@ -8,6 +8,7 @@ import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
 import ConnectionState from "./components/ConnectionState.jsx";
 import AlertDialog from "../../dialogs/AlertDialog.jsx";
 import GameState from "./components/GameState.jsx";
+import PlayerScore from "./components/PlayerScore.jsx";
 
 export default function GameSession({
     ships,
@@ -154,7 +155,7 @@ export default function GameSession({
                       justifyContent: "left",
                       marginTop: "12px",
                   }}>
-                <Grid item xs={3} sx={{marginLeft: "50px"}}>
+                <Grid item xs={12} md={3} sx={{marginLeft: "50px"}}>
                     <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
                     {isGameOver ?
                         <Button
@@ -173,7 +174,7 @@ export default function GameSession({
                             title={"Are you sure you want to leave this game?"}
                             onAccept={handleLeaveGame}/>}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                     <GameState state={gameState}/>
                 </Grid>
             </Grid>
@@ -184,11 +185,18 @@ export default function GameSession({
                     justifyContent: "right",
                     marginTop: "24px",
                 }}>
-                    <Typography variant="h5" component="div">Your Board</Typography>
+                    <Grid container>
+                        <Grid item xs={12} md={5}>
+                            <Typography variant="h5" component="div">{"Your Board"}</Typography>
+
+                        </Grid>
+                        <Grid item xs={12} md={7}>
+                            <PlayerScore strikes={opponentStrikes}/>
+                        </Grid>
+                    </Grid>
                     <Paper elevation={7}>
                         <OwnGameBoard ships={ships} tileStrikes={opponentStrikes}/>
                     </Paper>
-
                 </Grid>
                 <Grid item xs={12} md={4} sx={{
                     display: "grid",
@@ -196,7 +204,15 @@ export default function GameSession({
                     justifyContent: "center",
                     marginTop: "24px"
                 }}>
-                    <Typography variant="h5" component="div">Opponents Board</Typography>
+                    <Grid container>
+                        <Grid item xs={12} md={5}>
+                            <Typography variant="h5" component="div">{"Opponent Board"}</Typography>
+
+                        </Grid>
+                        <Grid item xs={12} md={7}>
+                            <PlayerScore strikes={ownStrikes}/>
+                        </Grid>
+                    </Grid>
                     <Paper elevation={7}>
                         <OpponentGameBoard handleStrike={handleStrike} tileStrikes={ownStrikes}/>
                     </Paper>
