@@ -36,13 +36,10 @@ export default function OwnGameBoard({ships, tileStrikes}) {
         return "src/assets/missed-strike.png"
     }
 
-    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-    const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-
     return (
         <div>
             <NumberRow/>
-            <Grid container style={{backgroundColor: theme.palette.boardSideRow}} wrap="nowrap">
+            <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}} wrap="nowrap">
                 <LetterRow/>
                 <Grid container wrap="nowrap">
                     {board.map((col, colIndex) => (

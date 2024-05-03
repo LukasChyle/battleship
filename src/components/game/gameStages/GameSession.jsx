@@ -25,7 +25,8 @@ export default function GameSession({
     const [gameId, setGameId] = useState("");
 
     const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL)
+    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL,
+        {shouldReconnect: !isGameOver ? () => true : false})
 
     useEffect(() => {
         if (readyState === 1) {
@@ -152,15 +153,15 @@ export default function GameSession({
                   sx={{
                       display: "flex",
                       alignItems: "top",
-                      justifyContent: "left",
+                      justifyContent: "center",
                       marginTop: "12px",
                   }}>
-                <Grid item xs={12} md={3} sx={{marginLeft: "50px"}}>
+                <Grid item xs={12} md={2}>
                     <ConnectionState style={{marginBottom: "12px"}} state={readyState}/>
                     {isGameOver ?
                         <Button
                             sx={{boxShadow: 5}}
-                            size="large"
+                            size="small"
                             variant="contained"
                             color="primary"
                             onClick={handleLeaveGame}>
@@ -174,9 +175,11 @@ export default function GameSession({
                             title={"Are you sure you want to leave this game?"}
                             onAccept={handleLeaveGame}/>}
                 </Grid>
+                <Grid item xs={0} md={1}/>
                 <Grid item xs={12} md={3}>
                     <GameState state={gameState}/>
                 </Grid>
+                <Grid item xs={0} md={5}/>
             </Grid>
             <Grid container spacing={10}>
                 <Grid item xs={12} md={5} sx={{

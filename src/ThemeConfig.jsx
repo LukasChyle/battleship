@@ -5,11 +5,16 @@ const ThemeConfig = (isDarkMode) => {
         {
             palette: {
                 mode: "dark",
-                boardSideRow: "rgba(255, 255, 255, 0.08)",
+                primary: {
+                    main: "#87cefa",
+                },
+                appBarText: "#87cefa",
+                boardSideRowBackground: "rgba(255, 255, 255, 0.08)",
+                boardSideRowText: "lightgreen",
                 leaveButton: "crimson",
                 customText: {
                     green: "lightgreen",
-                    blue: "lightblue"
+                    blue: "#87cefa"
                 },
                 connection: {
                     connecting: "gold",
@@ -25,7 +30,12 @@ const ThemeConfig = (isDarkMode) => {
         } : {
             palette: {
                 mode: "light",
-                boardSideRow: "lavender",
+                background: {
+                    default: "rgba(0, 0, 0, 0.04)",
+                },
+                appBarText: "white",
+                boardSideRowBackground: "lavender",
+                boardSideRowText: "black",
                 leaveButton: "error",
                 customText: {
                     green: "darkgreen",

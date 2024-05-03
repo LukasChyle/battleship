@@ -29,7 +29,6 @@ export default function AlertDialog({
         <Fragment>
             <Button
                 sx={{boxShadow: 5, backgroundColor: theme.palette.leaveButton}}
-                type="submit"
                 size="small"
                 color="error"
                 variant="contained"

@@ -126,7 +126,7 @@ export default function SetUpGameBoard({ships, onShips}) {
     return (
         <div>
             <NumberRow/>
-            <Grid container style={{backgroundColor: theme.palette.boardSideRow}} wrap="nowrap">
+            <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}} wrap="nowrap">
                 <LetterRow/>
                 <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
                     <div>

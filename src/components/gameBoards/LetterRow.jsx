@@ -11,7 +11,7 @@ export default function LetterRow() {
                     <Typography key={letter} style={{
                         alignContent: "center",
                         textAlign: "center",
-                        color: theme.palette.customText.blue
+                        color: theme.palette.boardSideRowText
                     }} className="letter-tile">{letter}</Typography>
                     <Divider/>
                 </div>

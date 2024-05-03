@@ -1,6 +1,7 @@
-import {AppBar, FormControlLabel, Switch, Toolbar, Typography} from "@mui/material";
+import {AppBar, FormControlLabel, Switch, Toolbar, Typography, useTheme} from "@mui/material";
 
 export default function ({onIsDarkMode, isDarkMode}) {
+    const theme = useTheme()
 
     const handleDarkModeSwitch = () => {
         window.sessionStorage.setItem("isDarkMode", !isDarkMode)
@@ -17,7 +18,11 @@ export default function ({onIsDarkMode, isDarkMode}) {
                 <Typography
                     variant="h5"
                     component="div"
-                    sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
+                    sx={{
+                        color: theme.palette.appBarText,
+                        flexGrow: 1,
+                        display: {xs: 'none', sm: 'block'}
+                    }}
                 >
                     BATTLESHIPS
                 </Typography>
