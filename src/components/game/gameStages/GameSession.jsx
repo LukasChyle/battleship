@@ -9,6 +9,7 @@ import ConnectionState from "./components/ConnectionState.jsx";
 import AlertDialog from "../../dialogs/AlertDialog.jsx";
 import GameState from "./components/GameState.jsx";
 import PlayerScore from "./components/PlayerScore.jsx";
+import { properties} from "../../../../properties.js";
 
 export default function GameSession({
     ships,
@@ -23,9 +24,7 @@ export default function GameSession({
     const [gameLogMessages, setGameLogMessages] = useState([]);
     const [isGameOver, setIsGameOver] = useState(false);
     const [gameId, setGameId] = useState("");
-
-    const WS_URL = 'ws://localhost:8000/play'
-    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(WS_URL,
+    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(properties.WS_URL,
         {shouldReconnect: !isGameOver ? () => true : false})
 
     useEffect(() => {
