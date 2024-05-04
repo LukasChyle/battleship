@@ -9,7 +9,7 @@ import ConnectionState from "./components/ConnectionState.jsx";
 import AlertDialog from "../../dialogs/AlertDialog.jsx";
 import GameState from "./components/GameState.jsx";
 import PlayerScore from "./components/PlayerScore.jsx";
-import { properties} from "../../../../properties.js";
+import {properties} from "../../../../properties.js";
 
 export default function GameSession({
     ships,
@@ -24,6 +24,7 @@ export default function GameSession({
     const [gameLogMessages, setGameLogMessages] = useState([]);
     const [isGameOver, setIsGameOver] = useState(false);
     const [gameId, setGameId] = useState("");
+    const [turnTime, setTurnTime] = useState(0)
     const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(properties.WS_URL,
         {shouldReconnect: !isGameOver ? () => true : false})
 
@@ -68,21 +69,28 @@ export default function GameSession({
             setGameId(lastJsonMessage.gameId)
             window.sessionStorage.setItem("gameId", lastJsonMessage.gameId)
         }
-        if (
-            lastJsonMessage?.eventType === "WON" ||
-            lastJsonMessage?.eventType === "LOST" ||
-            lastJsonMessage?.eventType === "OPPONENT_LEFT") {
-            setIsGameOver(true)
-            window.sessionStorage.removeItem("gameId")
-            window.sessionStorage.removeItem("isPlayingGame")
+        if (lastJsonMessage?.timeLeft) {
+            setTurnTime(lastJsonMessage.timeLeft)
         }
-        if (lastJsonMessage?.ships) {
-            onShips(lastJsonMessage.ships)
+        switch (lastJsonMessage?.eventType) {
+            case "WON":
+            case "LOST":
+            case "OPPONENT_LEFT":
+            case "NO_GAME":
+            case "TIMEOUT_OWN":
+            case "TIMEOUT_OPPONENT":
+                window.sessionStorage.removeItem("gameId")
+                window.sessionStorage.removeItem("isPlayingGame")
+                setTurnTime(0)
+                break
         }
         if (lastJsonMessage?.eventType === "WAITING_OPPONENT") {
             setOpenWaitingDialog(true)
         } else {
             setOpenWaitingDialog(false)
+        }
+        if (lastJsonMessage?.ships) {
+            onShips(lastJsonMessage.ships)
         }
     }, [lastJsonMessage]);
 
@@ -115,6 +123,7 @@ export default function GameSession({
         window.sessionStorage.removeItem("messages")
         window.sessionStorage.removeItem("gameId")
         window.sessionStorage.removeItem("isPlayingGame")
+        setTurnTime(0)
         setOpenWaitingDialog(false)
         onIsPlayingGame(false)
         setGameState("")
