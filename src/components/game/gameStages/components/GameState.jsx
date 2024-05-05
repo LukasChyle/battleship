@@ -15,16 +15,32 @@ export default function GameState({state}) {
             return {string: "YOU WON!", color: "green"}
         } else if (state === "LOST") {
             return {string: "You lost", color: "red"}
+        } else if (state === "TIMEOUT_OWN") {
+            return {string: "Turn expired, you lost", color: "red"}
+        } else if (state === "TIMEOUT_OPPONENT") {
+            return {string: "Turn expired, You won!", color: "green"}
+        } else if (state === "NO_GAME") {
+            return {string: "The game you tried to reconnect don't exist anymore.", color: "red"}
         }
         return {string: "No state given by server"}
     }
 
     const values = getGameState()
-    const style =  {
-        variant: state === "WON" || state === "LOST" || state === "OPPONENT_LEFT"? "h5" : "h6",
-        fontWeight: state === "WON" || state === "LOST" || state === "OPPONENT_LEFT"? "bold" : "normal",
-        color: values?.color
-    }
+    const style =
+        state === "WON" ||
+        state === "LOST" ||
+        state === "OPPONENT_LEFT" ||
+        state === "TIMEOUT_OWN" ||
+        state === "TIMEOUT_OPPONENT" ?
+            {
+                variant: "h5",
+                fontWeight: "bold",
+                color: values?.color
+            } : {
+                variant: "h6",
+                fontWeight: "normal",
+                color: values?.color
+            }
 
     return (
         <Paper elevation={5} sx={{padding: "20px"}}>

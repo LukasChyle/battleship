@@ -1,32 +1,24 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 import AlertDialog from "./AlertDialog.jsx";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function WaitingOpponentDialog({isOpen, handleLeave}) {
 
     const [timer, setTimer] = useState(0)
-    const [isRunning, setIsRunning] = useState(false)
-    let timeInterval = useRef(null)
 
     useEffect(() => {
-        isOpen? handleStart() : handleReset()
-    }, [isOpen])
-
-    const handleStart = () => {
-        if (isRunning) {
-            return
-        }
-        setIsRunning(true)
-        timeInterval.current = setInterval(() => {
-            setTimer((prev) => prev + 1)
-        }, 100)
-    };
-
-    const handleReset = () => {
-        setIsRunning(false)
-        clearInterval(timeInterval.current)
-        setTimer(0)
-    };
+        const interval = setInterval(() => {
+            setTimer(prevSeconds => {
+                if (isOpen) {
+                    return prevSeconds + 1;
+                } else {
+                    clearInterval(interval);
+                    return 0;
+                }
+            });
+        }, 100);
+        return () => clearInterval(interval);
+    }, [isOpen]);
 
     const formatTime = (timer) => {
         const minutes = Math.floor(timer / 600).toString().padStart(2, "0")

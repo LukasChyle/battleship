@@ -14,7 +14,7 @@ const ThemeConfig = (isDarkMode) => {
                 leaveButton: "crimson",
                 customText: {
                     green: "lightgreen",
-                    blue: "#87cefa"
+                    blue: "#87cefa",
                 },
                 connection: {
                     connecting: "gold",

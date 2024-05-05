@@ -10,6 +10,7 @@ import AlertDialog from "../../dialogs/AlertDialog.jsx";
 import GameState from "./components/GameState.jsx";
 import PlayerScore from "./components/PlayerScore.jsx";
 import {properties} from "../../../../properties.js";
+import TurnTimer from "./components/TurnTimer.jsx";
 
 export default function GameSession({
     ships,
@@ -24,9 +25,10 @@ export default function GameSession({
     const [gameLogMessages, setGameLogMessages] = useState([]);
     const [isGameOver, setIsGameOver] = useState(false);
     const [gameId, setGameId] = useState("");
-    const [turnTime, setTurnTime] = useState(0)
+    const [turnSecondsLeft, setTurnSecondsLeft] = useState(0)
+
     const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(properties.WS_URL,
-        {shouldReconnect: !isGameOver ? () => true : false})
+        {shouldReconnect: !isGameOver})
 
     useEffect(() => {
         if (readyState === 1) {
@@ -70,7 +72,7 @@ export default function GameSession({
             window.sessionStorage.setItem("gameId", lastJsonMessage.gameId)
         }
         if (lastJsonMessage?.timeLeft) {
-            setTurnTime(lastJsonMessage.timeLeft)
+            setTurnSecondsLeft(lastJsonMessage.timeLeft)
         }
         switch (lastJsonMessage?.eventType) {
             case "WON":
@@ -81,7 +83,8 @@ export default function GameSession({
             case "TIMEOUT_OPPONENT":
                 window.sessionStorage.removeItem("gameId")
                 window.sessionStorage.removeItem("isPlayingGame")
-                setTurnTime(0)
+                setTurnSecondsLeft(0)
+                setIsGameOver(true)
                 break
         }
         if (lastJsonMessage?.eventType === "WAITING_OPPONENT") {
@@ -123,7 +126,7 @@ export default function GameSession({
         window.sessionStorage.removeItem("messages")
         window.sessionStorage.removeItem("gameId")
         window.sessionStorage.removeItem("isPlayingGame")
-        setTurnTime(0)
+        setTurnSecondsLeft(0)
         setOpenWaitingDialog(false)
         onIsPlayingGame(false)
         setGameState("")
@@ -160,7 +163,7 @@ export default function GameSession({
             <Grid container
                   sx={{
                       display: "flex",
-                      alignItems: "top",
+                      alignItems: "center",
                       justifyContent: "center",
                       marginTop: "12px",
                   }}>
@@ -187,7 +190,10 @@ export default function GameSession({
                 <Grid item xs={12} md={3}>
                     <GameState state={gameState}/>
                 </Grid>
-                <Grid item xs={0} md={5}/>
+                <Grid item xs={0} md={2}>
+                    <TurnTimer gameState={gameState} turnSecondsLeft={turnSecondsLeft} setTurnSecondsLeft={setTurnSecondsLeft} />
+                </Grid>
+                <Grid item xs={0} md={3}/>
             </Grid>
             <Grid container spacing={10}>
                 <Grid item xs={12} md={5} sx={{
