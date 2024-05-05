@@ -204,7 +204,7 @@ export default function GameSession({
                 }}>
                     <Grid container>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="h5" component="div">{"Your Board"}</Typography>
+                            <Typography variant="h5" component="div">{"Own"}</Typography>
 
                         </Grid>
                         <Grid item xs={12} md={7}>
@@ -223,7 +223,7 @@ export default function GameSession({
                 }}>
                     <Grid container>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="h5" component="div">{"Opponent Board"}</Typography>
+                            <Typography variant="h5" component="div">{"Opponent"}</Typography>
 
                         </Grid>
                         <Grid item xs={12} md={7}>
