@@ -1,7 +1,7 @@
 import OwnGameBoard from "../../gameBoards/ownGameBoard/OwnGameBoard.jsx";
 import OpponentGameBoard from "../../gameBoards/opponentGameBoard/OpponentGameBoard.jsx";
 import {Alert, Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
-import GameMessageLogList from "../../lists/GameMessageLogList.jsx";
+import GameMessageLogList from "../../list/GameMessageLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
