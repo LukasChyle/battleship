@@ -141,7 +141,7 @@ export default function GameSession({
 
     const createGameLogMessage = () => {
         const letter = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
-        const content = `${lastJsonMessage.eventType === "TURN_OWN" ? "Opponent" : "You"} ${lastJsonMessage.hit
+        const content = `${lastJsonMessage.eventType === "TURN_OWN" ? "Enemy" : "You"} ${lastJsonMessage.hit
             ? " hit a ship" : "missed"} at ${letter + (+lastJsonMessage.strikeCol + 1)}`
         const today = new Date()
         const message = {
@@ -223,7 +223,7 @@ export default function GameSession({
                 }}>
                     <Grid container>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="h5" component="div">{"Opponent"}</Typography>
+                            <Typography variant="h5" component="div">{"Enemy"}</Typography>
 
                         </Grid>
                         <Grid item xs={12} md={7}>

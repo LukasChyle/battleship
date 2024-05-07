@@ -7,9 +7,9 @@ export default function GameState({state}) {
         if (state === "WAITING_OPPONENT") {
             return {string: "Waiting for an opponent to join"}
         } else if (state === "TURN_OWN") {
-            return {string: "Your turn to strike", color: theme.palette.customText.green}
+            return {string: "Your turn to attack", color: theme.palette.customText.green}
         } else if (state === "TURN_OPPONENT") {
-            return {string: "Opponent turn to strike", color: theme.palette.customText.blue}
+            return {string: "Enemy's turn to attack", color: theme.palette.customText.blue}
         } else if (state === "OPPONENT_LEFT") {
             return {string: "Opponent left the game", color: "red"}
         } else if (state === "WON") {
