@@ -12,17 +12,15 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
     return (
         <div>
             <Grid container spacing={1}>
-                <Grid item xs={0} md={1}/>
-                <Grid item xs={6} md={5} sx={{
-                    display: "grid",
+                <Grid item xs={12} md={8} sx={{
+                    display: "flex",
                     alignContent: "center",
                     justifyContent: "center",
+                    marginTop: "50px"
                 }}>
-                    <Paper elevation={7} sx={{marginTop: "50px"}}>
-                        <SetUpGameBoard ships={ships} onShips={onShips}/>
-                    </Paper>
+                    <SetUpGameBoard ships={ships} onShips={onShips}/>
                 </Grid>
-                <Grid item xs={3} md={5} sx={{
+                <Grid item xs={12} md={3} sx={{
                     display: "grid",
                     alignContent: "center",
                     justifyContent: "center",
@@ -30,7 +28,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                     <Paper elevation={3} sx={{padding: "24px"}}>
                         <ListItemText
                             primary={"Set up:"}
-                            secondary={"Place the ships on the board as you want them, rotate a ship with the arrow button"}
+                            secondary={"Drag and drop the 5 ships to the board as you want them, once a ship is placed on the board it can be rotated by the arrow button"}
                             primaryTypographyProps={{variant: "h6", fontWeight: "bold"}}
                             secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
                         />
@@ -40,13 +38,13 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                                 variant="contained"
                                 color="primary"
                                 onClick={handleStartGame}
+                                disabled={ships.find(e => e.row === undefined) || ships.find(e => e.col === undefined)}
                             >
-                                Start Game
+                                {"Start Game"}
                             </Button>
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item xs={0} md={1}/>
             </Grid>
         </div>
     )

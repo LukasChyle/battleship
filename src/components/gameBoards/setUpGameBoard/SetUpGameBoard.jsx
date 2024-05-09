@@ -1,10 +1,11 @@
-import {Grid, useTheme} from "@mui/material";
+import {Grid, Paper, useTheme} from "@mui/material";
 import {useEffect, useState} from "react";
 import {DndContext} from "@dnd-kit/core";
 import SetUpGameBoardTile from "./components/SetUpGameBoardTile.jsx";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 import NumberRow from "../NumberRow.jsx";
 import LetterRow from "../LetterRow.jsx";
+import InitialShipList from "./components/InitialShipList.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
@@ -82,9 +83,11 @@ export default function SetUpGameBoard({ships, onShips}) {
             }
         }
         const currentTiles = []
-        for (let i = 0; i < length; i++) {
-            currentIsHorizontal ? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push(
-                {id: (currentRow + i) + "" + currentCol})
+        if (currentRow !== undefined && currentCol !== undefined) {
+            for (let i = 0; i < length; i++) {
+                currentIsHorizontal ? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push(
+                    {id: (currentRow + i) + "" + currentCol})
+            }
         }
         for (let i = 0; i < length; i++) {
             if (layIsHorizontal) {
@@ -125,33 +128,43 @@ export default function SetUpGameBoard({ships, onShips}) {
 
     return (
         <div>
-            <NumberRow/>
-            <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}} wrap="nowrap">
-                <LetterRow/>
-                <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
-                    <div>
-                        <Grid container wrap="nowrap">
-                            {board.map((col, colIndex) => (
-                                <Grid key={colIndex}>
-                                    {col.map((row, rowIndex) => (
-                                        <Grid key={rowIndex}>
-                                            <SetUpGameBoardTile key={rowIndex}
-                                                                tile={tiles.find(
-                                                                    t => t.id === rowIndex + "" + colIndex)}
-                                                                ships={ships}
-                                                                onShips={onShips}
-                                                                canBeLaid={canBeLaid}
-                                                                markTiles={markTiles}
-                                                                resetTileImages={resetTileImages}
-                                            />
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            ))}
+            <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
+                <div>
+                    <Grid container display="flex">
+                        <Grid item xs={12} md={5}>
+                            <InitialShipList ships={ships} onShips={onShips}/>
                         </Grid>
-                    </div>
-                </DndContext>
-            </Grid>
+                        <Grid container wrap="nowrap" item xs={12} md={7}>
+                            <Paper elevation={7}>
+                                <NumberRow/>
+                                <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}}
+                                      wrap="nowrap">
+                                    <LetterRow/>
+                                    <Grid container wrap="nowrap">
+                                        {board.map((col, colIndex) => (
+                                            <Grid key={colIndex}>
+                                                {col.map((row, rowIndex) => (
+                                                    <Grid key={rowIndex}>
+                                                        <SetUpGameBoardTile key={rowIndex}
+                                                                            tile={tiles.find(
+                                                                                t => t.id === rowIndex + "" + colIndex)}
+                                                                            ships={ships}
+                                                                            onShips={onShips}
+                                                                            canBeLaid={canBeLaid}
+                                                                            markTiles={markTiles}
+                                                                            resetTileImages={resetTileImages}
+                                                        />
+                                                    </Grid>
+                                                ))}
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </div>
+            </DndContext>
         </div>
     )
 }

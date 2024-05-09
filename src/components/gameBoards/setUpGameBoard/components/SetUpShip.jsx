@@ -55,11 +55,13 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
             {...attributes}
             {...listeners}
         >
-            <Button onMouseEnter={handleButtonEnter}
-                    onMouseLeave={handleButtonLeave}
-                    onMouseDown={handleButtonClick}
-                    style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}
-            </Button>
+            {row !== undefined && col !== undefined &&
+                <Button onMouseEnter={handleButtonEnter}
+                        onMouseLeave={handleButtonLeave}
+                        onMouseDown={handleButtonClick}
+                        style={buttonStyle}>{isHorizontal ? "⬇️" : "➡️"}
+                </Button>
+            }
             <img className={[shipImage.shipImageStyle, "ship-image"].join(' ')} src={shipImage.srcString} alt={"Ship"}/>
         </div>
     )
