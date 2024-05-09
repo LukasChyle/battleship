@@ -1,7 +1,7 @@
 import {List, ListItemText, Paper, useTheme} from "@mui/material";
 import {useEffect} from "react";
 
-export default function GameMessageLogList({messages}) {
+export default function GameLogList({messages}) {
     const theme = useTheme()
 
     useEffect(() => {

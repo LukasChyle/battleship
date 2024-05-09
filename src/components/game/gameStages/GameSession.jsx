@@ -1,7 +1,7 @@
 import OwnGameBoard from "../../gameBoards/ownGameBoard/OwnGameBoard.jsx";
 import OpponentGameBoard from "../../gameBoards/opponentGameBoard/OpponentGameBoard.jsx";
 import {Alert, Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
-import GameMessageLogList from "../../lists/GameMessageLogList.jsx";
+import GameLogList from "./components/GameLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
@@ -241,7 +241,7 @@ export default function GameSession({
                     marginTop: "24px"
                 }}>
                     <Typography variant="h5" component="div">{"Action log"}</Typography>
-                    <GameMessageLogList messages={gameLogMessages}/>
+                    <GameLogList messages={gameLogMessages}/>
                 </Grid>
             </Grid>
             <Snackbar
