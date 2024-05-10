@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import {Typography} from "@mui/material";
+import {useIntl} from "react-intl";
+import {messages} from "../../Game.messages.js";
 
 export default function TurnTimer({gameState, turnSecondsLeft, setTurnSecondsLeft}) {
+    const intl = useIntl()
+
     useEffect(() => {
         const interval = setInterval(() => {
             setTurnSecondsLeft(prevSeconds => {
@@ -24,7 +28,7 @@ export default function TurnTimer({gameState, turnSecondsLeft, setTurnSecondsLef
             {turnSecondsLeft > 0 && (
                 <div>
                     <Typography variant="h6" sx={{fontWeight: "bold"}}>
-                        {"Time left:"}
+                        {intl.formatMessage(messages.turnTimerTitle) + ":"}
                     </Typography>
                     <Typography variant="h4" color={turnSecondsLeft <= 30 ? "red" : ""}>
                         {minutes}:{seconds}

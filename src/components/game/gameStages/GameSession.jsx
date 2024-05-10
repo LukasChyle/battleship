@@ -220,13 +220,13 @@ export default function GameSession({
                     marginTop: "24px",
                 }}>
                     <Grid container>
-                        <Grid item xs={12} md={5}>
+                        <Grid item xs={12} md={4}>
                             <Typography variant="h5" component="div">
                                 {intl.formatMessage(messages.ownBoardTitle)}
                             </Typography>
 
                         </Grid>
-                        <Grid item xs={12} md={7}>
+                        <Grid item xs={12} md={8}>
                             <PlayerScore strikes={opponentStrikes}/>
                         </Grid>
                     </Grid>
@@ -241,12 +241,12 @@ export default function GameSession({
                     marginTop: "24px"
                 }}>
                     <Grid container>
-                        <Grid item xs={12} md={5}>
+                        <Grid item xs={12} md={4}>
                             <Typography variant="h5" component="div">
                                 {intl.formatMessage(messages.opponentBoardTitle)}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} md={7}>
+                        <Grid item xs={12} md={8}>
                             <PlayerScore strikes={ownStrikes}/>
                         </Grid>
                     </Grid>

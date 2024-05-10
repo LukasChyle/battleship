@@ -16,9 +16,20 @@
   "game.session.ownBoardTitle": "Egna",
   "game.session.opponentBoardTitle": "Fienden",
   "game.session.gameLogWindowTitle": "Spellog",
-
-
-
+  "game.session.turnTimerTitle": "Tid kvar",
+  "game.session.playerScoreHits": "Träffar",
+  "game.session.playerScoreMisses": "Missar",
+  "game.session.playerScoreHitRatio": "Träffsäkerhet",
+  "game.session.gameStateTitle": "Speltillstånd",
+  "game.session.gameStateWaitingOpponent": "Väntar på att en motståndare ska gå med",
+  "game.session.gameStateTurnOwn": "Din tur att attackera",
+  "game.session.gameStateTurnOpponent": "Fiendens tur att attackera",
+  "game.session.gameStateOpponentLeft": "Motståndaren lämnade matchen",
+  "game.session.gameStateWon": "DU VANN!",
+  "game.session.gameStateLost": "Du förlorade",
+  "game.session.gameStateTimeoutOwn": "Tiden tog slut, du förlorade",
+  "game.session.gameStateTimeoutOpponent": "Tiden tog slut, du vann!",
+  "game.session.gameStateNoGame": "Spelet du försökte återansluta finns inte längre",
   "connectionState.title": "Anslutningstillstånd",
   "connectionState.open": "Ansluten",
   "connectionState.connecting": "Ansluter",

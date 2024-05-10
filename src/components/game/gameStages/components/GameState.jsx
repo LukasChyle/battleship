@@ -1,29 +1,58 @@
 import {ListItemText, Paper, useTheme} from "@mui/material";
+import {useIntl} from "react-intl";
+import {messages} from "../../Game.messages.js";
 
 export default function GameState({state}) {
     const theme = useTheme()
+    const intl = useIntl()
 
     const getGameState = () => {
-        if (state === "WAITING_OPPONENT") {
-            return {string: "Waiting for an opponent to join"}
-        } else if (state === "TURN_OWN") {
-            return {string: "Your turn to attack", color: theme.palette.customText.green}
-        } else if (state === "TURN_OPPONENT") {
-            return {string: "Enemy's turn to attack", color: theme.palette.customText.blue}
-        } else if (state === "OPPONENT_LEFT") {
-            return {string: "Opponent left the game", color: "red"}
-        } else if (state === "WON") {
-            return {string: "YOU WON!", color: "green"}
-        } else if (state === "LOST") {
-            return {string: "You lost", color: "red"}
-        } else if (state === "TIMEOUT_OWN") {
-            return {string: "Turn expired, you lost", color: "red"}
-        } else if (state === "TIMEOUT_OPPONENT") {
-            return {string: "Turn expired, You won!", color: "green"}
-        } else if (state === "NO_GAME") {
-            return {string: "The game you tried to reconnect don't exist anymore.", color: "red"}
+        switch (state) {
+            case "WAITING_OPPONENT":
+                return {string: intl.formatMessage(messages.gameStateWaitingOpponent)}
+            case "TURN_OWN":
+                return {
+                    string: intl.formatMessage(messages.gameStateTurnOwn),
+                    color: theme.palette.customText.green
+                }
+            case "TURN_OPPONENT":
+                return {
+                    string: intl.formatMessage(messages.gameStateTurnOpponent),
+                    color: theme.palette.customText.blue
+                }
+            case "OPPONENT_LEFT":
+                return {
+                    string: intl.formatMessage(messages.gameStateOpponentLeft),
+                    color: "red"
+                }
+            case "WON":
+                return {
+                    string: intl.formatMessage(messages.gameStateWon),
+                    color: "green"
+                }
+            case "LOST":
+                return {
+                    string: intl.formatMessage(messages.gameStateLost),
+                    color: "red"
+                }
+            case "TIMEOUT_OWN":
+                return {
+                    string: intl.formatMessage(messages.gameStateTimeoutOwn),
+                    color: "red"
+                }
+            case "TIMEOUT_OPPONENT":
+                return {
+                    string: intl.formatMessage(messages.gameStateTimeoutOpponent),
+                    color: "green"
+                }
+            case "NO_GAME":
+                return {
+                    string: intl.formatMessage(messages.gameStateNoGame),
+                    color: "red"
+                }
+            default:
+                return ""
         }
-        return {string: "No state given by server"}
     }
 
     const values = getGameState()
@@ -49,7 +78,7 @@ export default function GameState({state}) {
                 sx={{
                     textAlign: "center"
                 }}
-                primary={"Game state:"}
+                primary={intl.formatMessage(messages.gameStateTitle) + ":"}
                 secondary={values.string}
                 primaryTypographyProps={{variant: "h5", fontWeight: "bold"}}
                 secondaryTypographyProps={style}

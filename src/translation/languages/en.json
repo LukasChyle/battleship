@@ -16,9 +16,20 @@
   "game.session.ownBoardTitle": "Own",
   "game.session.opponentBoardTitle": "Enemy",
   "game.session.gameLogWindowTitle": "Game log",
-
-
-
+  "game.session.turnTimerTitle": "Time left",
+  "game.session.playerScoreHits": "Hits",
+  "game.session.playerScoreMisses": "Misses",
+  "game.session.playerScoreHitRatio": "Accuracy",
+  "game.session.gameStateTitle": "Game state",
+  "game.session.gameStateWaitingOpponent": "Waiting for an opponent to join",
+  "game.session.gameStateTurnOwn": "Your turn to attack",
+  "game.session.gameStateTurnOpponent": "Enemy's turn to attack",
+  "game.session.gameStateOpponentLeft": "Opponent left the game",
+  "game.session.gameStateWon": "YOU WON!",
+  "game.session.gameStateLost": "You lost",
+  "game.session.gameStateTimeoutOwn": "Turn expired, you lost",
+  "game.session.gameStateTimeoutOpponent": "Turn expired, You won!",
+  "game.session.gameStateNoGame": "The game you tried to reconnect don't exist anymore",
   "connectionState.title": "Connection state",
   "connectionState.open": "Connected",
   "connectionState.connecting": "Connecting",
