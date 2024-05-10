@@ -1,19 +1,22 @@
 import {Box, Typography, useTheme} from "@mui/material";
+import {useIntl} from "react-intl";
+import {messages} from "./ConnectionState.messages.js";
 
 export default function ConnectionState({style, state}) {
     const theme = useTheme()
+    const intl = useIntl()
 
     const getConnectionState = () => {
         if (state === 0) {
-            return {string: "Connecting", color: theme.palette.connection.connecting}
+            return {string: intl.formatMessage(messages.connecting), color: theme.palette.connection.connecting}
         } else if (state === 1) {
-            return {string: "Connected", color: theme.palette.connection.connected}
+            return {string: intl.formatMessage(messages.open), color: theme.palette.connection.connected}
         } else if (state === 2) {
-            return {string: "Closing", color: theme.palette.connection.closing}
+            return {string: intl.formatMessage(messages.closing), color: theme.palette.connection.closing}
         } else if (state === 3) {
-            return {string: "Disconnected", color: theme.palette.connection.disconnected}
+            return {string: intl.formatMessage(messages.closed), color: theme.palette.connection.disconnected}
         } else {
-            return {string: "Error", color: theme.palette.connection.error}
+            return {string: intl.formatMessage(messages.uninstantiated), color: theme.palette.connection.error}
         }
     }
     const values = getConnectionState()
@@ -23,7 +26,9 @@ export default function ConnectionState({style, state}) {
             <Typography variant="caption" sx={{
                 fontWeight: "bold",
                 color: theme.palette.connection.title
-            }}>{"Connection state"}</Typography>
+            }}>
+                {intl.formatMessage(messages.title)}
+            </Typography>
             <Box
                 display="flex"
                 alignItems="center"

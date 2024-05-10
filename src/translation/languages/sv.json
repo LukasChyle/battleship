@@ -1,0 +1,28 @@
+{
+  "header.darkModeSwitch": "Mörkt läge",
+  "header.title": "SÄNKA SKEPP",
+  "game.setUp.instructionsTitle": "Placering",
+  "game.setUp.instructionsContent": "Dra och släpp de 5 skeppen på spelbrädet som du önskar. När ett skepp är placerat kan du rotera det med knappen som finns i det övre vänstra hörnet av skeppet.",
+  "game.setUp.startGameButton": "STARTA SPELET",
+  "game.session.leaveGameButton": "LÄMNA SPELET",
+  "game.session.leaveGameAlertDialog": "Är du säker på att du vill lämna det här spelet?",
+  "game.session.stayButton": "Stanna kvar",
+  "game.session.leaveButton": "Lämna",
+  "game.session.waitingOpponentDialogContent": "Väntar på en motståndare",
+  "game.session.logMessageOwnDidHit": "Du träffade ett skepp på ",
+  "game.session.logMessageOwnDidMiss": "Du missade på ",
+  "game.session.logMessageOpponentDidHit": "Fienden träffade ett skepp på ",
+  "game.session.logMessageOpponentDidMiss": "Fienden missade på ",
+  "game.session.ownBoardTitle": "Egna",
+  "game.session.opponentBoardTitle": "Fienden",
+  "game.session.gameLogWindowTitle": "Spellog",
+
+
+
+  "connectionState.title": "Anslutningstillstånd",
+  "connectionState.open": "Ansluten",
+  "connectionState.connecting": "Ansluter",
+  "connectionState.closing": "Stänger",
+  "connectionState.closed": "frånkopplad",
+  "connectionState.uninstantiated": "Error"
+}

@@ -15,6 +15,7 @@ const ThemeConfig = (isDarkMode) => {
                 customText: {
                     green: "lightgreen",
                     blue: "#87cefa",
+                    header: "white"
                 },
                 connection: {
                     connecting: "gold",
@@ -39,7 +40,8 @@ const ThemeConfig = (isDarkMode) => {
                 leaveButton: "error",
                 customText: {
                     green: "darkgreen",
-                    blue: "darkblue"
+                    blue: "darkblue",
+                    header: "black"
                 },
                 connection: {
                     connecting: "yellow",

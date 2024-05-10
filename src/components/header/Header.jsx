@@ -1,7 +1,11 @@
 import {AppBar, FormControlLabel, Switch, Toolbar, Typography, useTheme} from "@mui/material";
+import LanguageSelect from "./LanguageSelect.jsx";
+import {useIntl} from "react-intl";
+import {messages} from "./Header.messages.js";
 
-export default function ({onIsDarkMode, isDarkMode}) {
+export default function ({onIsDarkMode, isDarkMode, locale, onLocale}) {
     const theme = useTheme()
+    const intl = useIntl()
 
     const handleDarkModeSwitch = () => {
         window.sessionStorage.setItem("isDarkMode", !isDarkMode)
@@ -24,19 +28,21 @@ export default function ({onIsDarkMode, isDarkMode}) {
                         display: {xs: 'none', sm: 'block'}
                     }}
                 >
-                    BATTLESHIPS
+                    {intl.formatMessage(messages.title)}
                 </Typography>
+                <LanguageSelect locale={locale} onLocale={onLocale}/>
                 <FormControlLabel
                     sx={{
-                        fontSize: "12px"
+                        fontSize: "12px",
+                        color: theme.palette.customText.header
                     }}
                     control={
                         <Switch
+                            name="mode"
                             checked={isDarkMode}
-                            color="primary"
                             onChange={handleDarkModeSwitch}
                         />}
-                    label="Dark"
+                    label={intl.formatMessage(messages.darkModeSwitch)}
                     labelPlacement="start"
                 />
             </Toolbar>

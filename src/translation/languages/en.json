@@ -1,0 +1,28 @@
+{
+  "header.darkModeSwitch": "Dark mode",
+  "header.title": "BATTLESHIPS",
+  "game.setUp.instructionsTitle": "Placement",
+  "game.setUp.instructionsContent": "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the button located in the upper left corner of the ship.",
+  "game.setUp.startGameButton": "START GAME",
+  "game.session.leaveGameButton": "LEAVE GAME",
+  "game.session.leaveGameAlertDialog": "Are you sure you want to leave this game?",
+  "game.session.stayButton": "Stay",
+  "game.session.leaveButton": "Leave",
+  "game.session.waitingOpponentDialogContent": "Waiting for an opponent",
+  "game.session.logMessageOwnDidHit": "You hit a ship at ",
+  "game.session.logMessageOwnDidMiss": "You missed at ",
+  "game.session.logMessageOpponentDidHit": "Enemy hit a ship at ",
+  "game.session.logMessageOpponentDidMiss": "Enemy missed at ",
+  "game.session.ownBoardTitle": "Own",
+  "game.session.opponentBoardTitle": "Enemy",
+  "game.session.gameLogWindowTitle": "Game log",
+
+
+
+  "connectionState.title": "Connection state",
+  "connectionState.open": "Connected",
+  "connectionState.connecting": "Connecting",
+  "connectionState.closing": "Closing",
+  "connectionState.closed": "Disconnected",
+  "connectionState.uninstantiated": "Error"
+}

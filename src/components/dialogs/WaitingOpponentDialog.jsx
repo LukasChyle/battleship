@@ -1,9 +1,11 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 import AlertDialog from "./AlertDialog.jsx";
 import {useEffect, useState} from "react";
+import {useIntl} from "react-intl";
+import {messages} from "../game/Game.messages.js";
 
 export default function WaitingOpponentDialog({isOpen, handleLeave}) {
-
+    const intl = useIntl()
     const [timer, setTimer] = useState(0)
 
     useEffect(() => {
@@ -39,17 +41,17 @@ export default function WaitingOpponentDialog({isOpen, handleLeave}) {
                 sx={{display: "grid", justifyContent: "center"}}
                 fontWeight="bold"
                 id="dialog-title">
-                {"Waiting for an opponent"}
+                {intl.formatMessage(messages.waitingOpponentDialogContent)}
             </DialogTitle>
             <DialogContent sx={{display: "grid", justifyContent: "center"}}>
                 <Typography variant="h5" sx={{fontWeight: "bold", color: "black"}}>{minutes}:{seconds}</Typography>
             </DialogContent>
             <DialogActions>
                 <AlertDialog
-                    dialogButtonText={"Leave Game"}
-                    acceptDialogButtonText={"Leave"}
-                    cancelDialogButtonText={"Stay"}
-                    title={"Sure you want to leave this game?"}
+                    dialogButtonText={intl.formatMessage(messages.leaveGameButton)}
+                    acceptDialogButtonText={intl.formatMessage(messages.leaveButton)}
+                    cancelDialogButtonText={intl.formatMessage(messages.stayButton)}
+                    title={intl.formatMessage(messages.leaveGameAlertDialog)}
                     onAccept={handleLeave} />
             </DialogActions>
         </Dialog>

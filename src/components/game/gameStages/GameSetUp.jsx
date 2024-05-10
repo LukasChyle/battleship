@@ -1,8 +1,11 @@
 import SetUpGameBoard from "../../gameBoards/setUpGameBoard/SetUpGameBoard.jsx";
 import {Button, Grid, ListItemText, Paper, useTheme} from "@mui/material";
+import {useIntl} from "react-intl";
+import {messages} from "../Game.messages.js";
 
 export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
     const theme = useTheme()
+    const intl = useIntl()
     const handleStartGame = () => {
         onIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
@@ -27,8 +30,8 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                 }}>
                     <Paper elevation={3} sx={{padding: "24px"}}>
                         <ListItemText
-                            primary={"Set up:"}
-                            secondary={"Drag and drop the 5 ships to the board as you want them, once a ship is placed on the board it can be rotated by the arrow button"}
+                            primary={intl.formatMessage(messages.instructionsTitle) + ":"}
+                            secondary={intl.formatMessage(messages.instructionsContent)}
                             primaryTypographyProps={{variant: "h6", fontWeight: "bold"}}
                             secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
                         />
@@ -41,7 +44,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                                 disabled={!!(ships.find(e => e.row === undefined) ||
                                     ships.find(e => e.col === undefined))}
                             >
-                                {"Start Game"}
+                                {intl.formatMessage(messages.startGameButton)}
                             </Button>
                         </div>
                     </Paper>

@@ -5,18 +5,21 @@ import GameLogList from "./components/GameLogList.jsx";
 import {useEffect, useState} from "react";
 import useWebSocket from "react-use-websocket";
 import WaitingOpponentDialog from "../../dialogs/WaitingOpponentDialog.jsx";
-import ConnectionState from "./components/ConnectionState.jsx";
+import ConnectionState from "../../connectionState/ConnectionState.jsx";
 import AlertDialog from "../../dialogs/AlertDialog.jsx";
 import GameState from "./components/GameState.jsx";
 import PlayerScore from "./components/PlayerScore.jsx";
 import {properties} from "../../../../properties.js";
 import TurnTimer from "./components/TurnTimer.jsx";
+import {useIntl} from "react-intl";
+import {messages} from "../Game.messages.js";
 
 export default function GameSession({
     ships,
     onShips,
     onIsPlayingGame,
 }) {
+    const intl = useIntl()
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [gameState, setGameState] = useState("");
@@ -140,13 +143,26 @@ export default function GameSession({
     }
 
     const createGameLogMessage = () => {
-        const letter = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
-        const content = `${lastJsonMessage.eventType === "TURN_OWN" ? "Enemy" : "You"} ${lastJsonMessage.hit
-            ? " hit a ship" : "missed"} at ${letter + (+lastJsonMessage.strikeCol + 1)}`
+        const position = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
+            + (+lastJsonMessage.strikeCol + 1)
+
+        const content = () => {
+            if (lastJsonMessage.eventType === "TURN_OWN") {
+                if (lastJsonMessage.hit) {
+                    return intl.formatMessage(messages.logMessageOpponentDidHit) + position
+                }
+                return intl.formatMessage(messages.logMessageOpponentDidMiss) + position
+            }
+            if (lastJsonMessage.hit) {
+                return intl.formatMessage(messages.logMessageOwnDidHit) + position
+            }
+            return intl.formatMessage(messages.logMessageOwnDidMiss) + position
+        }
+
         const today = new Date()
         const message = {
             isOwnMove: lastJsonMessage.eventType === "TURN_OPPONENT",
-            content: content,
+            content: content(),
             isHit: lastJsonMessage.hit,
             time: today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0')
         }
@@ -176,14 +192,14 @@ export default function GameSession({
                             variant="contained"
                             color="primary"
                             onClick={handleLeaveGame}>
-                            {"Leave Game"}
+                            {intl.formatMessage(messages.leaveGameButton)}
                         </Button>
                         :
                         <AlertDialog
-                            dialogButtonText={"Leave Game"}
-                            acceptDialogButtonText={"Leave"}
-                            cancelDialogButtonText={"Stay"}
-                            title={"Are you sure you want to leave this game?"}
+                            dialogButtonText={intl.formatMessage(messages.leaveGameButton)}
+                            acceptDialogButtonText={intl.formatMessage(messages.leaveButton)}
+                            cancelDialogButtonText={intl.formatMessage(messages.stayButton)}
+                            title={intl.formatMessage(messages.leaveGameAlertDialog)}
                             onAccept={handleLeaveGame}/>}
                 </Grid>
                 <Grid item xs={0} md={1}/>
@@ -191,7 +207,8 @@ export default function GameSession({
                     <GameState state={gameState}/>
                 </Grid>
                 <Grid item xs={0} md={2}>
-                    <TurnTimer gameState={gameState} turnSecondsLeft={turnSecondsLeft} setTurnSecondsLeft={setTurnSecondsLeft} />
+                    <TurnTimer gameState={gameState} turnSecondsLeft={turnSecondsLeft}
+                               setTurnSecondsLeft={setTurnSecondsLeft}/>
                 </Grid>
                 <Grid item xs={0} md={3}/>
             </Grid>
@@ -204,7 +221,9 @@ export default function GameSession({
                 }}>
                     <Grid container>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="h5" component="div">{"Own"}</Typography>
+                            <Typography variant="h5" component="div">
+                                {intl.formatMessage(messages.ownBoardTitle)}
+                            </Typography>
 
                         </Grid>
                         <Grid item xs={12} md={7}>
@@ -223,8 +242,9 @@ export default function GameSession({
                 }}>
                     <Grid container>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="h5" component="div">{"Enemy"}</Typography>
-
+                            <Typography variant="h5" component="div">
+                                {intl.formatMessage(messages.opponentBoardTitle)}
+                            </Typography>
                         </Grid>
                         <Grid item xs={12} md={7}>
                             <PlayerScore strikes={ownStrikes}/>
@@ -240,7 +260,9 @@ export default function GameSession({
                     justifyContent: "left",
                     marginTop: "24px"
                 }}>
-                    <Typography variant="h5" component="div">{"Action log"}</Typography>
+                    <Typography variant="h5" component="div">
+                        {intl.formatMessage(messages.gameLogWindowTitle)}
+                    </Typography>
                     <GameLogList messages={gameLogMessages}/>
                 </Grid>
             </Grid>
