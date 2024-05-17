@@ -31,7 +31,7 @@ export default function GameSession({
     const [turnSecondsLeft, setTurnSecondsLeft] = useState(0)
 
     const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(properties.WS_URL,
-        {shouldReconnect: !isGameOver})
+        {shouldReconnect: () => !isGameOver})
 
     useEffect(() => {
         if (readyState === 1) {
