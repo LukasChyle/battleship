@@ -1,8 +1,5 @@
-# React + Vite
+This is a webbapplication created with React and Vite,
+Where you can play battleships against other trough the backend (battleship-backend repo).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+more about the project (mostly in Swedish)
+[Examensrapport-LukasChyle-JAVA22D.pdf](https://github.com/user-attachments/files/17046300/Examensrapport-LukasChyle-JAVA22D.pdf)
