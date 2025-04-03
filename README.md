@@ -31,10 +31,7 @@ environment within a scalable system.
 The frontend is developed using JavaScript with the React library, while the backend is
 implemented in Java utilizing the Spring Boot framework.
 
-## Tools
-### Spring Boot
-A Java-based framework for building backend services and web applications. It simplifies dependency management, includes an embedded server (Tomcat, Netty, etc.), and offers production-ready features out of the box.
-
+## Tools (used in frontend)
 ### React
 A JavaScript library for building user interfaces with a component-based approach. It focuses on the view layer, enabling dynamic and interactive UIs.
 
@@ -43,18 +40,6 @@ A fast frontend build tool and development server optimized for modern framework
 
 ### WebSocket
 A communication protocol enabling bidirectional, real-time data exchange between a client and server over a single persistent TCP connection, reducing the need for repeated requests.
-
-### WebFlux
-A reactive alternative to Spring MVC, designed for asynchronous, non-blocking HTTP processing. Best suited for high-throughput applications but requires careful handling of blocking operations like database queries.
-
-### Netty (Server)
-A low-level, high-performance networking framework for building scalable, asynchronous applications.
-
-### Spring Boot Starter WebFlux
-A module for developing reactive, non-blocking web applications using Spring WebFlux. Supports built-in reactive servers like Netty or Undertow and is optimized for WebSocket handling.
-
-### Lombok
-A Java library that reduces boilerplate code by generating getter/setter methods, constructors, and more at compile time. Improves code readability but adds compile-time dependencies that can affect debugging.
 
 ### Material-UI (MUI)
 A React component library implementing Google’s Material Design, offering customizable and reusable UI components for modern and responsive web applications.
