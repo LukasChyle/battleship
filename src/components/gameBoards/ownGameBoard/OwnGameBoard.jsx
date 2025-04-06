@@ -46,7 +46,7 @@ export default function OwnGameBoard({ships, tileStrikes}) {
                         <Grid className="board-row" key={colIndex}>
                             {col.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.tileId === rowIndex + "" + colIndex) &&
+                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex) &&
                                         <img className="tile-strike-img"
                                              src={getStrikeImage(
                                                  tiles.find(t => t.used && t.id === rowIndex + "" + colIndex))}

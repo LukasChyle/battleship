@@ -27,7 +27,7 @@ export default function OpponentGameBoard({tileStrikes, handleStrike}) {
 
     const handleTiles = () => {
         setTiles(tiles.map((e) => {
-            return {...e, alreadyUsed: !!tileStrikes.find(t => t.tileId === e.id)}
+            return {...e, alreadyUsed: !!tileStrikes.find(t => t.row + "" + t.column === e.id)}
         }))
     }
 
@@ -45,9 +45,9 @@ export default function OpponentGameBoard({tileStrikes, handleStrike}) {
                         <Grid className="board-row" key={colIndex}>
                             {col.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.tileId === rowIndex + "" + colIndex) &&
+                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex) &&
                                         <img className="tile-strike-img"
-                                             src={tileStrikes.find(t => t.tileId === rowIndex + "" + colIndex).hit
+                                             src={tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex).hit
                                                  ? "src/assets/strike-1.png" : "src/assets/missed-strike.png"}
                                              alt={"tileStrike"}
                                         />

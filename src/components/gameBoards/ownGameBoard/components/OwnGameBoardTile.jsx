@@ -10,7 +10,9 @@ export default function OwnGameBoardTile({tile, tileStrikes}) {
 
     return (
         <span className="board-tile">
-            <img className="tile-img" src={tile.used? getUsedTileImage(tileStrikes.find(t => t.tileId === tile.id)) : "/src/assets/framed-water.jpg"} alt="board-tile"/>
+            <img className="tile-img"
+                 src={tile.used ? getUsedTileImage(tileStrikes.find(t => t.row + "" + t.column === tile.id))
+                     : "/src/assets/framed-water.jpg"} alt="board-tile"/>
             {tile.ship && <Ship
                 key={tile.ship.id}
                 isHorizontal={tile.ship.isHorizontal}
