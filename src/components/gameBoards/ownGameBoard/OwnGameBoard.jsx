@@ -11,9 +11,9 @@ const board = Array.apply(null, Array(10)).map(() => (
 
 const getInitialTiles = () => {
     const tiles = []
-    board.forEach((row, rowIndex) => (row.forEach((col, colIndex) => {
+    board.forEach((row, rowIndex) => (row.forEach((column, columnIndex) => {
         tiles.push({
-            id: (rowIndex + "" + colIndex),
+            id: (rowIndex + "" + columnIndex),
             used: false,
             ship: undefined
         })
@@ -42,19 +42,19 @@ export default function OwnGameBoard({ships, tileStrikes}) {
             <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}} wrap="nowrap">
                 <LetterRow/>
                 <Grid container wrap="nowrap">
-                    {board.map((col, colIndex) => (
-                        <Grid className="board-row" key={colIndex}>
-                            {col.map((row, rowIndex) => (
+                    {board.map((column, columnIndex) => (
+                        <Grid className="board-row" key={columnIndex}>
+                            {column.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex) &&
+                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + columnIndex) &&
                                         <img className="tile-strike-img"
                                              src={getStrikeImage(
-                                                 tiles.find(t => t.used && t.id === rowIndex + "" + colIndex))}
+                                                 tiles.find(t => t.used && t.id === rowIndex + "" + columnIndex))}
                                              alt={"tileStrike"}
                                         />
                                     }
                                     <OwnGameBoardTile key={rowIndex}
-                                                      tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
+                                                      tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
                                                       tileStrikes={tileStrikes}
                                     />
                                 </Grid>

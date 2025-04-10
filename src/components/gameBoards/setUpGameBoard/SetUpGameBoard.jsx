@@ -13,11 +13,11 @@ const board = Array.apply(null, Array(10)).map(() => (
 
 const getInitialTiles = () => {
     const tiles = []
-    board.forEach((row, rowIndex) => (row.forEach((col, colIndex) => {
+    board.forEach((row, rowIndex) => (row.forEach((column, columnIndex) => {
         tiles.push({
-            id: (rowIndex + "" + colIndex),
+            id: (rowIndex + "" + columnIndex),
             row: rowIndex,
-            col: colIndex,
+            column: columnIndex,
             src: "/src/assets/framed-water.jpg",
             used: false,
             ship: undefined
@@ -41,13 +41,13 @@ export default function SetUpGameBoard({ships, onShips}) {
                     e.active.data.current.isHorizontal,
                     e.active.data.current.isHorizontal,
                     e.over.data.current.row,
-                    e.over.data.current.col,
+                    e.over.data.current.column,
                     e.active.data.current.row,
-                    e.active.data.current.col),
+                    e.active.data.current.column),
                 e.active.data.current.length,
                 e.active.data.current.isHorizontal,
                 e.over.data.current.row,
-                e.over.data.current.col)
+                e.over.data.current.column)
         }
     }
 
@@ -61,20 +61,21 @@ export default function SetUpGameBoard({ships, onShips}) {
             e.active.data.current.isHorizontal,
             e.active.data.current.isHorizontal,
             e.over.data.current.row,
-            e.over.data.current.col,
+            e.over.data.current.column,
             e.active.data.current.row,
-            e.active.data.current.col)) {
+            e.active.data.current.column)) {
             return
         }
         onShips(ships.map((ship) => {
             const match = e.active.id === ship.id
-            return match ? {...ship, row: e.over.data.current.row, col: e.over.data.current.col} : ship
+            return match ? {...ship, row: e.over.data.current.row, column: e.over.data.current.column} : ship
         }))
     }
 
-    const canBeLaid = (length, layIsHorizontal, currentIsHorizontal, overRow, overCol, currentRow, currentCol) => {
+    const canBeLaid = (length, layIsHorizontal, currentIsHorizontal, overRow, overColumn, currentRow,
+        currentColumn) => {
         if (layIsHorizontal) {
-            if (length + overCol > 10) {
+            if (length + overColumn > 10) {
                 return false
             }
         } else {
@@ -83,21 +84,22 @@ export default function SetUpGameBoard({ships, onShips}) {
             }
         }
         const currentTiles = []
-        if (currentRow !== undefined && currentCol !== undefined) {
+        if (currentRow !== undefined && currentColumn !== undefined) {
             for (let i = 0; i < length; i++) {
-                currentIsHorizontal ? currentTiles.push({id: currentRow + "" + (currentCol + i)}) : currentTiles.push(
-                    {id: (currentRow + i) + "" + currentCol})
+                currentIsHorizontal ? currentTiles.push({id: currentRow + "" + (currentColumn + i)})
+                    : currentTiles.push(
+                        {id: (currentRow + i) + "" + currentColumn})
             }
         }
         for (let i = 0; i < length; i++) {
             if (layIsHorizontal) {
-                if (tiles.find(e => e.id === overRow + "" + (overCol + i)).used && !currentTiles.find(
-                    e => e.id === overRow + "" + (overCol + i))) {
+                if (tiles.find(e => e.id === overRow + "" + (overColumn + i)).used && !currentTiles.find(
+                    e => e.id === overRow + "" + (overColumn + i))) {
                     return false
                 }
             } else {
-                if (tiles.find(e => e.id === (overRow + i) + "" + overCol).used && !currentTiles.find(
-                    e => e.id === (overRow + i) + "" + overCol)) {
+                if (tiles.find(e => e.id === (overRow + i) + "" + overColumn).used && !currentTiles.find(
+                    e => e.id === (overRow + i) + "" + overColumn)) {
                     return false
                 }
             }
@@ -105,11 +107,11 @@ export default function SetUpGameBoard({ships, onShips}) {
         return true
     }
 
-    const markTiles = (canBeLaid, length, isHorizontal, overRow, overCol) => {
+    const markTiles = (canBeLaid, length, isHorizontal, overRow, overColumn) => {
         const tilesToChange = []
         for (let i = 0; i < length; i++) {
-            isHorizontal ? tilesToChange.push({id: overRow + "" + (overCol + i)}) : tilesToChange.push(
-                {id: (overRow + i) + "" + overCol})
+            isHorizontal ? tilesToChange.push({id: overRow + "" + (overColumn + i)}) : tilesToChange.push(
+                {id: (overRow + i) + "" + overColumn})
         }
         setTiles(tiles.map((e) => {
             const match = tilesToChange.find(t => t.id === e.id)
@@ -141,13 +143,14 @@ export default function SetUpGameBoard({ships, onShips}) {
                                       wrap="nowrap">
                                     <LetterRow/>
                                     <Grid container wrap="nowrap">
-                                        {board.map((col, colIndex) => (
-                                            <Grid key={colIndex}>
-                                                {col.map((row, rowIndex) => (
+                                        {board.map((column, columnIndex) => (
+                                            <Grid key={columnIndex}>
+                                                {column.map((row, rowIndex) => (
                                                     <Grid key={rowIndex}>
                                                         <SetUpGameBoardTile key={rowIndex}
                                                                             tile={tiles.find(
-                                                                                t => t.id === rowIndex + "" + colIndex)}
+                                                                                t => t.id === rowIndex + ""
+                                                                                    + columnIndex)}
                                                                             ships={ships}
                                                                             onShips={onShips}
                                                                             canBeLaid={canBeLaid}

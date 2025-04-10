@@ -10,11 +10,11 @@ const board = Array.apply(null, Array(10)).map(() => (
 
 const getTiles = () => {
     const tiles = []
-    board.forEach((row, rowIndex) => (row.forEach((col, colIndex) => {
+    board.forEach((row, rowIndex) => (row.forEach((column, columnIndex) => {
         tiles.push({
             id: (rowIndex + "" + colIndex),
             row: rowIndex,
-            col: colIndex,
+            column: columnIndex,
             alreadyUsed: false
         })
     })))
@@ -41,19 +41,19 @@ export default function OpponentGameBoard({tileStrikes, handleStrike}) {
             <Grid container style={{backgroundColor: theme.palette.boardSideRowBackground}} wrap="nowrap">
                 <LetterRow/>
                 <Grid container wrap="nowrap">
-                    {board.map((col, colIndex) => (
-                        <Grid className="board-row" key={colIndex}>
-                            {col.map((row, rowIndex) => (
+                    {board.map((column, columnIndex) => (
+                        <Grid className="board-row" key={columnIndex}>
+                            {column.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex) &&
+                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + columnIndex) &&
                                         <img className="tile-strike-img"
-                                             src={tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + colIndex).hit
+                                             src={tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + columnIndex).hit
                                                  ? "src/assets/strike-1.png" : "src/assets/missed-strike.png"}
                                              alt={"tileStrike"}
                                         />
                                     }
                                     <OpponentGameBoardTile key={rowIndex}
-                                                           tile={tiles.find(t => t.id === rowIndex + "" + colIndex)}
+                                                           tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
                                                            handleStrike={handleStrike}
                                     />
                                 </Grid>

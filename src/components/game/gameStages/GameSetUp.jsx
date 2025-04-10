@@ -42,7 +42,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                                 color="primary"
                                 onClick={handleStartGame}
                                 disabled={!!(ships.find(e => e.row === undefined) ||
-                                    ships.find(e => e.col === undefined))}
+                                    ships.find(e => e.column === undefined))}
                             >
                                 {intl.formatMessage(messages.startGameButton)}
                             </Button>

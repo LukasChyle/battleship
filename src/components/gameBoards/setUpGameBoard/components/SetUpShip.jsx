@@ -4,13 +4,13 @@ import {CSS} from "@dnd-kit/utilities";
 import {Button} from "@mui/material";
 import ShipImageConfig from "../../ShipImageConfig.jsx";
 
-export default function SetUpShip({id, isHorizontal, length, row, col, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
+export default function SetUpShip({id, isHorizontal, length, row, column, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
     const [isDisabled, setIsDisabled] = useState(false)
     const {
         active, attributes, listeners, setNodeRef, transform
     } = useDraggable({
         id: id,
-        data: {length: length, isHorizontal: isHorizontal, row: row, col: col},
+        data: {length: length, isHorizontal: isHorizontal, row: row, column: column},
         disabled: isDisabled
     })
     const zIndex = active && active.id === id ? 2 : 1;
@@ -27,7 +27,7 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
     }
 
     const handleButtonClick = () => {
-        if (canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col)) {
+        if (canBeLaid(length, !isHorizontal, isHorizontal, row, column, row, column)) {
             onShips(ships.map((e) => {
                 return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
             }))
@@ -36,7 +36,7 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
     }
 
     const handleButtonEnter = () => {
-        markTiles(canBeLaid(length, !isHorizontal, isHorizontal, row, col, row, col), length, !isHorizontal, row, col)
+        markTiles(canBeLaid(length, !isHorizontal, isHorizontal, row, column, row, column), length, !isHorizontal, row, column)
         setIsDisabled(true)
     }
 
@@ -55,7 +55,7 @@ export default function SetUpShip({id, isHorizontal, length, row, col, ships, on
             {...attributes}
             {...listeners}
         >
-            {row !== undefined && col !== undefined &&
+            {row !== undefined && column !== undefined &&
                 <Button onMouseEnter={handleButtonEnter}
                         onMouseLeave={handleButtonLeave}
                         onMouseDown={handleButtonClick}

@@ -6,7 +6,7 @@ export default function SetUpGameBoardTile({tile, ships, onShips, canBeLaid, mar
         id: tile.id,
         data: {
             row: tile.row,
-            col: tile.col
+            column: tile.column
         }
     })
     return (
@@ -18,7 +18,7 @@ export default function SetUpGameBoardTile({tile, ships, onShips, canBeLaid, mar
                 isHorizontal={tile.ship.isHorizontal}
                 length={tile.ship.length}
                 row={tile.row}
-                col={tile.col}
+                column={tile.column}
                 ships={ships}
                 onShips={onShips}
                 canBeLaid={canBeLaid}

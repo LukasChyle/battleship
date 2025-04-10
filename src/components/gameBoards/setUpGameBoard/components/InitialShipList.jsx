@@ -5,7 +5,7 @@ export default function InitialShipList({ships, onShips}) {
     return (
             <List sx={{width: "230px"}}>
                 {ships.map((ship, index) =>
-                    ship.row === undefined && ship.col === undefined &&
+                    ship.row === undefined && ship.column === undefined &&
                     <ListItem key={index} sx={{paddingLeft: 0, paddingRight: 0}}>
                         <SetUpShip
                             id={ship.id}
@@ -13,7 +13,7 @@ export default function InitialShipList({ships, onShips}) {
                             isHorizontal={ship.isHorizontal}
                             length={ship.length}
                             row={ship.row}
-                            col={ship.col}
+                            column={ship.column}
                             ships={ships}
                             onShips={onShips}
                         />

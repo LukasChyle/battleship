@@ -65,6 +65,8 @@ export default function GameSession({
 
         if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
             createGameLogMessage()
+            //TODO: instead of strikeRow and StrikeCol, create message with opponentStrikes or ownStrikes depending on eventType.
+            // can be inserted in the if method below.
         }
         if (lastJsonMessage?.opponentStrikes && lastJsonMessage?.ownStrikes) {
             setOpponentStrikes(lastJsonMessage.opponentStrikes)
@@ -107,7 +109,7 @@ export default function GameSession({
                     type: "STRIKE",
                     gameId: gameId,
                     row: e.row,
-                    column: e.col,
+                    column: e.column,
                     ships: null
                 })
             }
@@ -143,6 +145,7 @@ export default function GameSession({
     }
 
     const createGameLogMessage = () => {
+        //TODO: Refactor, strikeCol, strikeRow and hit don't exist anymore, use last object in ownStrikes or opponentStrikes.
         const position = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
             + (+lastJsonMessage.strikeCol + 1)
 

@@ -3,9 +3,9 @@ export default function MatchTilesWithShips(tiles, onTiles, ships) {
     ships.forEach((e) => {
         for (let i = 0; i < e.length; i++) {
             if (e.isHorizontal) {
-                tilesToChange.push({id: (e.row + "" + (e.col + i)), ship: e.col === (e.col + i) ? e : undefined})
+                tilesToChange.push({id: (e.row + "" + (e.column + i)), ship: e.column === (e.column + i) ? e : undefined})
             } else {
-                tilesToChange.push({id: ((e.row + i) + "" + e.col), ship: e.row === (e.row + i) ? e : undefined})
+                tilesToChange.push({id: ((e.row + i) + "" + e.column), ship: e.row === (e.row + i) ? e : undefined})
             }
         }
     })

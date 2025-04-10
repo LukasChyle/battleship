@@ -15,7 +15,7 @@ export default function OpponentGameBoardTile({tile, handleStrike}) {
     return (
         <span className="board-tile">
             <img
-                onClick={() => handleStrike(!tile.alreadyUsed? {row: tile.row, col: tile.col} : null)}
+                onClick={() => handleStrike(!tile.alreadyUsed? {row: tile.row, column: tile.column} : null)}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
                 className="opponent-tile-img tile-img"
