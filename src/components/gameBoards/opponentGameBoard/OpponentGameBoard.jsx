@@ -1,6 +1,6 @@
 import {Grid, useTheme} from "@mui/material";
 import OpponentGameBoardTile from "./components/OpponentGameBoardTile.jsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import NumberRow from "../NumberRow.jsx";
 import LetterRow from "../LetterRow.jsx";
 
@@ -12,7 +12,7 @@ const getTiles = () => {
     const tiles = []
     board.forEach((row, rowIndex) => (row.forEach((column, columnIndex) => {
         tiles.push({
-            id: (rowIndex + "" + colIndex),
+            id: (rowIndex + "" + columnIndex),
             row: rowIndex,
             column: columnIndex,
             alreadyUsed: false
@@ -21,13 +21,13 @@ const getTiles = () => {
     return tiles
 }
 
-export default function OpponentGameBoard({tileStrikes, handleStrike}) {
+function OpponentGameBoard({tileStrikes, handleStrike}) {
     const theme = useTheme()
     const [tiles, setTiles] = useState(getTiles())
 
     const handleTiles = () => {
         setTiles(tiles.map((e) => {
-            return {...e, alreadyUsed: !!tileStrikes.find(t => t.row + "" + t.column === e.id)}
+            return {...e, alreadyUsed: !!tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === e.id)}
         }))
     }
 
@@ -45,9 +45,12 @@ export default function OpponentGameBoard({tileStrikes, handleStrike}) {
                         <Grid className="board-row" key={columnIndex}>
                             {column.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + columnIndex) &&
+                                    {tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === rowIndex + ""
+                                            + columnIndex) &&
                                         <img className="tile-strike-img"
-                                             src={tileStrikes.find(t => t.row + "" + t.column === rowIndex + "" + columnIndex).hit
+                                             src={tileStrikes.find(
+                                                 t => t.coordinate.row + "" + t.coordinate.column === rowIndex + ""
+                                                     + columnIndex).hit
                                                  ? "src/assets/strike-1.png" : "src/assets/missed-strike.png"}
                                              alt={"tileStrike"}
                                         />
@@ -65,3 +68,5 @@ export default function OpponentGameBoard({tileStrikes, handleStrike}) {
         </div>
     )
 }
+
+export default React.memo(OpponentGameBoard)

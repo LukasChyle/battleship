@@ -24,7 +24,7 @@ export default function GameLogList({messages}) {
                         key={index}
                         align="left"
                         primary={message.time + ": " + message.content}
-                        sx={{color: message.isOwnMove ? theme.palette.customText.green : theme.palette.customText.blue, fontsize: "small",}}
+                        sx={{color: message.isOwnAction ? theme.palette.customText.green : theme.palette.customText.blue, fontsize: "small",}}
                         primaryTypographyProps={{fontWeight: message.isHit ? "bold" : "normal", fontSize: "small"}}
                     />
                 ))}

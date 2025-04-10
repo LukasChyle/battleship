@@ -41,6 +41,11 @@ export const messages = defineMessages({
         defaultMessage: "Waiting for an opponent",
         description: "content for alert waitingOpponentDialog",
     },
+    logMessageOwnDidSinkShip: {
+        id: "game.session.logMessageOwnDidSinkShip",
+        defaultMessage: "You sank a ship at ",
+        description: "log message version: own strike did sink ship",
+    },
     logMessageOwnDidHit: {
         id: "game.session.logMessageOwnDidHit",
         defaultMessage: "You hit a ship at ",
@@ -50,6 +55,11 @@ export const messages = defineMessages({
         id: "game.session.logMessageOwnDidMiss",
         defaultMessage: "You missed at ",
         description: "log message version: own strike did miss",
+    },
+    logMessageOpponentDidSinkShip: {
+        id: "game.session.logMessageOpponentDidSinkShip",
+        defaultMessage: "Enemy sank a ship at ",
+        description: "log message version: opponent strike did sink ship",
     },
     logMessageOpponentDidHit: {
         id: "game.session.logMessageOpponentDidHit",

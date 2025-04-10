@@ -16,13 +16,14 @@ import {messages} from "../Game.messages.js";
 
 export default function GameSession({
     ships,
-    onShips,
     onIsPlayingGame,
 }) {
     const intl = useIntl()
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [gameState, setGameState] = useState("");
+    const [ownShips, setOwnShips] = useState(ships);
+    const [opponentSunkenShips, setOpponentSunkenShips] = useState([]);
     const [opponentStrikes, setOpponentStrikes] = useState([]);
     const [ownStrikes, setOwnStrikes] = useState([]);
     const [gameLogMessages, setGameLogMessages] = useState([]);
@@ -60,26 +61,55 @@ export default function GameSession({
         }
     }, [readyState]);
 
-    useEffect(() => {
-        setGameState(lastJsonMessage?.eventType)
+    //TODO: Combine Own and Opponent gameBoard same with gameBoardTile, add a prop boolean if isOwnBoard.
+    //TODO: show opponents sunken ships on board.
+    //TODO: change water color under ship to red only if a ship is sunk.
 
-        if (lastJsonMessage?.strikeRow && lastJsonMessage?.strikeCol) {
-            createGameLogMessage()
-            //TODO: instead of strikeRow and StrikeCol, create message with opponentStrikes or ownStrikes depending on eventType.
-            // can be inserted in the if method below.
+    useEffect(() => {
+        if (!lastJsonMessage) {
+            return;
         }
-        if (lastJsonMessage?.opponentStrikes && lastJsonMessage?.ownStrikes) {
-            setOpponentStrikes(lastJsonMessage.opponentStrikes)
-            setOwnStrikes(lastJsonMessage.ownStrikes)
+        const {
+            gameId,
+            eventType,
+            opponentStrikes,
+            ownStrikes,
+            timeLeft,
+            ownActiveShips,
+            ownSunkenShips,
+            opponentSunkenShips
+        } = lastJsonMessage;
+
+        eventType && setGameState(eventType)
+        timeLeft && setTurnSecondsLeft(timeLeft)
+
+        ownActiveShips && setOwnShips(convertShips(ownActiveShips, false));
+        opponentSunkenShips && setOpponentSunkenShips(convertShips(opponentSunkenShips, true))
+        if(ownActiveShips && ownSunkenShips) {
+            setOwnShips(prevState => [...prevState, ...convertShips(ownSunkenShips, true)])
+        } else if (ownSunkenShips) {
+            setOwnShips(convertShips(ownSunkenShips, true))
         }
-        if (lastJsonMessage?.gameId) {
-            setGameId(lastJsonMessage.gameId)
-            window.sessionStorage.setItem("gameId", lastJsonMessage.gameId)
+
+        if (opponentStrikes || ownStrikes) {
+            opponentStrikes && setOpponentStrikes(opponentStrikes);
+            ownStrikes && setOwnStrikes(ownStrikes);
+
+            const sunkAShip = ownSunkenShips || opponentSunkenShips;
+            const isOwnTurn = eventType === "TURN_OWN";
+            const lastStrike = isOwnTurn ? opponentStrikes.at(-1) : ownStrikes.at(-1);
+
+            if (lastStrike) {
+                const {coordinate, hit} = lastStrike;
+                createGameLogMessage(coordinate.row, coordinate.column, hit, isOwnTurn, sunkAShip);
+
+            }
         }
-        if (lastJsonMessage?.timeLeft) {
-            setTurnSecondsLeft(lastJsonMessage.timeLeft)
+        if (gameId) {
+            setGameId(gameId)
+            window.sessionStorage.setItem("gameId", gameId)
         }
-        switch (lastJsonMessage?.eventType) {
+        switch (eventType) {
             case "WON":
             case "LOST":
             case "OPPONENT_LEFT":
@@ -92,15 +122,22 @@ export default function GameSession({
                 setIsGameOver(true)
                 break
         }
-        if (lastJsonMessage?.eventType === "WAITING_OPPONENT") {
+        if (eventType === "WAITING_OPPONENT") {
             setOpenWaitingDialog(true)
         } else {
             setOpenWaitingDialog(false)
         }
-        if (lastJsonMessage?.ships) {
-            onShips(lastJsonMessage.ships)
-        }
     }, [lastJsonMessage]);
+
+    const convertShips = (ships, isSunk) =>
+        ships.map(e => ({
+            id: e.id,
+            isHorizontal: e.isHorizontal,
+            length: e.length,
+            row: e.row,
+            column: e.column,
+            isSunk: isSunk
+        }));
 
     const handleStrike = (e) => {
         if (gameState === "TURN_OWN") {
@@ -144,19 +181,24 @@ export default function GameSession({
         setShowSnackbar(false)
     }
 
-    const createGameLogMessage = () => {
-        //TODO: Refactor, strikeCol, strikeRow and hit don't exist anymore, use last object in ownStrikes or opponentStrikes.
-        const position = String.fromCharCode(97 + +lastJsonMessage.strikeRow).toUpperCase()
-            + (+lastJsonMessage.strikeCol + 1)
+    const createGameLogMessage = (row, column, isHit, isOwnTurn, sunkAShip) => {
+        const position = String.fromCharCode(97 + +row).toUpperCase()
+            + (+column + 1)
 
         const content = () => {
-            if (lastJsonMessage.eventType === "TURN_OWN") {
-                if (lastJsonMessage.hit) {
+            if (isOwnTurn) {
+                if (isHit) {
+                    if (sunkAShip) {
+                        return intl.formatMessage(messages.logMessageOpponentDidSinkShip) + position
+                    }
                     return intl.formatMessage(messages.logMessageOpponentDidHit) + position
                 }
                 return intl.formatMessage(messages.logMessageOpponentDidMiss) + position
             }
-            if (lastJsonMessage.hit) {
+            if (isHit) {
+                if (sunkAShip) {
+                    return intl.formatMessage(messages.logMessageOwnDidSinkShip) + position
+                }
                 return intl.formatMessage(messages.logMessageOwnDidHit) + position
             }
             return intl.formatMessage(messages.logMessageOwnDidMiss) + position
@@ -164,9 +206,10 @@ export default function GameSession({
 
         const today = new Date()
         const message = {
-            isOwnMove: lastJsonMessage.eventType === "TURN_OPPONENT",
+            isOwnAction: !isOwnTurn,
             content: content(),
-            isHit: lastJsonMessage.hit,
+            isHit: isHit,
+            sunkAShip: sunkAShip,
             time: today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0')
         }
         setGameLogMessages(messages => [...messages, message])
@@ -234,7 +277,7 @@ export default function GameSession({
                         </Grid>
                     </Grid>
                     <Paper elevation={7}>
-                        <OwnGameBoard ships={ships} tileStrikes={opponentStrikes}/>
+                        <OwnGameBoard ships={ownShips} tileStrikes={opponentStrikes}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4} sx={{

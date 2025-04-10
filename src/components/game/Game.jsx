@@ -19,12 +19,13 @@ export default function Game() {
         }
     }, []);
 
+    //TODO: see if Ship do need the variable of ID, or if it can be removed before sending ships to backend.
+
     return (
         <div>
             {isPlayingGame ?
                 <GameSession
                     ships={ships}
-                    onShips={setShips}
                     onIsPlayingGame={setIsPlayingGame}
                 />
                 :

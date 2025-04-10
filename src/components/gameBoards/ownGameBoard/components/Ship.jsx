@@ -1,7 +1,7 @@
 import ShipImageConfig from "../../ShipImageConfig.jsx";
 
-export default function Ship({isHorizontal, length}) {
-    const shipImage = ShipImageConfig(isHorizontal, length)
+export default function Ship({isHorizontal, length, isSunk}) {
+    const shipImage = ShipImageConfig(isHorizontal, length, isSunk)
 
     return (
         <div
