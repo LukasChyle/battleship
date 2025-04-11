@@ -1,39 +1,47 @@
 import {Grid, useTheme} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import GameBoardTile from "../ownGameBoard/components/GameBoardTile.jsx";
-import NumberRow from "../NumberRow.jsx";
+import GameBoardTile from "./components/GameBoardTile.jsx";
+import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 import LetterRow from "../LetterRow.jsx";
+import NumberRow from "../NumberRow.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
     Array.apply(null, Array(10)).map(function () {
     })))
 
-const getTiles = () => {
+const getInitialTiles = () => {
     const tiles = []
     board.forEach((row, rowIndex) => (row.forEach((column, columnIndex) => {
         tiles.push({
-            id: (rowIndex + "" + columnIndex),
             row: rowIndex,
             column: columnIndex,
-            alreadyUsed: false
+            usedByShip: false,
+            ship: undefined,
+            alreadyStruck: false
         })
     })))
     return tiles
 }
 
-function OpponentGameBoard({tileStrikes, handleStrike}) {
+function GameBoard({ships, tileStrikes, handleStrike, isOwnBoard}) {
     const theme = useTheme()
-    const [tiles, setTiles] = useState(getTiles())
-
-    const handleTiles = () => {
-        setTiles(tiles.map((e) => {
-            return {...e, alreadyUsed: !!tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === e.id)}
-        }))
-    }
+    const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
-        handleTiles()
+        setTiles(matchTilesAlreadyUsed(ships ? MatchTilesWithShips(tiles, ships) : tiles))
     }, [tileStrikes]);
+
+    const matchTilesAlreadyUsed = (tiles) => {
+        return tiles.map((e) => {
+            return {...e, alreadyStruck: !!tileStrikes.find(t => t.coordinate.row === e.row && t.coordinate.column === e.column)}
+        })
+    }
+
+    const getStrikeImage = (rowIndex, columnIndex) => {
+        return tileStrikes.find(
+            t => t.coordinate.row === rowIndex && t.coordinate.column === columnIndex).hit
+            ? "src/assets/strike-1.png" : "src/assets/missed-strike.png"
+    }
 
     return (
         <div>
@@ -45,29 +53,27 @@ function OpponentGameBoard({tileStrikes, handleStrike}) {
                         <Grid className="board-row" key={columnIndex}>
                             {column.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === rowIndex + ""
-                                            + columnIndex) &&
+                                    {tileStrikes.find(t => t.coordinate.row === rowIndex && t.coordinate.column === columnIndex) &&
                                         <img className="tile-strike-img"
-                                             src={tileStrikes.find(
-                                                 t => t.coordinate.row + "" + t.coordinate.column === rowIndex + ""
-                                                     + columnIndex).hit
-                                                 ? "src/assets/strike-1.png" : "src/assets/missed-strike.png"}
+                                             src={getStrikeImage(rowIndex, columnIndex)}
                                              alt={"tileStrike"}
                                         />
                                     }
                                     <GameBoardTile key={rowIndex}
-                                                   tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
+                                                   tile={tiles.find(t => t.row === rowIndex && t.column === columnIndex)}
+                                                   tileStrikes={tileStrikes}
+                                                   isOwnTile={isOwnBoard}
                                                    handleStrike={handleStrike}
-                                                   isOpponentTile={true}
                                     />
                                 </Grid>
                             ))}
                         </Grid>
                     ))}
                 </Grid>
+
             </Grid>
         </div>
     )
 }
 
-export default React.memo(OpponentGameBoard)
+export default React.memo(GameBoard)

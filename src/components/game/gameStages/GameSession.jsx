@@ -1,5 +1,4 @@
-import OwnGameBoard from "../../gameBoards/ownGameBoard/OwnGameBoard.jsx";
-import OpponentGameBoard from "../../gameBoards/opponentGameBoard/OpponentGameBoard.jsx";
+import GameBoard from "../../gameBoards/gameBoard/GameBoard.jsx";
 import {Alert, Button, Grid, Paper, Snackbar, Typography} from "@mui/material";
 import GameLogList from "./components/GameLogList.jsx";
 import {useEffect, useState} from "react";
@@ -61,7 +60,7 @@ export default function GameSession({
         }
     }, [readyState]);
 
-    //TODO: Combine Own and Opponent gameBoard same with gameBoardTile, add a prop boolean if isOwnBoard.
+    //TODO: tile are not showing green water under ship or red water on struck ship
     //TODO: show opponents sunken ships on board.
     //TODO: change water color under ship to red only if a ship is sunk.
 
@@ -85,7 +84,7 @@ export default function GameSession({
 
         ownActiveShips && setOwnShips(convertShips(ownActiveShips, false));
         opponentSunkenShips && setOpponentSunkenShips(convertShips(opponentSunkenShips, true))
-        if(ownActiveShips && ownSunkenShips) {
+        if (ownActiveShips && ownSunkenShips) {
             setOwnShips(prevState => [...prevState, ...convertShips(ownSunkenShips, true)])
         } else if (ownSunkenShips) {
             setOwnShips(convertShips(ownSunkenShips, true))
@@ -277,7 +276,9 @@ export default function GameSession({
                         </Grid>
                     </Grid>
                     <Paper elevation={7}>
-                        <OwnGameBoard ships={ownShips} tileStrikes={opponentStrikes}/>
+                        <GameBoard isOwnBoard={true}
+                                   ships={ownShips}
+                                   tileStrikes={opponentStrikes}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={4} sx={{
@@ -297,7 +298,10 @@ export default function GameSession({
                         </Grid>
                     </Grid>
                     <Paper elevation={7}>
-                        <OpponentGameBoard handleStrike={handleStrike} tileStrikes={ownStrikes}/>
+                        <GameBoard isOwnBoard={false}
+                                   ships={opponentSunkenShips}
+                                   handleStrike={handleStrike}
+                                   tileStrikes={ownStrikes}/>
                     </Paper>
 
                 </Grid>

@@ -19,7 +19,7 @@ const getInitialTiles = () => {
             row: rowIndex,
             column: columnIndex,
             src: "/src/assets/framed-water.jpg",
-            used: false,
+            usedByShip: false,
             ship: undefined
         })
     })))
@@ -31,7 +31,7 @@ export default function SetUpGameBoard({ships, onShips}) {
     const [tiles, setTiles] = useState(getInitialTiles())
 
     useEffect(() => {
-        MatchTilesWithShips(tiles, setTiles, ships)
+        setTiles(MatchTilesWithShips(tiles, ships))
     }, [ships]);
 
     const handleDragOver = (e) => {
@@ -93,12 +93,12 @@ export default function SetUpGameBoard({ships, onShips}) {
         }
         for (let i = 0; i < length; i++) {
             if (layIsHorizontal) {
-                if (tiles.find(e => e.id === overRow + "" + (overColumn + i)).used && !currentTiles.find(
+                if (tiles.find(e => e.id === overRow + "" + (overColumn + i)).usedByShip && !currentTiles.find(
                     e => e.id === overRow + "" + (overColumn + i))) {
                     return false
                 }
             } else {
-                if (tiles.find(e => e.id === (overRow + i) + "" + overColumn).used && !currentTiles.find(
+                if (tiles.find(e => e.id === (overRow + i) + "" + overColumn).usedByShip && !currentTiles.find(
                     e => e.id === (overRow + i) + "" + overColumn)) {
                     return false
                 }
