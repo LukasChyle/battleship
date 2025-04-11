@@ -1,21 +1,21 @@
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Ship from "./Ship.jsx";
 
-const getInitialTileImage = (tile, tileStrikes) => {
-    return tile.usedByShip ? getUsedTileImage(
-            tileStrikes.find(t => t.coordinate.row === tile.row && t.coordinate.column === tile.column))
+const getTileImage = (tile, tileStrikes) => {
+    return tile.usedByShip ? getUsedByShipTileImage(tileStrikes.find(t => t.coordinate.row === tile.row && t.coordinate.column === tile.column))
         : "/src/assets/framed-water.jpg"
 }
 
-const getUsedTileImage = (isHit) => {
+const getUsedByShipTileImage = (isHit) => {
+    console.log(isHit)
     if (isHit) {
         return "/src/assets/red-framed-water.jpg"
     }
     return "/src/assets/green-framed-water.jpg"
 }
 
-export default function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
-    const [image, setImage] = useState(getInitialTileImage(tile, tileStrikes))
+function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
+    const [image, setImage] = useState("")
 
     const handleClick = () => {
         if (!isOwnTile && !tile.alreadyStruck) {
@@ -31,9 +31,13 @@ export default function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTil
 
     const handleOnMouseLeave = () => {
         if (!isOwnTile) {
-            setImage(getInitialTileImage(tile, tileStrikes))
+            setImage(getTileImage(tile, tileStrikes))
         }
     }
+
+    useEffect(() => {
+        setImage(getTileImage(tile, tileStrikes));
+    }, [tile, tileStrikes]);
 
     return (
         <span className="board-tile">
@@ -41,7 +45,7 @@ export default function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTil
                 onClick={handleClick}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
-                className="opponent-tile-img tile-img"
+                className="tile-img tile-img"
                 src={image}
                 alt="board-tile"/>
             {tile.ship && <Ship
@@ -53,3 +57,5 @@ export default function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTil
         </span>
     )
 }
+
+export default React.memo(GameBoardTile)

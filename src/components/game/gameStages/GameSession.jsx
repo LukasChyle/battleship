@@ -60,8 +60,7 @@ export default function GameSession({
         }
     }, [readyState]);
 
-    //TODO: tile are not showing green water under ship or red water on struck ship
-    //TODO: show opponents sunken ships on board.
+    //TODO: show number of sunken ships on statistics
     //TODO: change water color under ship to red only if a ship is sunk.
 
     useEffect(() => {
@@ -101,7 +100,6 @@ export default function GameSession({
             if (lastStrike) {
                 const {coordinate, hit} = lastStrike;
                 createGameLogMessage(coordinate.row, coordinate.column, hit, isOwnTurn, sunkAShip);
-
             }
         }
         if (gameId) {
