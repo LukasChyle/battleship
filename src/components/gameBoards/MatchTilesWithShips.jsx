@@ -10,7 +10,6 @@ export default function MatchTilesWithShips(tiles, ships) {
             }
         }
     })
-    console.log(ships)
     return tiles.map((e) => {
         const match = tilesToChange.find(t => t.row === e.row && t.column === e.column)
         return match ? {...e, usedByShip: true, usedBySunkenShip: match.usedBySunkenShip, ship: match.ship}
