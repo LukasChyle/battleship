@@ -14,12 +14,12 @@ export default function PlayerScore({strikes}) {
                     {`${hits} ${intl.formatMessage(messages.playerScoreHits)}`}
                 </Typography>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
                 <Typography variant="h6">
                     {`${strikes.length - hits} ${intl.formatMessage(messages.playerScoreMisses)}`}
                 </Typography>
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={6}>
                 <Typography variant="h6">
                     {`${strikes.length !== 0 ?
                         (Math.trunc((hits / strikes.length) * 100) + "% " +

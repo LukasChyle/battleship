@@ -16,5 +16,3 @@ export default function MatchTilesWithShips(tiles, ships) {
             : {...e, usedByShip: false, ship: undefined}
     })
 }
-
-// usedBySunkenShip: match.ship.sunk

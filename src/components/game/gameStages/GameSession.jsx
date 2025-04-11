@@ -60,8 +60,6 @@ export default function GameSession({
         }
     }, [readyState]);
 
-    //TODO: show number of sunken ships on statistics
-
     //TODO: Refactor tiles and ships in setUp to use row and column instead of id.
     //TODO: see if Ship do need the variable of ID, or if it can be removed before sending ships to backend.
 
@@ -265,13 +263,13 @@ export default function GameSession({
                     marginTop: "24px",
                 }}>
                     <Grid container>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <Typography variant="h5" component="div">
                                 {intl.formatMessage(messages.ownBoardTitle)}
                             </Typography>
 
                         </Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={9}>
                             <PlayerScore strikes={opponentStrikes}/>
                         </Grid>
                     </Grid>
@@ -288,12 +286,12 @@ export default function GameSession({
                     marginTop: "24px"
                 }}>
                     <Grid container>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <Typography variant="h5" component="div">
                                 {intl.formatMessage(messages.opponentBoardTitle)}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={9}>
                             <PlayerScore strikes={ownStrikes}/>
                         </Grid>
                     </Grid>
