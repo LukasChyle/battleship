@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Ship from "./Ship.jsx";
 
-const getTileImage = (tile, tileStrikes) => {
+const getTileImage = (tile) => {
     return tile.usedByShip ? getUsedByShipTileImage(tile.usedBySunkenShip)
         : "/src/assets/framed-water.jpg"
 }
@@ -14,7 +14,7 @@ const getUsedByShipTileImage = (isSunken) => {
 }
 
 function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
-    const [image, setImage] = useState("")
+    const [image, setImage] = useState(getTileImage(tile))
 
     const handleClick = () => {
         if (!isOwnTile && !tile.alreadyStruck) {
@@ -30,7 +30,7 @@ function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
 
     const handleOnMouseLeave = () => {
         if (!isOwnTile) {
-            setImage(getTileImage(tile, tileStrikes))
+            setImage(getTileImage(tile))
         }
     }
 
