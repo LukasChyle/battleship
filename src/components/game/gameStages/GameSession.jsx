@@ -39,16 +39,16 @@ export default function GameSession({
                 sendJsonMessage({
                     type: "RECONNECT",
                     gameId: window.sessionStorage.getItem('gameId'),
-                    row: null,
-                    column: null,
+                    strikeRow: null,
+                    strikeColumn: null,
                     ships: ships
                 })
             } else {
                 sendJsonMessage({
                     type: "JOIN",
                     gameId: null,
-                    row: null,
-                    column: null,
+                    strikeRow: null,
+                    strikeColumn: null,
                     ships: ships
                 })
             }
@@ -142,8 +142,8 @@ export default function GameSession({
                 sendJsonMessage({
                     type: "STRIKE",
                     gameId: gameId,
-                    row: e.row,
-                    column: e.column,
+                    strikeRow: e.row,
+                    strikeColumn: e.column,
                     ships: null
                 })
             }
@@ -157,8 +157,8 @@ export default function GameSession({
             sendJsonMessage({
                 type: "LEAVE",
                 gameId: gameId,
-                row: null,
-                column: null,
+                strikeRow: null,
+                strikeColumn: null,
                 ships: null
             })
         }
