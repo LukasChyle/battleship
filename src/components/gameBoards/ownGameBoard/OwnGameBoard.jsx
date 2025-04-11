@@ -1,12 +1,13 @@
 import {Grid, useTheme} from "@mui/material";
-import OwnGameBoardTile from "./components/OwnGameBoardTile.jsx";
 import React, {useEffect, useState} from "react";
+import GameBoardTile from "./components/GameBoardTile.jsx";
 import MatchTilesWithShips from "../MatchTilesWithShips.jsx";
 import LetterRow from "../LetterRow.jsx";
 import NumberRow from "../NumberRow.jsx";
 
 const board = Array.apply(null, Array(10)).map(() => (
-    Array.apply(null, Array(10)).map(function () {})))
+    Array.apply(null, Array(10)).map(function () {
+    })))
 
 const getInitialTiles = () => {
     const tiles = []
@@ -44,16 +45,18 @@ function OwnGameBoard({ships, tileStrikes}) {
                         <Grid className="board-row" key={columnIndex}>
                             {column.map((row, rowIndex) => (
                                 <Grid key={rowIndex}>
-                                    {tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === rowIndex + "" + columnIndex) &&
+                                    {tileStrikes.find(t => t.coordinate.row + "" + t.coordinate.column === rowIndex + ""
+                                            + columnIndex) &&
                                         <img className="tile-strike-img"
                                              src={getStrikeImage(
                                                  tiles.find(t => t.used && t.id === rowIndex + "" + columnIndex))}
                                              alt={"tileStrike"}
                                         />
                                     }
-                                    <OwnGameBoardTile key={rowIndex}
-                                                      tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
-                                                      tileStrikes={tileStrikes}
+                                    <GameBoardTile key={rowIndex}
+                                                   tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
+                                                   tileStrikes={tileStrikes}
+                                                   isOpponentTile={false}
                                     />
                                 </Grid>
                             ))}

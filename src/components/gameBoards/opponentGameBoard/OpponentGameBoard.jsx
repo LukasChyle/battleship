@@ -1,6 +1,6 @@
 import {Grid, useTheme} from "@mui/material";
-import OpponentGameBoardTile from "./components/OpponentGameBoardTile.jsx";
 import React, {useEffect, useState} from "react";
+import GameBoardTile from "../ownGameBoard/components/GameBoardTile.jsx";
 import NumberRow from "../NumberRow.jsx";
 import LetterRow from "../LetterRow.jsx";
 
@@ -55,9 +55,10 @@ function OpponentGameBoard({tileStrikes, handleStrike}) {
                                              alt={"tileStrike"}
                                         />
                                     }
-                                    <OpponentGameBoardTile key={rowIndex}
-                                                           tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
-                                                           handleStrike={handleStrike}
+                                    <GameBoardTile key={rowIndex}
+                                                   tile={tiles.find(t => t.id === rowIndex + "" + columnIndex)}
+                                                   handleStrike={handleStrike}
+                                                   isOpponentTile={true}
                                     />
                                 </Grid>
                             ))}
