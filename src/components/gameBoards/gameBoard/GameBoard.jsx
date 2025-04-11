@@ -16,6 +16,7 @@ const getInitialTiles = () => {
             row: rowIndex,
             column: columnIndex,
             usedByShip: false,
+            usedBySunkenShip: false,
             ship: undefined,
             alreadyStruck: false
         })

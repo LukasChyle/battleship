@@ -43,7 +43,7 @@ export const messages = defineMessages({
     },
     logMessageOwnDidSinkShip: {
         id: "game.session.logMessageOwnDidSinkShip",
-        defaultMessage: "You sank a ship at ",
+        defaultMessage: "You sank a ship with ",
         description: "log message version: own strike did sink ship",
     },
     logMessageOwnDidHit: {
@@ -58,7 +58,7 @@ export const messages = defineMessages({
     },
     logMessageOpponentDidSinkShip: {
         id: "game.session.logMessageOpponentDidSinkShip",
-        defaultMessage: "Enemy sank a ship at ",
+        defaultMessage: "Enemy sank a ship with ",
         description: "log message version: opponent strike did sink ship",
     },
     logMessageOpponentDidHit: {

@@ -61,7 +61,9 @@ export default function GameSession({
     }, [readyState]);
 
     //TODO: show number of sunken ships on statistics
-    //TODO: change water color under ship to red only if a ship is sunk.
+
+    //TODO: Refactor tiles and ships in setUp to use row and column instead of id.
+    //TODO: see if Ship do need the variable of ID, or if it can be removed before sending ships to backend.
 
     useEffect(() => {
         if (!lastJsonMessage) {

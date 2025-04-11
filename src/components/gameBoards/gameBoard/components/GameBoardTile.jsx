@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import Ship from "./Ship.jsx";
 
 const getTileImage = (tile, tileStrikes) => {
-    return tile.usedByShip ? getUsedByShipTileImage(tileStrikes.find(t => t.coordinate.row === tile.row && t.coordinate.column === tile.column))
+    return tile.usedByShip ? getUsedByShipTileImage(tile.usedBySunkenShip)
         : "/src/assets/framed-water.jpg"
 }
 
-const getUsedByShipTileImage = (isHit) => {
-    console.log(isHit)
-    if (isHit) {
+const getUsedByShipTileImage = (isSunken) => {
+    if (isSunken) {
         return "/src/assets/red-framed-water.jpg"
     }
     return "/src/assets/green-framed-water.jpg"
