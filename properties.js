@@ -1,5 +1,6 @@
 export const properties = {
 
-    WS_URL: "ws://localhost:8000/play"
+    // URL: "ws://localhost:8000/play"
+    URL: "wss://yippikayey.duckdns.org:443/play"
 
 };
