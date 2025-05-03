@@ -3,14 +3,14 @@ import Ship from "./Ship.jsx";
 
 const getTileImage = (tile) => {
     return tile.usedByShip ? getUsedByShipTileImage(tile.usedBySunkenShip)
-        : "/battleship/src/assets/framed-water.JPG"
+        : "/battleship/assets/framed-water.jpg"
 }
 
 const getUsedByShipTileImage = (isSunken) => {
     if (isSunken) {
-        return "/battleship/src/assets/red-framed-water.JPG"
+        return "/battleship/assets/red-framed-water.jpg"
     }
-    return "/battleship/src/assets/green-framed-water.JPG"
+    return "/battleship/assets/green-framed-water.jpg"
 }
 
 function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
@@ -24,7 +24,7 @@ function GameBoardTile({tile, tileStrikes, handleStrike, isOwnTile}) {
 
     const handleOnMouseEnter = () => {
         if (!isOwnTile) {
-            setImage("/battleship/src/assets/strike-framed-water.JPG")
+            setImage("/battleship/assets/strike-framed-water.jpg")
         }
     }
 

@@ -41,7 +41,7 @@ function GameBoard({ships, tileStrikes, handleStrike, isOwnBoard}) {
     const getStrikeImage = (rowIndex, columnIndex) => {
         return tileStrikes.find(
             t => t.coordinate.row === rowIndex && t.coordinate.column === columnIndex).hit
-            ? "/battleship/src/assets/strike1.PNG" : "src/assets/missed-strike.PNG"
+            ? "/battleship/assets/strike1.png" : "/assets/missed-strike.png"
     }
 
     return (

@@ -18,7 +18,7 @@ const getInitialTiles = () => {
             id: (rowIndex + "" + columnIndex),
             row: rowIndex,
             column: columnIndex,
-            src: "/battleship/src/assets/framed-water.JPG",
+            src: "/battleship/assets/framed-water.jpg",
             usedByShip: false,
             ship: undefined
         })
@@ -117,14 +117,14 @@ export default function SetUpGameBoard({ships, onShips}) {
             const match = tilesToChange.find(t => t.id === e.id)
             return match ? {
                 ...e,
-                src: canBeLaid ? "/battleship/src/assets/green-framed-water.JPG" : "/src/assets/red-framed-water.JPG"
-            } : {...e, src: "/battleship/src/assets/framed-water.JPG"}
+                src: canBeLaid ? "/battleship/assets/green-framed-water.jpg" : "/battleship/assets/red-framed-water.jpg"
+            } : {...e, src: "/battleship/assets/framed-water.jpg"}
         }))
     }
 
     const resetTileImages = () => {
         setTiles(tiles.map((e) => {
-            return {...e, src: "/battleship/src/assets/framed-water.JPG"}
+            return {...e, src: "/battleship/assets/framed-water.jpg"}
         }))
     }
 
