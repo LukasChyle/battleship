@@ -5,4 +5,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: "/battleship",
+  server: {
+    proxy: {
+      '/play': {
+        target: 'https://yippikayey.duckdns.org',
+        changeOrigin: true,
+        secure: true,
+        ws: true
+      }
+    }
+  }
+
 })
