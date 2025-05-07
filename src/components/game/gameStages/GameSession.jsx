@@ -94,7 +94,7 @@ export default function GameSession({
             ownStrikes && setOwnStrikes(ownStrikes);
 
             const sunkAShip = ownSunkenShips || opponentSunkenShips;
-            const isOwnTurn = eventType === "TURN_OWN";
+            const isOwnTurn = eventType === "TURN_OWN" || eventType === "LOST";
             const lastStrike = isOwnTurn ? opponentStrikes.at(-1) : ownStrikes.at(-1);
 
             if (lastStrike) {
