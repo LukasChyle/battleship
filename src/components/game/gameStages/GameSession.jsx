@@ -12,6 +12,7 @@ import {properties} from "../../../../properties.js";
 import TurnTimer from "./components/TurnTimer.jsx";
 import {useIntl} from "react-intl";
 import {messages} from "../Game.messages.js";
+import GameOverDialog from "../../dialogs/GameOverDialog.jsx";
 
 export default function GameSession({
     ships,
@@ -19,6 +20,7 @@ export default function GameSession({
 }) {
     const intl = useIntl()
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
+    const [openGameOverDialog, setGameOverDialog] = useState(false);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [gameState, setGameState] = useState("");
     const [ownShips, setOwnShips] = useState(ships);
@@ -117,6 +119,7 @@ export default function GameSession({
                 window.sessionStorage.removeItem("isPlayingGame")
                 setTurnSecondsLeft(0)
                 setIsGameOver(true)
+                setGameOverDialog(true)
                 break
         }
         if (eventType === "WAITING_OPPONENT") {
@@ -167,6 +170,7 @@ export default function GameSession({
         window.sessionStorage.removeItem("isPlayingGame")
         setTurnSecondsLeft(0)
         setOpenWaitingDialog(false)
+        setGameOverDialog(false)
         onIsPlayingGame(false)
         setGameState("")
     }
@@ -218,6 +222,11 @@ export default function GameSession({
             <WaitingOpponentDialog
                 isOpen={openWaitingDialog}
                 handleLeave={handleLeaveGame}
+            />
+            <GameOverDialog
+                isOpen={openGameOverDialog}
+                handleLeave={handleLeaveGame}
+                state={gameState}
             />
             <Grid container
                   sx={{

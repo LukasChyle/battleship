@@ -13,7 +13,7 @@ const ThemeConfig = (isDarkMode) => {
                 boardSideRowText: "lightgreen",
                 leaveButton: "crimson",
                 customText: {
-                    green: "lightgreen",
+                    green: "#81c784",
                     blue: "#87cefa",
                     header: "white"
                 },
@@ -39,8 +39,8 @@ const ThemeConfig = (isDarkMode) => {
                 boardSideRowText: "black",
                 leaveButton: "error",
                 customText: {
-                    green: "darkgreen",
-                    blue: "darkblue",
+                    green: "#1b5e20",
+                    blue: "#0d47a1",
                     header: "black"
                 },
                 connection: {

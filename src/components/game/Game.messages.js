@@ -8,7 +8,7 @@ export const messages = defineMessages({
     },
     instructionsContent: {
         id: "game.setUp.instructionsContent",
-        defaultMessage: "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the button located in the upper left corner of the ship.",
+        defaultMessage: "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the arrow button located in the upper left corner of the ship.",
         description: "instructions content for setup",
     },
     startGameButton: {
@@ -26,6 +26,11 @@ export const messages = defineMessages({
         defaultMessage: "Are you sure you want to leave this game?",
         description: "leave game content for alert dialog",
     },
+    waitingOpponentDialogContent: {
+        id: "game.session.waitingOpponentDialogContent",
+        defaultMessage: "Waiting for an opponent",
+        description: "content for alert waitingOpponentDialog",
+    },
     stayButton: {
         id: "game.session.stayButton",
         defaultMessage: "Stay",
@@ -35,11 +40,6 @@ export const messages = defineMessages({
         id: "game.session.leaveButton",
         defaultMessage: "Leave",
         description: "text of leave button",
-    },
-    waitingOpponentDialogContent: {
-        id: "game.session.waitingOpponentDialogContent",
-        defaultMessage: "Waiting for an opponent",
-        description: "content for alert waitingOpponentDialog",
     },
     logMessageOwnDidSinkShip: {
         id: "game.session.logMessageOwnDidSinkShip",

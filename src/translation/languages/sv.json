@@ -2,7 +2,7 @@
   "header.darkModeSwitch": "Mörkt läge",
   "header.title": "SÄNKA SKEPP",
   "game.setUp.instructionsTitle": "Placering",
-  "game.setUp.instructionsContent": "Dra och släpp de 5 skeppen på spelbrädet som du önskar. När ett skepp är placerat kan du rotera det med knappen som finns i det övre vänstra hörnet av skeppet.",
+  "game.setUp.instructionsContent": "Dra och släpp de 5 skeppen på spelbrädet som du önskar. När ett skepp är placerat kan du rotera det med pil-knappen som finns i det övre vänstra hörnet av skeppet.",
   "game.setUp.startGameButton": "STARTA SPELET",
   "game.session.leaveGameButton": "LÄMNA SPELET",
   "game.session.leaveGameAlertDialog": "Är du säker på att du vill lämna det här spelet?",

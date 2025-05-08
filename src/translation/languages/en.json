@@ -2,7 +2,7 @@
   "header.darkModeSwitch": "Dark mode",
   "header.title": "BATTLESHIPS",
   "game.setUp.instructionsTitle": "Placement",
-  "game.setUp.instructionsContent": "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the button located in the upper left corner of the ship.",
+  "game.setUp.instructionsContent": "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the arrow button located in the upper left corner of the ship.",
   "game.setUp.startGameButton": "START GAME",
   "game.session.leaveGameButton": "LEAVE GAME",
   "game.session.leaveGameAlertDialog": "Are you sure you want to leave this game?",
