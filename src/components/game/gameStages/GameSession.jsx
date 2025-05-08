@@ -32,8 +32,8 @@ export default function GameSession({
     const [gameId, setGameId] = useState("");
     const [turnSecondsLeft, setTurnSecondsLeft] = useState(0)
 
-    const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(properties.URL,
-        {shouldReconnect: () => !isGameOver})
+    const {sendJsonMessage, lastJsonMessage, readyState} =
+        useWebSocket(properties.webSocketURL + "/play", {shouldReconnect: () => !isGameOver})
 
     useEffect(() => {
         if (readyState === 1) {
@@ -64,6 +64,7 @@ export default function GameSession({
 
     //TODO: Refactor tiles and ships in setUp to use row and column instead of id.
     //TODO: see if Ship do need the variable of ID, or if it can be removed before sending ships to backend.
+    //TODO: in gameSetUp, test if the server is online and if not write a message box and block "start game"
 
     useEffect(() => {
         if (!lastJsonMessage) {

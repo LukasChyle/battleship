@@ -37,5 +37,13 @@
   "connectionState.connecting": "Ansluter",
   "connectionState.closing": "Stänger",
   "connectionState.closed": "frånkopplad",
-  "connectionState.uninstantiated": "Error"
+  "connectionState.uninstantiated": "Error",
+  "statistics.data.statisticsInfo": "Statistik över alla spel hittills",
+  "statistics.data.currentActiveGames": "Pågående spel",
+  "statistics.data.gamesStarted": "Startade spel",
+  "statistics.data.gamesCompleted": "Slutförda spel",
+  "statistics.data.hits": "Träffar",
+  "statistics.data.misses": "Missar",
+  "statistics.data.averageHitRatio": "Genomsnittlig Träffsäkerhet",
+  "statistics.data.shipsSunk": "Sänkta skepp"
 }

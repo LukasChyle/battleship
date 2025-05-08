@@ -37,5 +37,13 @@
   "connectionState.connecting": "Connecting",
   "connectionState.closing": "Closing",
   "connectionState.closed": "Disconnected",
-  "connectionState.uninstantiated": "Error"
+  "connectionState.uninstantiated": "Error",
+  "statistics.data.statisticsInfo": "Statistics about all games played so far",
+  "statistics.data.currentActiveGames": "Current active games",
+  "statistics.data.gamesStarted": "Games started",
+  "statistics.data.gamesCompleted": "Games completed",
+  "statistics.data.hits": "Hits",
+  "statistics.data.misses": "Misses",
+  "statistics.data.averageHitRatio": "Average accuracy",
+  "statistics.data.shipsSunk": "Sunken ships"
 }

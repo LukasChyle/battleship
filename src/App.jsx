@@ -11,6 +11,7 @@ function App() {
     const [isDarkMode, setIsDarkMode] = useState(JSON.parse(window.sessionStorage?.getItem("isDarkMode")))
     const theme = ThemeConfig(isDarkMode)
 
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>

@@ -1,19 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import {properties} from "./properties.js";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base: "/battleship",
-  server: {
-    proxy: {
-      '/play': {
-        target: 'https://yippikayey.duckdns.org',
-        changeOrigin: true,
-        secure: true,
-        ws: true
+  export default defineConfig({
+    plugins: [react()],
+    base: "/battleship",
+    server: {
+      proxy: {
+        '/api': {
+          target: properties.baseURL,
+          changeOrigin: true,
+          secure: true,
+        },
+        '/play': {
+          target: properties.webSocketURL,
+          changeOrigin: true,
+          secure: true,
+          wss: true
+        }
       }
     }
-  }
-
-})
+  })
