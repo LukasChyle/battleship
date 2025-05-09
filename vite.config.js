@@ -4,7 +4,7 @@ import {properties} from "./properties.js";
 
   export default defineConfig({
     plugins: [react()],
-    base: "/battleship",
+    base: "/battleship/",
     server: {
       proxy: {
         '/api': {
