@@ -62,6 +62,7 @@ export default function GameSession({
         }
     }, [readyState]);
 
+    //TODO: create and add preview.png for index.html
     //TODO: Refactor tiles and ships in setUp to use row and column instead of id.
     //TODO: see if Ship do need the variable of ID, or if it can be removed before sending ships to backend.
     //TODO: in gameSetUp, test if the server is online and if not write a message box and block "start game"
