@@ -33,7 +33,13 @@ export default function GameSession({
     const [turnSecondsLeft, setTurnSecondsLeft] = useState(0)
 
     const {sendJsonMessage, lastJsonMessage, readyState} =
-        useWebSocket(properties.webSocketURL + "/play", {shouldReconnect: () => !isGameOver})
+        useWebSocket(properties.webSocketURL + "/play", {
+                shouldReconnect: () => {
+                    const isPlaying = window.sessionStorage.getItem("isPlayingGame") === "true";
+                    return !isGameOver && isPlaying;
+                }, reconnectAttempts: 10, reconnectInterval: 3000, retryOnError: true
+            }
+        )
 
     useEffect(() => {
         if (readyState === 1) {
@@ -106,23 +112,17 @@ export default function GameSession({
                 createGameLogMessage(coordinate.row, coordinate.column, hit, isOwnTurn, sunkAShip);
             }
         }
+        if (["WON", "LOST", "OPPONENT_LEFT", "NO_GAME", "TIMEOUT_OWN", "TIMEOUT_OPPONENT"].includes(eventType)) {
+            setIsGameOver(true);
+            window.sessionStorage.removeItem("gameId");
+            window.sessionStorage.removeItem("isPlayingGame");
+            setTurnSecondsLeft(0);
+            setGameOverDialog(true);
+            return
+        }
         if (gameId) {
             setGameId(gameId)
             window.sessionStorage.setItem("gameId", gameId)
-        }
-        switch (eventType) {
-            case "WON":
-            case "LOST":
-            case "OPPONENT_LEFT":
-            case "NO_GAME":
-            case "TIMEOUT_OWN":
-            case "TIMEOUT_OPPONENT":
-                window.sessionStorage.removeItem("gameId")
-                window.sessionStorage.removeItem("isPlayingGame")
-                setTurnSecondsLeft(0)
-                setIsGameOver(true)
-                setGameOverDialog(true)
-                break
         }
         if (eventType === "WAITING_OPPONENT") {
             setOpenWaitingDialog(true)
@@ -173,6 +173,7 @@ export default function GameSession({
         setTurnSecondsLeft(0)
         setOpenWaitingDialog(false)
         setGameOverDialog(false)
+        setIsGameOver(true)
         onIsPlayingGame(false)
         setGameState("")
     }
