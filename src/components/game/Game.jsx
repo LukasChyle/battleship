@@ -4,7 +4,7 @@ import GameSetUp from "./gameStages/GameSetUp.jsx";
 
 const getInitialShips = [
     {id: "ship-1", isHorizontal: true, length: 2, row: undefined, column: undefined},
-    {id: "ship-2", isHorizontal: true, length: 2, row: undefined, column: undefined},
+    {id: "ship-2", isHorizontal: true, length: 3, row: undefined, column: undefined},
     {id: "ship-3", isHorizontal: true, length: 3, row: undefined, column: undefined},
     {id: "ship-4", isHorizontal: true, length: 4, row: undefined, column: undefined},
     {id: "ship-5", isHorizontal: true, length: 5, row: undefined, column: undefined},
