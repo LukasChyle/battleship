@@ -26,7 +26,7 @@ const getInitialTiles = () => {
     return tiles
 }
 
-export default function SetUpGameBoard({ships, onShips}) {
+export default function SetUpGameBoard({ships, setShips}) {
     const theme = useTheme()
     const [tiles, setTiles] = useState(getInitialTiles())
 
@@ -66,7 +66,7 @@ export default function SetUpGameBoard({ships, onShips}) {
             e.active.data.current.column)) {
             return
         }
-        onShips(ships.map((ship) => {
+        setShips(ships.map((ship) => {
             const match = e.active.id === ship.id
             return match ? {...ship, row: e.over.data.current.row, column: e.over.data.current.column} : ship
         }))
@@ -134,7 +134,7 @@ export default function SetUpGameBoard({ships, onShips}) {
                 <div>
                     <Grid container display="flex">
                         <Grid item xs={12} md={5}>
-                            <InitialShipList ships={ships} onShips={onShips}/>
+                            <InitialShipList ships={ships} setShips={setShips}/>
                         </Grid>
                         <Grid container wrap="nowrap" item xs={12} md={7}>
                             <Paper elevation={7}>
@@ -152,7 +152,7 @@ export default function SetUpGameBoard({ships, onShips}) {
                                                                                 t => t.id === rowIndex + ""
                                                                                     + columnIndex)}
                                                                             ships={ships}
-                                                                            onShips={onShips}
+                                                                            setShips={setShips}
                                                                             canBeLaid={canBeLaid}
                                                                             markTiles={markTiles}
                                                                             resetTileImages={resetTileImages}

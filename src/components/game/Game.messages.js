@@ -11,10 +11,25 @@ export const messages = defineMessages({
         defaultMessage: "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the arrow button located in the upper left corner of the ship.",
         description: "instructions content for setup",
     },
-    startGameButton: {
-        id: "game.setUp.startGameButton",
-        defaultMessage: "START GAME",
-        description: "text of start game button",
+    startGameAgainstRandomButton: {
+        id: "game.setUp.startGameAgainstRandomButton",
+        defaultMessage: "PLAY AGAINST RANDOM",
+        description: "text of start game against random player button",
+    },
+    startGameForFriendButton: {
+        id: "game.setUp.startGameForFriendButton",
+        defaultMessage: "CREATE GAME FOR FRIEND",
+        description: "text of start game for a friend button",
+    },
+    joinGameWithCodeButton: {
+        id: "game.setUp.joinGameWithCodeButton",
+        defaultMessage: "JOIN GAME WITH CODE",
+        description: "text of join a game with code button",
+    },
+    enterCodeToJoinInputPlaceholder: {
+        id: "game.setUp.enterCodeToJoinInputPlaceholder",
+        defaultMessage: "Enter code to join",
+        description: "text of input placeholder for code to join friend game",
     },
     leaveGameButton: {
         id: "game.session.leaveGameButton",

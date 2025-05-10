@@ -1,7 +1,7 @@
 import {useDroppable} from "@dnd-kit/core";
 import SetUpShip from "./SetUpShip.jsx";
 
-export default function SetUpGameBoardTile({tile, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
+export default function SetUpGameBoardTile({tile, ships, setShips, canBeLaid, markTiles, resetTileImages}) {
     const {setNodeRef} = useDroppable({
         id: tile.id,
         data: {
@@ -20,7 +20,7 @@ export default function SetUpGameBoardTile({tile, ships, onShips, canBeLaid, mar
                 row={tile.row}
                 column={tile.column}
                 ships={ships}
-                onShips={onShips}
+                setShips={setShips}
                 canBeLaid={canBeLaid}
                 markTiles={markTiles}
                 resetTileImages={resetTileImages}

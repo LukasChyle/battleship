@@ -1,7 +1,7 @@
 import {List, ListItem} from "@mui/material";
 import SetUpShip from "./SetUpShip.jsx";
 
-export default function InitialShipList({ships, onShips}) {
+export default function InitialShipList({ships, setShips}) {
     return (
             <List sx={{width: "230px"}}>
                 {ships.map((ship, index) =>
@@ -15,7 +15,7 @@ export default function InitialShipList({ships, onShips}) {
                             row={ship.row}
                             column={ship.column}
                             ships={ships}
-                            onShips={onShips}
+                            setShips={setShips}
                         />
                     </ListItem>
                 )}

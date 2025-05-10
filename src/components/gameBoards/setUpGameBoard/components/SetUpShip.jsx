@@ -4,7 +4,7 @@ import {CSS} from "@dnd-kit/utilities";
 import {Button} from "@mui/material";
 import ShipImageConfig from "../../ShipImageConfig.jsx";
 
-export default function SetUpShip({id, isHorizontal, length, row, column, ships, onShips, canBeLaid, markTiles, resetTileImages}) {
+export default function SetUpShip({id, isHorizontal, length, row, column, ships, setShips, canBeLaid, markTiles, resetTileImages}) {
     const [isDisabled, setIsDisabled] = useState(false)
     const {
         active, attributes, listeners, setNodeRef, transform
@@ -28,7 +28,7 @@ export default function SetUpShip({id, isHorizontal, length, row, column, ships,
 
     const handleButtonClick = () => {
         if (canBeLaid(length, !isHorizontal, isHorizontal, row, column, row, column)) {
-            onShips(ships.map((e) => {
+            setShips(ships.map((e) => {
                 return e.id === id ? {...e, isHorizontal: isHorizontal = !isHorizontal} : e
             }))
             resetTileImages()

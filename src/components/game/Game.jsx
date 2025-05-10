@@ -12,6 +12,8 @@ const getInitialShips = [
 export default function Game() {
     const [ships, setShips] = useState(getInitialShips);
     const [isPlayingGame, setIsPlayingGame] = useState(false);
+    const [isPlayingWithFriend, setIsPlayingWithFriend] = useState(false);
+    const [joinGameCode, setJoinGameCode] = useState("");
 
     useEffect(() => {
         if (window.sessionStorage?.getItem("isPlayingGame")) {
@@ -29,8 +31,11 @@ export default function Game() {
                 :
                 <GameSetUp
                     ships={ships}
-                    onShips={setShips}
-                    onIsPlayingGame={setIsPlayingGame}
+                    setShips={setShips}
+                    setIsPlayingGame={setIsPlayingGame}
+                    setIsPlayingWithFriend={setIsPlayingWithFriend}
+                    joinGameCode={joinGameCode}
+                    setJoinGameCode={setJoinGameCode}
                 />}
         </div>
     )

@@ -3,12 +3,21 @@ import {Button, Grid, ListItemText, Paper, useTheme} from "@mui/material";
 import {useIntl} from "react-intl";
 import {messages} from "../Game.messages.js";
 import GameStatistics from "../../statistics/GameStatistics.jsx";
+import StartMenu from "./components/StartMenu.jsx";
 
-export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
+export default function GameSetUp({
+    ships,
+    setShips,
+    setIsPlayingGame,
+    setIsPlayingWithFriend,
+    joinGameCode,
+    setJoinGameCode
+}) {
     const theme = useTheme()
     const intl = useIntl()
-    const handleStartGame = () => {
-        onIsPlayingGame(true)
+    const handleStartGame = (isWithFriend) => () => {
+        setIsPlayingWithFriend(isWithFriend)
+        setIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
         window.sessionStorage.removeItem("messages")
     }
@@ -22,7 +31,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                     justifyContent: "center",
                     marginTop: "50px"
                 }}>
-                    <SetUpGameBoard ships={ships} onShips={onShips}/>
+                    <SetUpGameBoard ships={ships} setShips={setShips}/>
                 </Grid>
 
                 <Grid item xs={12} md={3} sx={{
@@ -34,7 +43,7 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                     <Grid container direction="column" spacing={3}>
                         <Grid item>
 
-                            <GameStatistics refresh={onIsPlayingGame}/>
+                            <GameStatistics refresh={setIsPlayingGame}/>
                         </Grid>
                         <Grid item>
                             <Paper elevation={3} sx={{padding: "24px"}}>
@@ -44,18 +53,11 @@ export default function GameSetUp({ships, onShips, onIsPlayingGame}) {
                                     primaryTypographyProps={{variant: "h6", fontWeight: "bold"}}
                                     secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
                                 />
-                                <div style={{marginTop: "30px"}}>
-                                    <Button
-                                        size="large"
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleStartGame}
-                                        disabled={!!(ships.find(e => e.row === undefined) ||
-                                            ships.find(e => e.column === undefined))}
-                                    >
-                                        {intl.formatMessage(messages.startGameButton)}
-                                    </Button>
-                                </div>
+                                <StartMenu
+                                    handleStartGameRandom={handleStartGame}
+                                    ships={ships}
+                                    setJoinGameCode={setJoinGameCode}
+                                    joinGameCode={joinGameCode}/>
                             </Paper>
                         </Grid>
                     </Grid>
