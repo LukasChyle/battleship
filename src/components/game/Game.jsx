@@ -26,7 +26,7 @@ export default function Game() {
             {isPlayingGame ?
                 <GameSession
                     ships={ships}
-                    onIsPlayingGame={setIsPlayingGame}
+                    setIsPlayingGame={setIsPlayingGame}
                 />
                 :
                 <GameSetUp

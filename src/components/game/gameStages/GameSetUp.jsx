@@ -15,7 +15,7 @@ export default function GameSetUp({
 }) {
     const theme = useTheme()
     const intl = useIntl()
-    const handleStartGame = (isWithFriend) => () => {
+    const handleStartGame = (isWithFriend) => {
         setIsPlayingWithFriend(isWithFriend)
         setIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
@@ -54,7 +54,7 @@ export default function GameSetUp({
                                     secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
                                 />
                                 <StartMenu
-                                    handleStartGameRandom={handleStartGame}
+                                    handleStartGame={handleStartGame}
                                     ships={ships}
                                     setJoinGameCode={setJoinGameCode}
                                     joinGameCode={joinGameCode}/>
