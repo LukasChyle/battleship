@@ -27,6 +27,9 @@ export default function Game() {
                 <GameSession
                     ships={ships}
                     setIsPlayingGame={setIsPlayingGame}
+                    isPlayingWithFriend={isPlayingWithFriend}
+                    joinGameCode={joinGameCode}
+                    setJoinGameCode={setJoinGameCode}
                 />
                 :
                 <GameSetUp

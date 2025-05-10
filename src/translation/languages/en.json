@@ -12,6 +12,7 @@
   "game.session.stayButton": "Stay",
   "game.session.leaveButton": "Leave",
   "game.session.waitingOpponentDialogContent": "Waiting for an opponent",
+  "game.session.waitingFriendDialogContent": "Waiting for a friend to join with code",
   "game.session.logMessageOwnDidSinkShip": "You sank a ship with ",
   "game.session.logMessageOwnDidHit": "You hit a ship at ",
   "game.session.logMessageOwnDidMiss": "You missed at ",

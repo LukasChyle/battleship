@@ -17,6 +17,9 @@ import GameOverDialog from "../../dialogs/GameOverDialog.jsx";
 export default function GameSession({
     ships,
     setIsPlayingGame,
+    isPlayingWithFriend,
+    joinGameCode,
+    setJoinGameCode
 }) {
     const intl = useIntl()
     const [openWaitingDialog, setOpenWaitingDialog] = useState(false);
@@ -53,8 +56,8 @@ export default function GameSession({
                 })
             } else {
                 sendJsonMessage({
-                    type: "JOIN",
-                    gameId: null,
+                    type: isPlayingWithFriend ? "JOIN_FRIEND" : "JOIN",
+                    gameId: joinGameCode.length === 36 ? joinGameCode : null,
                     strikeRow: null,
                     strikeColumn: null,
                     ships: ships
@@ -117,13 +120,14 @@ export default function GameSession({
             window.sessionStorage.removeItem("isPlayingGame");
             setTurnSecondsLeft(0);
             setGameOverDialog(true);
+            setJoinGameCode("");
             return
         }
         if (gameId) {
             setGameId(gameId)
             window.sessionStorage.setItem("gameId", gameId)
         }
-        if (eventType === "WAITING_OPPONENT") {
+        if (eventType === "WAITING_OPPONENT" || eventType === "WAITING_FRIEND") {
             setOpenWaitingDialog(true)
         } else {
             setOpenWaitingDialog(false)
@@ -174,6 +178,7 @@ export default function GameSession({
         setGameOverDialog(false)
         setIsGameOver(true)
         setIsPlayingGame(false)
+        setJoinGameCode("");
         setGameState("")
     }
 
@@ -224,6 +229,8 @@ export default function GameSession({
             <WaitingOpponentDialog
                 isOpen={openWaitingDialog}
                 handleLeave={handleLeaveGame}
+                isPlayingWithFriend={isPlayingWithFriend}
+                gameId={gameId}
             />
             <GameOverDialog
                 isOpen={openGameOverDialog}

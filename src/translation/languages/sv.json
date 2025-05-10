@@ -12,6 +12,7 @@
   "game.session.stayButton": "Stanna kvar",
   "game.session.leaveButton": "Lämna",
   "game.session.waitingOpponentDialogContent": "Väntar på en motståndare",
+  "game.session.waitingFriendDialogContent": "Väntar på att en vän ska gå med, kod",
   "game.session.logMessageOwnDidSinkShip": "Du sänkte ett skepp med ",
   "game.session.logMessageOwnDidHit": "Du träffade ett skepp på ",
   "game.session.logMessageOwnDidMiss": "Du missade på ",

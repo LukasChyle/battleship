@@ -44,7 +44,12 @@ export const messages = defineMessages({
     waitingOpponentDialogContent: {
         id: "game.session.waitingOpponentDialogContent",
         defaultMessage: "Waiting for an opponent",
-        description: "content for alert waitingOpponentDialog",
+        description: "Content text for waiting opponent",
+    },
+    waitingFriendDialogContent: {
+        id: "game.session.waitingFriendDialogContent",
+        defaultMessage: "Waiting for a friend to join with code",
+        description: "content text for waiting friend",
     },
     stayButton: {
         id: "game.session.stayButton",
