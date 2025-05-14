@@ -1,9 +1,8 @@
 import SetUpGameBoard from "../../gameBoards/setUpGameBoard/SetUpGameBoard.jsx";
-import {Button, Grid, ListItemText, Paper, useTheme} from "@mui/material";
-import {useIntl} from "react-intl";
-import {messages} from "../Game.messages.js";
+import {Grid, Paper} from "@mui/material";
 import GameStatistics from "../../statistics/GameStatistics.jsx";
 import StartMenu from "./components/StartMenu.jsx";
+import SetUpInstructions from "./components/SetUpInstructions.jsx";
 
 export default function GameSetUp({
     ships,
@@ -13,8 +12,6 @@ export default function GameSetUp({
     joinGameCode,
     setJoinGameCode
 }) {
-    const theme = useTheme()
-    const intl = useIntl()
     const handleStartGame = (isWithFriend) => {
         setIsPlayingWithFriend(isWithFriend)
         setIsPlayingGame(true)
@@ -47,12 +44,7 @@ export default function GameSetUp({
                         </Grid>
                         <Grid item>
                             <Paper elevation={3} sx={{padding: "24px"}}>
-                                <ListItemText
-                                    primary={intl.formatMessage(messages.instructionsTitle) + ":"}
-                                    secondary={intl.formatMessage(messages.instructionsContent)}
-                                    primaryTypographyProps={{variant: "h6", fontWeight: "bold"}}
-                                    secondaryTypographyProps={{variant: "body1", color: theme.palette.text.primary}}
-                                />
+                                <SetUpInstructions/>
                                 <StartMenu
                                     handleStartGame={handleStartGame}
                                     ships={ships}

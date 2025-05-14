@@ -3,13 +3,18 @@ import {defineMessages} from "react-intl"
 export const messages = defineMessages({
     instructionsTitle: {
         id: "game.setUp.instructionsTitle",
-        defaultMessage: "Placement",
+        defaultMessage: "Instruction",
         description: "instructions title for setup",
     },
-    instructionsContent: {
-        id: "game.setUp.instructionsContent",
+    instructionsPlacement: {
+        id: "game.setUp.instructionsPlacement",
         defaultMessage: "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the arrow button located in the upper left corner of the ship.",
-        description: "instructions content for setup",
+        description: "instructions how to place the ships",
+    },
+    instructionsStartGame: {
+        id: "game.setUp.instructionsStartGame",
+        defaultMessage: "Start the game in the mode you wish to play.",
+        description: "instructions how to start the game",
     },
     startGameAgainstRandomButton: {
         id: "game.setUp.startGameAgainstRandomButton",
@@ -28,7 +33,7 @@ export const messages = defineMessages({
     },
     enterCodeToJoinInputPlaceholder: {
         id: "game.setUp.enterCodeToJoinInputPlaceholder",
-        defaultMessage: "Enter code to join",
+        defaultMessage: "Paste the code here",
         description: "text of input placeholder for code to join friend game",
     },
     leaveGameButton: {
