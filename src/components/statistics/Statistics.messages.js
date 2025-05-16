@@ -6,6 +6,16 @@ export const messages = defineMessages({
         defaultMessage: "Statistics about all games played so far",
         description: "info about the statistics",
     },
+    openStatisticsButton: {
+        id: "statistics.data.openStatisticsButton",
+        defaultMessage: "Statistics",
+        description: "button text for opening the statistics dialog",
+    },
+    closeStatisticsButton: {
+        id: "statistics.data.closeStatisticsButton",
+        defaultMessage: "Close",
+        description: "button text for closing the statistics dialog",
+    },
     currentActiveGames: {
         id: "statistics.data.currentActiveGames",
         defaultMessage: "Current active games",

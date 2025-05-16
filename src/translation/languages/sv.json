@@ -46,6 +46,8 @@
   "connectionState.closed": "frånkopplad",
   "connectionState.uninstantiated": "Error",
   "statistics.data.statisticsInfo": "Statistik över alla spel hittills",
+  "statistics.data.openStatisticsButton": "Statistik",
+  "statistics.data.closeStatisticsButton": "Stäng",
   "statistics.data.currentActiveGames": "Pågående spel",
   "statistics.data.gamesStarted": "Startade spel",
   "statistics.data.gamesCompleted": "Slutförda spel",

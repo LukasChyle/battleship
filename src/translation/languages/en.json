@@ -46,6 +46,8 @@
   "connectionState.closed": "Disconnected",
   "connectionState.uninstantiated": "Error",
   "statistics.data.statisticsInfo": "Statistics about all games played so far",
+  "statistics.data.openStatisticsButton": "Statistics",
+  "statistics.data.closeStatisticsButton": "Close",
   "statistics.data.currentActiveGames": "Current active games",
   "statistics.data.gamesStarted": "Games started",
   "statistics.data.gamesCompleted": "Games completed",

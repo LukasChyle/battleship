@@ -1,19 +1,18 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useApiRequest} from "../../api/apiHooks.js";
 import {axiosService} from "../../api/axiosService.js";
-import {Paper, Typography} from "@mui/material";
+import {Button, Paper, Typography} from "@mui/material";
 import {useIntl} from "react-intl";
 import {messages} from "./Statistics.messages.js";
+import StatisticsDialog from "../dialogs/StatisticsDialog.jsx";
 
 export default function GameStatistics({refresh}) {
     const intl = useIntl()
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const {
-        data: statistics,
-        loading: statsLoading,
-        error: statsError,
-        execute: fetchStats
-    } = useApiRequest(axiosService.getGameStatistics);
+    const handleOpenDialogButton = () => {
+        setIsDialogOpen(true)
+    }
 
     const {
         data: activeGames,
@@ -23,18 +22,19 @@ export default function GameStatistics({refresh}) {
     } = useApiRequest(axiosService.getCurrentGames);
 
     useEffect(() => {
-        fetchStats().catch(console.error);
         fetchGames().catch(console.error);
     }, [refresh]);
 
-    if (statsLoading || gamesLoading) {
+    if (gamesLoading) {
         return <div>Loading...</div>;
     }
-    if (statsError || gamesError) {
+    if (gamesError) {
         return <div>Error loading data</div>;
     }
 
     return (
+        <div>
+        <StatisticsDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen}/>
         <Paper elevation={5}
                sx={{paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px", paddingBottom: "10px"}}>
             {activeGames && (
@@ -42,32 +42,15 @@ export default function GameStatistics({refresh}) {
                     {intl.formatMessage(messages.currentActiveGames)}: {activeGames.activeGames}
                 </Typography>
             )}
-            <Typography variant="h7" component="div" fontWeight="normal" sx={{marginTop: "10px"}}>
-                {intl.formatMessage(messages.statisticsInfo)}:
-            </Typography>
-            {statistics && (
-                <div>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.gamesStarted)}: {statistics.pvpGamesTotal}
-                    </Typography>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.gamesCompleted)}: {statistics.pvpGamesCompleted}
-                    </Typography>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.hits)}: {statistics.pvpHits}
-                    </Typography>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.misses)}: {statistics.pvpMisses}
-                    </Typography>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.averageHitRatio)}: {Math.trunc((statistics.pvpHits / (statistics.pvpHits
-                        + statistics.pvpMisses))* 100)} %
-                    </Typography>
-                    <Typography variant="h7" component="div" fontWeight="bold">
-                        {intl.formatMessage(messages.shipsSunk)}: {statistics.pvpShipsSunk}
-                    </Typography>
-                </div>
-            )}
+            <Button
+                sx={{boxShadow: 5}}
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={handleOpenDialogButton}>
+                {intl.formatMessage(messages.openStatisticsButton)}
+            </Button>
         </Paper>
+        </div>
     );
 }
