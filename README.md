@@ -33,7 +33,7 @@ environment within a scalable system.
 The frontend is developed using JavaScript with the React library, while the backend is
 implemented in Java utilizing the Spring Boot framework.
 
-## To-Do
+## To Do
 - Implement an "About" page/dialog trough the header.
 - Create an appropriate footer.
 - Add more language options.
