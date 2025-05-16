@@ -17,6 +17,7 @@ import GameOverDialog from "../../dialogs/GameOverDialog.jsx";
 export default function GameSession({
     ships,
     setIsPlayingGame,
+    isPlayingWithAI,
     isPlayingWithFriend,
     joinGameCode,
     setJoinGameCode
@@ -35,14 +36,25 @@ export default function GameSession({
     const [gameId, setGameId] = useState("");
     const [turnSecondsLeft, setTurnSecondsLeft] = useState(0)
 
-    const {sendJsonMessage, lastJsonMessage, readyState} =
+    const {sendJsonMessage, lastJsonMessage, lastMessage, readyState} =
         useWebSocket(properties.webSocketURL + "/play", {
                 shouldReconnect: () => {
                     const isPlaying = window.sessionStorage.getItem("isPlayingGame") === "true";
                     return !isGameOver && isPlaying;
                 }, reconnectAttempts: 10, reconnectInterval: 3000, retryOnError: true
+
             }
         )
+
+    useEffect(() => {
+        if (lastMessage !== null && typeof lastMessage.data === 'string') {
+            try {
+                JSON.parse(lastMessage.data);
+            } catch (e) {
+                console.log('WebSocket string message:', lastMessage.data);
+            }
+        }
+    }, [lastMessage]);
 
     useEffect(() => {
         if (readyState === 1) {
@@ -55,13 +67,23 @@ export default function GameSession({
                     ships: ships
                 })
             } else {
-                sendJsonMessage({
-                    type: isPlayingWithFriend ? "JOIN_FRIEND" : "JOIN",
-                    gameId: joinGameCode.length === 36 ? joinGameCode : null,
-                    strikeRow: null,
-                    strikeColumn: null,
-                    ships: ships
-                })
+                if (isPlayingWithAI) {
+                    sendJsonMessage({
+                        type: "JOIN_AI",
+                        gameId: null,
+                        strikeRow: null,
+                        strikeColumn: null,
+                        ships: ships
+                    })
+                } else {
+                    sendJsonMessage({
+                        type: isPlayingWithFriend ? "JOIN_FRIEND" : "JOIN",
+                        gameId: joinGameCode.length === 36 ? joinGameCode : null,
+                        strikeRow: null,
+                        strikeColumn: null,
+                        ships: ships
+                    })
+                }
             }
             if (window.sessionStorage?.getItem("messages")) {
                 setGameLogMessages(JSON.parse(window.sessionStorage.getItem("messages")))

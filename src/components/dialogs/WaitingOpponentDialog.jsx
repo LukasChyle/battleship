@@ -42,21 +42,29 @@ export default function WaitingOpponentDialog({isOpen, handleLeave, isPlayingWit
                 fontWeight="bold"
                 id="dialog-title">
                 {isPlayingWithFriend ?
-                    <>
+                    <div>
                         <Typography whiteSpace="pre-line"
+                                    component="div"
                                     variant="h5" sx={{fontWeight: "bold", color: "black"}}>
                             {intl.formatMessage(messages.waitingFriendDialogContent) + ":"}
                         </Typography>
-                        <Typography whiteSpace="pre-line" variant="h6" sx={{fontWeight: "bold", color: "#ff6333"}}>
+                        <Typography whiteSpace="pre-line"
+                                    component="div"
+                                    variant="h6"
+                                    sx={{fontWeight: "bold", color: "#ff6333"}}>
                             {gameId}
                         </Typography>
-                    </> :
-                    <Typography variant="h5" sx={{fontWeight: "bold", color: "black"}}>
+                    </div> :
+                    <Typography variant="h5"
+                                component="div"
+                                sx={{fontWeight: "bold", color: "black"}}>
                         {intl.formatMessage(messages.waitingOpponentDialogContent)}
                     </Typography>}
             </DialogTitle>
             <DialogContent sx={{display: "grid", justifyContent: "center"}}>
-                <Typography variant="h5" sx={{fontWeight: "bold", color: "black"}}>{minutes}:{seconds}</Typography>
+                <Typography variant="h5"
+                            component="div"
+                            sx={{fontWeight: "bold", color: "black"}}>{minutes}:{seconds}</Typography>
             </DialogContent>
             <DialogActions>
                 <AlertDialog

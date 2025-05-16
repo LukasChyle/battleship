@@ -8,12 +8,14 @@ export default function GameSetUp({
     ships,
     setShips,
     setIsPlayingGame,
+    setIsPlayingWithAI,
     setIsPlayingWithFriend,
     joinGameCode,
     setJoinGameCode
 }) {
-    const handleStartGame = (isWithFriend) => {
+    const handleStartGame = (isWithFriend, isWithAI) => {
         setIsPlayingWithFriend(isWithFriend)
+        setIsPlayingWithAI(isWithAI)
         setIsPlayingGame(true)
         window.sessionStorage.setItem("isPlayingGame", true)
         window.sessionStorage.removeItem("messages")

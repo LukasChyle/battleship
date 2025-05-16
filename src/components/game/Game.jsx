@@ -12,6 +12,7 @@ const getInitialShips = [
 export default function Game() {
     const [ships, setShips] = useState(getInitialShips);
     const [isPlayingGame, setIsPlayingGame] = useState(false);
+    const [isPlayingWithAI, setIsPlayingWithAI] = useState(false);
     const [isPlayingWithFriend, setIsPlayingWithFriend] = useState(false);
     const [joinGameCode, setJoinGameCode] = useState("");
 
@@ -27,6 +28,7 @@ export default function Game() {
                 <GameSession
                     ships={ships}
                     setIsPlayingGame={setIsPlayingGame}
+                    isPlayingWithAI={isPlayingWithAI}
                     isPlayingWithFriend={isPlayingWithFriend}
                     joinGameCode={joinGameCode}
                     setJoinGameCode={setJoinGameCode}
@@ -36,6 +38,7 @@ export default function Game() {
                     ships={ships}
                     setShips={setShips}
                     setIsPlayingGame={setIsPlayingGame}
+                    setIsPlayingWithAI={setIsPlayingWithAI}
                     setIsPlayingWithFriend={setIsPlayingWithFriend}
                     joinGameCode={joinGameCode}
                     setJoinGameCode={setJoinGameCode}

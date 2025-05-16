@@ -9,16 +9,26 @@ export const messages = defineMessages({
     instructionsPlacement: {
         id: "game.setUp.instructionsPlacement",
         defaultMessage: "Drag and drop the 5 ships onto the board as you wish. Once a ship is placed, you can rotate it using the arrow button located in the upper left corner of the ship.",
-        description: "instructions how to place the ships",
+        description: "instructions on how to place the ships",
     },
     instructionsStartGame: {
         id: "game.setUp.instructionsStartGame",
         defaultMessage: "Start the game in the mode you wish to play.",
-        description: "instructions how to start the game",
+        description: "instructions on how to start the game",
     },
-    startGameAgainstRandomButton: {
-        id: "game.setUp.startGameAgainstRandomButton",
-        defaultMessage: "PLAY AGAINST RANDOM",
+    instructionsPlayWithFriend: {
+        id: "game.setUp.instructionsPlayWithFriend",
+        defaultMessage: "To play against a friend: a code will be generated when creating a game for a friend, your friend have to paste in the code to be able to join the game.",
+        description: "instructions on how to play with a friend",
+    },
+    startGameAgainstAiButton: {
+        id: "game.setUp.startGameAgainstAiButton",
+        defaultMessage: "PLAY AGAINST AI",
+        description: "text of start game against ai button",
+    },
+    startGameAgainstPlayerButton: {
+        id: "game.setUp.startGameAgainstPlayerButton",
+        defaultMessage: "PLAY AGAINST PLAYER",
         description: "text of start game against random player button",
     },
     startGameForFriendButton: {
@@ -26,10 +36,10 @@ export const messages = defineMessages({
         defaultMessage: "CREATE GAME FOR FRIEND",
         description: "text of start game for a friend button",
     },
-    joinGameWithCodeButton: {
-        id: "game.setUp.joinGameWithCodeButton",
-        defaultMessage: "JOIN GAME WITH CODE",
-        description: "text of join a game with code button",
+    joinFriendWithCodeButton: {
+        id: "game.setUp.joinFriendWithCodeButton",
+        defaultMessage: "JOIN FRIEND WITH CODE",
+        description: "text of join a Friend game with code button",
     },
     enterCodeToJoinInputPlaceholder: {
         id: "game.setUp.enterCodeToJoinInputPlaceholder",

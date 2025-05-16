@@ -17,6 +17,9 @@ export default function SetUpInstructions() {
             <Typography variant="body1" color={theme.palette.text.primary} component="div">
                 {"2. " + intl.formatMessage(messages.instructionsStartGame)}
             </Typography>
+            <Typography variant="body1" color={theme.palette.text.primary} component="div">
+                {intl.formatMessage(messages.instructionsPlayWithFriend)}
+            </Typography>
         </>
     )
 }

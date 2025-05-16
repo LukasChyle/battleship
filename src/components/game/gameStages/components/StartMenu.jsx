@@ -19,11 +19,11 @@ export default function StartMenu({handleStartGame, ships, joinGameCode, setJoin
                         size="large"
                         variant="contained"
                         color="primary"
-                        onClick={() => handleStartGame(false)}
+                        onClick={() => handleStartGame(false, true)}
                         disabled={!!(ships.find(e => e.row === undefined) ||
                             ships.find(e => e.column === undefined))}
                     >
-                        {intl.formatMessage(messages.startGameAgainstRandomButton)}
+                        {intl.formatMessage(messages.startGameAgainstAiButton)}
                     </Button>
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -31,7 +31,19 @@ export default function StartMenu({handleStartGame, ships, joinGameCode, setJoin
                         size="large"
                         variant="contained"
                         color="primary"
-                        onClick={() => handleStartGame(true)}
+                        onClick={() => handleStartGame(false, false)}
+                        disabled={!!(ships.find(e => e.row === undefined) ||
+                            ships.find(e => e.column === undefined))}
+                    >
+                        {intl.formatMessage(messages.startGameAgainstPlayerButton)}
+                    </Button>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                    <Button
+                        size="large"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleStartGame(true, false)}
                         disabled={!!(ships.find(e => e.row === undefined) ||
                             ships.find(e => e.column === undefined))}
                     >
@@ -43,13 +55,13 @@ export default function StartMenu({handleStartGame, ships, joinGameCode, setJoin
                         size="large"
                         variant="contained"
                         color="primary"
-                        onClick={() => handleStartGame(true)}
+                        onClick={() => handleStartGame(true, false)}
                         disabled={
                             !!(ships.find(e => e.row === undefined) ||
                                 ships.find(e => e.column === undefined) || joinGameCode.length !== 36
                             )}
                     >
-                        {intl.formatMessage(messages.joinGameWithCodeButton)}
+                        {intl.formatMessage(messages.joinFriendWithCodeButton)}
                     </Button>
                 </Grid>
                 <Grid item xs={12} md={12}>
