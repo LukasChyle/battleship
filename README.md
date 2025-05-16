@@ -38,7 +38,9 @@ implemented in Java utilizing the Spring Boot framework.
 - Create an appropriate footer.
 - Add more language options.
 
-## Tools (used in frontend)
+## Tools
+### (used in frontend)
+
 ### React
 A JavaScript library for building user interfaces with a component-based approach. It focuses on the view layer, enabling dynamic and interactive UIs.
 
