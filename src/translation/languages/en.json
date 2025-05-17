@@ -45,14 +45,23 @@
   "connectionState.closing": "Closing",
   "connectionState.closed": "Disconnected",
   "connectionState.uninstantiated": "Error",
+  "statistics.data.loadingData": "Loading data...",
+  "statistics.data.errorLoadingData": "Error loading data",
   "statistics.data.statisticsInfo": "Statistics about all games played so far",
+  "statistics.data.statisticsPvpGamesHeader": "Player vs player",
+  "statistics.data.statisticsAiGamesHeader": "AI games",
+  "statistics.data.playerStatisticsAgainstAiHeader": "By player against AI",
+  "statistics.data.aiStatisticsAgainstPlayerHeader": "By AI against player",
   "statistics.data.openStatisticsButton": "Statistics",
   "statistics.data.closeStatisticsButton": "Close",
   "statistics.data.currentActiveGames": "Current active games",
   "statistics.data.gamesStarted": "Games started",
   "statistics.data.gamesCompleted": "Games completed",
+  "statistics.data.gamesPlayerLeft": "Games where player left",
   "statistics.data.hits": "Hits",
   "statistics.data.misses": "Misses",
   "statistics.data.averageHitRatio": "Average accuracy",
-  "statistics.data.shipsSunk": "Sunken ships"
+  "statistics.data.shipsSunk": "Sunken ships",
+  "statistics.data.gamesWonAgainstAi": "Games won against AI"
+
 }
