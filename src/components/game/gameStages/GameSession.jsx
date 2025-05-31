@@ -92,21 +92,6 @@ export default function GameSession({
     }
   }, [readyState]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (readyState === WebSocket.OPEN) {
-        sendJsonMessage({
-          type: "PING",
-          gameId: window.sessionStorage.getItem('gameId'),
-          strikeRow: null,
-          strikeColumn: null,
-          ships: null
-        })
-      }
-    }, 30000);
-    return () => clearInterval(interval);
-  }, [readyState]);
-
   //TODO: Move WebSocket into own component.
   //TODO: Create an about tab in the header, explaining about the project.
   //TODO: Refactor tiles and ships in setUp to use row and column instead of id.
