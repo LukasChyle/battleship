@@ -58,7 +58,9 @@ export default function GameSession({
       try {
         JSON.parse(lastMessage.data);
       } catch (e) {
-        console.log('WebSocket string message:', lastMessage.data);
+        if (lastMessage.data.startsWith("ping")) {
+          console.log('WebSocket string message:', lastMessage.data);
+        }
       }
     }
   }, [lastMessage]);
@@ -160,7 +162,7 @@ export default function GameSession({
     }
     if (eventType === "WAITING_OPPONENT" || eventType === "WAITING_FRIEND") {
       setOpenWaitingDialog(true)
-    } else {
+    } else if (eventType !== undefined) {
       setOpenWaitingDialog(false)
     }
   }, [lastJsonMessage]);
