@@ -41,7 +41,15 @@ export default function GameSession({
         shouldReconnect: () => {
           const isPlaying = window.sessionStorage.getItem("isPlayingGame") === "true";
           return !isGameOver && isPlaying;
-        }, reconnectAttempts: 10, reconnectInterval: 3000, retryOnError: true
+        },
+        reconnectAttempts: 10,
+        reconnectInterval: 3000,
+        retryOnError: true,
+        heartbeat: {
+          interval: 10000,
+          message: "ping",
+          pongTimeout: 5000,
+        }
       }
     )
 
