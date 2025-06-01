@@ -5,8 +5,8 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://lukaschyle.github.io/battleship/</loc>
-    <lastmod>2025-05-31</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2025-06-01</lastmod>
+    <changefreq>never</changefreq>
     <priority>1.0</priority>
   </url>
 </urlset>
