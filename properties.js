@@ -5,6 +5,6 @@ export const properties = {
     // webSocketURL: "ws://localhost:8081"
 
     // production
-    baseURL: "https://yippikayey.duckdns.org",
-    webSocketURL: "wss://yippikayey.duckdns.org"
+    baseURL: "https://yippikayey.tplinkdns.com",
+    webSocketURL: "wss://yippikayey.tplinkdns.com"
 };
